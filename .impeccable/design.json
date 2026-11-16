@@ -1,0 +1,506 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-16T23:35:21.722Z",
+  "title": "Design System: A semana",
+  "extensions": {
+    "colorMeta": {
+      "papel": {
+        "role": "neutral",
+        "displayName": "Papel",
+        "canonical": "#F2F4F0",
+        "tonalRamp": [
+          "#3D3D3C",
+          "#6D6E6C",
+          "#9D9F9C",
+          "#CECFCC",
+          "#F5F6F3",
+          "#F8F9F7",
+          "#FBFCFB",
+          "#FDFEFD"
+        ]
+      },
+      "tinta": {
+        "role": "primary",
+        "displayName": "Tinta de Caneta Azul",
+        "canonical": "#2443B8",
+        "tonalRamp": [
+          "#09112E",
+          "#101E53",
+          "#172C78",
+          "#1F399C",
+          "#5069C6",
+          "#8798D8",
+          "#BDC7EA",
+          "#E5E8F6"
+        ]
+      },
+      "tomate": {
+        "role": "secondary",
+        "displayName": "Tomate",
+        "canonical": "#C93D22",
+        "tonalRamp": [
+          "#320F09",
+          "#5A1B0F",
+          "#832816",
+          "#AB341D",
+          "#D4644E",
+          "#E19485",
+          "#EFC5BD",
+          "#F9E8E4"
+        ]
+      },
+      "verde": {
+        "role": "tertiary",
+        "displayName": "Verde Bloco",
+        "canonical": "#183B32",
+        "tonalRamp": [
+          "#060F0D",
+          "#0B1B16",
+          "#102621",
+          "#14322B",
+          "#46625B",
+          "#80938E",
+          "#BAC4C2",
+          "#E3E7E6"
+        ]
+      },
+      "grafite": {
+        "role": "neutral",
+        "displayName": "Grafite",
+        "canonical": "#1D2321",
+        "tonalRamp": [
+          "#070908",
+          "#0D100F",
+          "#131715",
+          "#191E1C",
+          "#4A4F4D",
+          "#838685",
+          "#BBBDBC",
+          "#E4E5E4"
+        ]
+      },
+      "pauta": {
+        "role": "neutral",
+        "displayName": "Pauta",
+        "canonical": "color-mix(in srgb, var(--tinta) 16%, var(--papel))",
+        "tonalRamp": [
+          "#34363A",
+          "#5E6168",
+          "#888C96",
+          "#B2B8C4",
+          "#DAE0EC",
+          "#E6EAF2",
+          "#F1F3F8",
+          "#F9FAFC"
+        ]
+      },
+      "pauta-forte": {
+        "role": "neutral",
+        "displayName": "Pauta Forte",
+        "canonical": "color-mix(in srgb, var(--tinta) 34%, var(--papel))",
+        "tonalRamp": [
+          "#2B2E37",
+          "#4D5363",
+          "#707890",
+          "#929CBC",
+          "#BDC6E4",
+          "#D1D8EC",
+          "#E6EAF5",
+          "#F5F6FB"
+        ]
+      },
+      "tinta-clara": {
+        "role": "neutral",
+        "displayName": "Tinta Clara",
+        "canonical": "color-mix(in srgb, var(--tinta) 7%, var(--papel))",
+        "tonalRamp": [
+          "#393A3B",
+          "#67686A",
+          "#949799",
+          "#C2C5C9",
+          "#E9EDF0",
+          "#F0F2F5",
+          "#F7F8F9",
+          "#FCFCFD"
+        ]
+      },
+      "tomate-fundo": {
+        "role": "secondary",
+        "displayName": "Tomate Fundo",
+        "canonical": "color-mix(in srgb, var(--tomate) 88%, var(--grafite))",
+        "tonalRamp": [
+          "#2D0F09",
+          "#511A0F",
+          "#752616",
+          "#99311D",
+          "#C3614E",
+          "#D69385",
+          "#E9C4BD",
+          "#F6E7E4"
+        ]
+      },
+      "texto-suave": {
+        "role": "neutral",
+        "displayName": "Texto Suave",
+        "canonical": "color-mix(in srgb, var(--grafite) 76%, var(--papel))",
+        "tonalRamp": [
+          "#141515",
+          "#242625",
+          "#343736",
+          "#444847",
+          "#737775",
+          "#9FA2A0",
+          "#CBCCCB",
+          "#EAEBEA"
+        ]
+      },
+      "sobre-tinta": {
+        "role": "neutral",
+        "displayName": "Sobre Tinta",
+        "canonical": "color-mix(in srgb, var(--papel) 82%, var(--tinta))",
+        "tonalRamp": [
+          "#33353A",
+          "#5C5F67",
+          "#858A96",
+          "#AEB4C4",
+          "#D7DDEB",
+          "#E4E7F1",
+          "#F0F2F8",
+          "#F9FAFC"
+        ]
+      },
+      "sobre-verde": {
+        "role": "neutral",
+        "displayName": "Sobre Verde",
+        "canonical": "color-mix(in srgb, var(--papel) 78%, var(--verde))",
+        "tonalRamp": [
+          "#313332",
+          "#575B59",
+          "#7E8481",
+          "#A5ADA8",
+          "#CED5D1",
+          "#DDE2E0",
+          "#EDEFEE",
+          "#F8F9F8"
+        ]
+      },
+      "pauta-tinta": {
+        "role": "neutral",
+        "displayName": "Pauta Tinta",
+        "canonical": "color-mix(in srgb, var(--papel) 26%, var(--tinta))",
+        "tonalRamp": [
+          "#171C32",
+          "#28335A",
+          "#3B4981",
+          "#4D60A9",
+          "#7B8DD2",
+          "#A4B1E0",
+          "#CED4EE",
+          "#EBEEF8"
+        ]
+      },
+      "pauta-verde": {
+        "role": "neutral",
+        "displayName": "Pauta Verde",
+        "canonical": "color-mix(in srgb, var(--papel) 22%, var(--verde))",
+        "tonalRamp": [
+          "#121917",
+          "#202D29",
+          "#2F413C",
+          "#3D554E",
+          "#6D837D",
+          "#9AAAA5",
+          "#C8D1CE",
+          "#E9ECEB"
+        ]
+      },
+      "num-inativo": {
+        "role": "neutral",
+        "displayName": "Numeral Inativo",
+        "canonical": "color-mix(in srgb, var(--papel) 55%, var(--tinta))",
+        "tonalRamp": [
+          "#252936",
+          "#434A61",
+          "#616B8C",
+          "#7F8BB7",
+          "#AAB6DF",
+          "#C5CDE9",
+          "#DFE4F3",
+          "#F2F4FA"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Só o h1 do hero e do artigo; largura 88%."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de seção (h2) e da gaveta; largura 90%."
+      },
+      "destaque": {
+        "displayName": "Destaque",
+        "purpose": "Frase de filosofia em Sobre, acesa palavra a palavra."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "h3, opções do seletor, títulos de painel."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido, no máximo 34em por linha."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Rótulos, metadados fortes, links de texto, botão compacto; algarismos tabulares."
+      },
+      "grade": {
+        "displayName": "Grade",
+        "purpose": "Dias e horas da folha e da grade de horários (12px a 13px)."
+      }
+    },
+    "fonts": [
+      {
+        "family": "Bricolage Grotesque",
+        "source": "woff2 variável self-hosted com eixo wdth; font-weight 200 800, font-stretch 75% 100%, font-display swap"
+      }
+    ],
+    "shadows": [
+      {
+        "name": "gaveta",
+        "value": "-24px 0 60px -30px color-mix(in srgb, var(--grafite) 45%, transparent)",
+        "purpose": "Só o painel lateral de detalhe (modal), com fundo grafite a 40%."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Saída padrão: reveals, toques, painéis."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Linhas que se desenham, cortinas, trilho das abas, indicador do menu."
+      },
+      {
+        "name": "dur-toque",
+        "value": "140ms",
+        "purpose": "Escala 0,97 ao pressionar botões."
+      },
+      {
+        "name": "dur-painel",
+        "value": "240ms",
+        "purpose": "Acordeão e fechamento da gaveta; a gaveta abre em 380ms."
+      },
+      {
+        "name": "troca-cor",
+        "value": "160ms ease",
+        "purpose": "Hover de fundo e cor; mantida com movimento reduzido."
+      },
+      {
+        "name": "reveal",
+        "value": "0.6s a 1.5s",
+        "purpose": "Linhas mascaradas, cortinas de foto, fios de seção; uma vez por elemento."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Lenis desligado, nada se desloca, conteúdo no estado final, só opacidade e cor até 160ms."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "semana",
+        "value": "1024px"
+      },
+      {
+        "name": "menu",
+        "value": "1100px"
+      },
+      {
+        "name": "aviso",
+        "value": "768px"
+      },
+      {
+        "name": "foto-tablet",
+        "value": "640px"
+      },
+      {
+        "name": "convite-coluna",
+        "value": "480px"
+      },
+      {
+        "name": "cabecalho-estreito",
+        "value": "420px"
+      }
+    ],
+    "grid": {
+      "calha": {
+        "movel": "40px",
+        "desktop": "96px"
+      },
+      "recuo": {
+        "movel": "14px",
+        "desktop": "24px"
+      },
+      "borda": {
+        "movel": "18px",
+        "desktop": "24px"
+      },
+      "folhaMax": "1680px",
+      "colunas": {
+        "movel": "calha + 1 dia",
+        "desktop": "calha + 7 dias"
+      },
+      "headerH": {
+        "movel": "64px",
+        "desktop": "72px"
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Agendar consulta",
+      "kind": "button",
+      "refersTo": "botao-acao",
+      "description": "O único botão de agendamento: tomate, bloco de agenda de 4px.",
+      "html": "<a class=\"ds-botao\" href=\"#\">Agendar consulta</a>",
+      "css": ".ds-botao{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:var(--raio-botao,4px);background:var(--tomate,#C93D22);color:var(--papel,#F2F4F0);font-family:var(--fonte);font-size:1rem;font-weight:650;line-height:1.2;text-decoration:none;white-space:nowrap;transition:transform 140ms cubic-bezier(0.23,1,0.32,1),background-color 160ms ease,color 160ms ease}.ds-botao:hover{background:var(--tomate-fundo,#B43A22)}.ds-botao:active{transform:scale(0.97)}.ds-botao:focus-visible{outline:2px solid var(--tinta,#2443B8);outline-offset:2px}"
+    },
+    {
+      "name": "Botão em linha",
+      "kind": "button",
+      "refersTo": "botao-linha",
+      "description": "Secundário em contorno de tinta; enche de tinta no hover.",
+      "html": "<a class=\"ds-botao-linha\" href=\"#\">Conhecer meu trabalho</a>",
+      "css": ".ds-botao-linha{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border:1.5px solid var(--tinta,#2443B8);border-radius:var(--raio-botao,4px);color:var(--tinta,#2443B8);background:var(--papel,#F2F4F0);font-family:var(--fonte);font-size:1rem;font-weight:650;text-decoration:none;transition:transform 140ms cubic-bezier(0.23,1,0.32,1),background-color 160ms ease,color 160ms ease}.ds-botao-linha:hover{background:var(--tinta,#2443B8);color:var(--papel,#F2F4F0)}.ds-botao-linha:active{transform:scale(0.97)}.ds-botao-linha:focus-visible{outline:2px solid var(--tinta,#2443B8);outline-offset:2px}"
+    },
+    {
+      "name": "Botão claro",
+      "kind": "button",
+      "refersTo": "botao-claro",
+      "description": "Agendar sobre fundo verde ou azul: papel com texto verde.",
+      "html": "<div class=\"ds-fundo-verde\"><a class=\"ds-botao-claro\" href=\"#\">Agendar consulta</a></div>",
+      "css": ".ds-fundo-verde{padding:32px;background:var(--verde,#183B32)}.ds-botao-claro{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:var(--raio-botao,4px);background:var(--papel,#F2F4F0);color:var(--verde,#183B32);font-family:var(--fonte);font-size:1rem;font-weight:650;text-decoration:none;transition:transform 140ms cubic-bezier(0.23,1,0.32,1),background-color 160ms ease}.ds-botao-claro:hover{background:var(--sobre-verde,#C2CBC6)}.ds-botao-claro:active{transform:scale(0.97)}.ds-botao-claro:focus-visible{outline:2px solid var(--papel,#F2F4F0);outline-offset:2px}"
+    },
+    {
+      "name": "Compromisso do hero",
+      "kind": "custom",
+      "refersTo": "evento-acao",
+      "description": "Célula da folha que é botão: texto embaixo à esquerda, meta no topo.",
+      "html": "<a class=\"ds-evento\" href=\"#\"><small>Primeira consulta, 60 min</small><span>Agendar consulta</span></a>",
+      "css": ".ds-evento{display:flex;flex-direction:column;justify-content:space-between;width:220px;min-height:118px;padding:14px 16px;border-radius:var(--raio-botao,4px);background:var(--tomate,#C93D22);color:var(--papel,#F2F4F0);font-family:var(--fonte);font-size:1.5rem;font-weight:650;line-height:1.12;text-decoration:none;transition:transform 140ms cubic-bezier(0.23,1,0.32,1),background-color 160ms ease}.ds-evento small{font-size:0.8125rem;font-weight:600}.ds-evento:hover{background:var(--tomate-fundo,#B43A22)}.ds-evento:active{transform:scale(0.97)}.ds-evento:focus-visible{outline:2px solid var(--tinta,#2443B8);outline-offset:2px}"
+    },
+    {
+      "name": "Seletor em linhas de agenda",
+      "kind": "chip",
+      "refersTo": "opcao-linha",
+      "description": "Grupo de rádio em linhas; a escolhida enche de verde com ponto tomate.",
+      "html": "<div class=\"ds-opcoes\" role=\"radiogroup\"><button class=\"ds-opcao\" role=\"radio\" aria-checked=\"true\"><span class=\"ds-marca\"></span>Comer melhor na rotina</button><button class=\"ds-opcao\" role=\"radio\" aria-checked=\"false\"><span class=\"ds-marca\"></span>Ganhar massa</button></div>",
+      "css": ".ds-opcoes{border-top:1px solid var(--pauta-forte,#ACB8DD);max-width:480px}.ds-opcao{display:flex;align-items:center;gap:16px;width:100%;min-height:76px;padding:16px 16px 16px 12px;border:0;border-bottom:1px solid var(--pauta-forte,#ACB8DD);background:none;text-align:left;font-family:var(--fonte);font-size:1.625rem;font-weight:600;line-height:1.15;color:var(--tinta,#2443B8);cursor:pointer;transition:background-color 120ms ease,color 120ms ease}.ds-marca{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center}.ds-marca::after{content:\"\";width:10px;height:10px;border-radius:50%;background:var(--tomate,#C93D22);transform:scale(0)}.ds-opcao[aria-checked=\"true\"]{background:var(--verde,#183B32);color:var(--papel,#F2F4F0)}.ds-opcao[aria-checked=\"true\"] .ds-marca::after{transform:scale(1)}.ds-opcao[aria-checked=\"false\"]:hover{background:var(--tinta-clara,#E4E8EC)}.ds-opcao:focus-visible{outline:2px solid var(--tinta,#2443B8);outline-offset:2px}"
+    },
+    {
+      "name": "Campo de formulário",
+      "kind": "input",
+      "refersTo": "campo",
+      "description": "Rótulo tinta acima, borda pauta forte, foco em tinta, erro em tomate.",
+      "html": "<label class=\"ds-campo\">E-mail<input type=\"email\" placeholder=\"voce@exemplo.com\"></label>",
+      "css": ".ds-campo{display:grid;gap:6px;max-width:360px;font-family:var(--fonte);font-size:0.9375rem;font-weight:650;color:var(--tinta,#2443B8)}.ds-campo input{min-height:52px;padding:12px 14px;background:var(--papel,#F2F4F0);border:1.5px solid var(--pauta-forte,#ACB8DD);border-radius:var(--raio-botao,4px);font:inherit;font-size:1rem;font-weight:400;color:var(--grafite,#1D2321);transition:border-color 160ms ease}.ds-campo input:focus-visible{outline:2px solid var(--tinta,#2443B8);outline-offset:2px;border-color:var(--tinta,#2443B8)}.ds-campo input[aria-invalid=\"true\"]{border-color:var(--tomate,#C93D22)}"
+    },
+    {
+      "name": "Navegação",
+      "kind": "nav",
+      "description": "Links do cabeçalho; ativo em tinta com traço tomate de 2px.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"true\">Sobre</a><a href=\"#\">Especialidades</a><a href=\"#\">Como funciona</a><a href=\"#\">Contato</a></nav>",
+      "css": ".ds-nav{display:flex;gap:24px;font-family:var(--fonte)}.ds-nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;font-size:0.9375rem;font-weight:500;color:var(--grafite,#1D2321);text-decoration:none;transition:color 160ms ease}.ds-nav a:hover{color:var(--tinta,#2443B8)}.ds-nav a[aria-current=\"true\"]{color:var(--tinta,#2443B8);font-weight:650}.ds-nav a[aria-current=\"true\"]::after{content:\"\";position:absolute;left:0;right:0;bottom:4px;height:2px;background:var(--tomate,#C93D22)}.ds-nav a:focus-visible{outline:2px solid var(--tinta,#2443B8);outline-offset:2px}"
+    },
+    {
+      "name": "Folha da semana",
+      "kind": "custom",
+      "description": "Calha de horas + sete dias com pauta, ponto de hoje e linha do agora com rótulo de papel à esquerda.",
+      "html": "<div class=\"ds-folha\"><span></span><b>seg</b><b>ter</b><b class=\"hoje\">qua</b><b>qui</b><b>sex</b><b>sáb</b><b>dom</b><i>07h</i><s></s><i>10h</i><s></s><div class=\"ds-agora\"><em>11:42</em></div></div>",
+      "css": ".ds-folha{position:relative;display:grid;grid-template-columns:56px repeat(7,1fr);width:560px;font-family:var(--fonte);background:var(--papel,#F2F4F0);border-top:2px solid var(--tinta,#2443B8)}.ds-folha span,.ds-folha b{border-bottom:1px solid var(--pauta-forte,#ACB8DD)}.ds-folha b{padding:8px 0 8px 8px;font-size:0.8125rem;font-weight:600;color:var(--tinta,#2443B8)}.ds-folha b.hoje::before{content:\"\";display:inline-block;width:6px;height:6px;margin-right:5px;border-radius:50%;background:var(--tomate,#C93D22)}.ds-folha i{grid-column:1;height:56px;padding:8px 0 0 8px;border-top:1px solid var(--pauta,#D1D8E7);font-style:normal;font-size:0.75rem;font-weight:600;color:var(--tinta,#2443B8);font-variant-numeric:tabular-nums}.ds-folha s{grid-column:2/-1;border-top:1px solid var(--pauta,#D1D8E7);text-decoration:none}.ds-agora{position:absolute;left:0;right:0;top:92px;height:1px;background:var(--tomate,#C93D22)}.ds-agora::before{content:\"\";position:absolute;left:52px;top:-4px;width:9px;height:9px;border-radius:50%;background:var(--tomate,#C93D22)}.ds-agora em{position:absolute;left:0;top:-9px;padding:0 4px;background:var(--papel,#F2F4F0);font-style:normal;font-size:0.6875rem;font-weight:650;line-height:18px;color:var(--tomate,#C93D22);font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Padrão de semana",
+      "kind": "card",
+      "description": "Arte abstrata 7x5: tinta e verde, no máximo uma célula tomate.",
+      "html": "<div class=\"ds-padrao\"><svg viewBox=\"0 0 70 50\" preserveAspectRatio=\"none\"><rect x=\"0\" y=\"10\" width=\"50\" height=\"10\" fill=\"#2443B8\"/><rect x=\"0\" y=\"30\" width=\"30\" height=\"10\" fill=\"#183B32\"/><rect x=\"30\" y=\"30\" width=\"10\" height=\"10\" fill=\"#C93D22\"/><rect x=\"40\" y=\"30\" width=\"10\" height=\"10\" fill=\"#183B32\"/><g stroke=\"#ACB8DD\" stroke-width=\"1\" vector-effect=\"non-scaling-stroke\"><line x1=\"10\" y1=\"0\" x2=\"10\" y2=\"50\"/><line x1=\"20\" y1=\"0\" x2=\"20\" y2=\"50\"/><line x1=\"30\" y1=\"0\" x2=\"30\" y2=\"50\"/><line x1=\"40\" y1=\"0\" x2=\"40\" y2=\"50\"/><line x1=\"50\" y1=\"0\" x2=\"50\" y2=\"50\"/><line x1=\"60\" y1=\"0\" x2=\"60\" y2=\"50\"/><line x1=\"0\" y1=\"10\" x2=\"70\" y2=\"10\"/><line x1=\"0\" y1=\"20\" x2=\"70\" y2=\"20\"/><line x1=\"0\" y1=\"30\" x2=\"70\" y2=\"30\"/><line x1=\"0\" y1=\"40\" x2=\"70\" y2=\"40\"/></g></svg></div>",
+      "css": ".ds-padrao{position:relative;width:320px;aspect-ratio:4/3;overflow:hidden;border-radius:var(--raio-foto,4px);background:var(--tinta-clara,#E4E8EC)}.ds-padrao svg{position:absolute;inset:0;width:100%;height:100%;transition:transform 500ms cubic-bezier(0.23,1,0.32,1)}.ds-padrao:hover svg{transform:scale(1.03)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A folha de rotina da semana",
+    "overview": "O site inteiro é uma folha de agenda semanal impressa em papel claro: uma calha de horas à esquerda e sete colunas de dias que descem a página de borda a borda, pautadas em tinta azul. O conteúdo não fica em cards soltos; ele é marcado na grade como compromisso. Títulos ocupam faixas de dias, a foto ocupa um bloco de dias e horas, e a ação principal é uma célula tomate na quinta-feira às 16h. A linha de margem tomate atravessa toda a folha, como no caderno.\n\nA densidade é de papelaria, não de painel: muito papel, fios finos, blocos cheios só onde algo foi \"marcado\". Uma família tipográfica só (Bricolage Grotesque variável, com eixo de largura) faz tudo, do título de 80px ao rótulo de hora de 12px; a hierarquia vem de tamanho, peso e largura, nunca de uma segunda fonte. A arte abstrata da marca é o padrão de semana 7x5, gerado a partir da mesma grade.\n\nO movimento é o de quem preenche a agenda: as linhas se desenham, os blocos são revelados por máscara e as trocas de estado são secas. No celular a mesma folha vira a vista de um dia, com a calha mantida.",
+    "keyCharacteristics": [
+      "Grade da semana como estrutura: calha de horas + 7 dias no desktop, calha + 1 dia no celular.",
+      "Papel, tinta, tomate, verde e grafite; tons intermediários sempre misturados desses cinco.",
+      "Uma família, Bricolage Grotesque variável, com largura comprimida (86% a 92%) nos títulos.",
+      "Cantos quase retos (4px): botões são blocos de agenda, não pílulas.",
+      "Profundidade plana; o único elevado é a gaveta de detalhe.",
+      "Linhas que se desenham, blocos revelados por máscara, trocas secas; tudo desligado com movimento reduzido."
+    ],
+    "rules": [
+      {
+        "name": "The Cinco Tintas Rule",
+        "body": "Toda cor nova é uma mistura das cinco primitivas (papel, tinta, tomate, verde, grafite). Se não sai delas, não entra.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tomate É Agora Rule",
+        "body": "Tomate marca só a ação de agendar, o tempo presente (hoje, agora, margem) e erros. Em cada padrão de semana, no máximo uma célula tomate.",
+        "section": "colors"
+      },
+      {
+        "name": "The Bloco Cheio Rule",
+        "body": "Preencher uma área de cor significa \"marcado\": verde para escolhido ou aberto, tinta para seção cheia, tomate para a ação. Vazio é fio claro sobre papel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Uma Família Rule",
+        "body": "Bricolage Grotesque faz tudo. Hierarquia vem de tamanho, peso (400, 500, 600, 650) e largura; nunca de uma segunda fonte, itálico decorativo ou caixa alta espaçada.",
+        "section": "typography"
+      },
+      {
+        "name": "The Número de Agenda Rule",
+        "body": "Todo número que cai na grade (hora, dia, CRN, data, etapa) usa algarismos tabulares.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tudo Cai na Linha Rule",
+        "body": "Todo bloco começa e termina numa linha de dia ou de hora. Nada flutua entre colunas.",
+        "section": "layout"
+      },
+      {
+        "name": "The Papel Plano Rule",
+        "body": "Nada fica elevado em repouso. Só um painel modal, que realmente cobre a folha, ganha sombra.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Bloco de Agenda Rule",
+        "body": "Botões e controles são células da agenda (raio de 4px), nunca pílulas.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** posicionar cada bloco por dia inicial e final da grade (calha 40px/96px, 7 colunas a partir de 1024px).",
+      "**Do** usar tomate só para agendar, para o tempo presente e para erros; uma célula tomate por padrão de semana.",
+      "**Do** desenhar o vazio com fio claro (pauta ou pauta forte) e o escolhido com bloco cheio (verde).",
+      "**Do** manter botões e controles com 4px de raio e alvo mínimo de 44px.",
+      "**Do** usar algarismos tabulares em horas, dias, datas, CRN e etapas.",
+      "**Do** comprimir a largura dos títulos (86% a 92%) em vez de trocar de fonte.",
+      "**Do** fazer o conteúdo nascer visível no CSS e deixar o script esconder só o que vai animar."
+    ],
+    "donts": [
+      "**Don't** usar o arranjo padrão da categoria: título à esquerda, foto arredondada à direita e fileira de cards.",
+      "**Don't** transformar botões em pílulas (999px) nem arredondar cards e fotos além de 4px.",
+      "**Don't** adicionar uma segunda família tipográfica nem rótulos em caixa alta espaçada acima dos títulos.",
+      "**Don't** escrever hex em componentes; toda cor passa pelos tokens.",
+      "**Don't** usar pauta forte como cor de texto.",
+      "**Don't** pôr sombra em elementos em repouso; só a gaveta modal tem sombra.",
+      "**Don't** usar foto de banco ou imagem gerada para representar o profissional ou pacientes; sem foto real, use o espaço reservado ou o padrão de semana."
+    ]
+  }
+}
