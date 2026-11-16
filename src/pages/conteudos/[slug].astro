@@ -1,0 +1,126 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Foto from '../../components/Foto.astro';
+import BotaoAgendar from '../../components/BotaoAgendar.astro';
+import Icone from '../../components/Icone.astro';
+import { p, t, nome, nomeCompleto, identificacao, dataBR, tem } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const artigos = await getCollection('artigos');
+  return artigos.map((artigo) => ({ params: { slug: artigo.id }, props: { artigo } }));
+}
+const { artigo } = Astro.props;
+const d = artigo.data;
+const { Content, headings } = await render(artigo);
+const sumario = headings.filter((h) => h.depth === 2);
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const compartilhar = `https://wa.me/?text=${encodeURIComponent(`${d.titulo} ${url}`)}`;
+const jsonld = [{
+  '@context': 'https://schema.org', '@type': 'Article',
+  headline: d.titulo, description: d.resumo, datePublished: d.data.toISOString(), inLanguage: 'pt-BR',
+  articleSection: d.categoria, mainEntityOfPage: url,
+  ...(nomeCompleto && { author: { '@type': 'Person', name: nomeCompleto, jobTitle: 'Nutricionista' } }),
+  ...(d.referencias.length && { citation: d.referencias.map((r) => r.url) }),
+}];
+---
+<Base titulo={d.titulo} descricao={d.resumo} tipo="article" jsonld={jsonld} noindex={d.rascunho}>
+  <div class="progresso" aria-hidden="true"><span data-progresso-leitura></span></div>
+  <article class="artigo">
+    <div class="sem">
+      <header class="v cabeca" style="--i:1;--f:6">
+        <h1>{d.titulo}</h1>
+        {d.rascunho && <p><span class="rascunho">[RASCUNHO — revisar antes de publicar]</span></p>}
+        <p class="resumo">{d.resumo}</p>
+        <p class="meta"><a class="cat" href={`/conteudos?categoria=${d.categoria.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>{d.categoria}</a><time datetime={d.data.toISOString().slice(0, 10)}>{dataBR(d.data)}</time><span>{d.tempoLeitura} min de leitura</span></p>
+      </header>
+    </div>
+    <div class="fio"></div>
+    <div class="sem corpo">
+      {sumario.length >= 3 && (
+        <nav class="v sumario gruda" style="--i:1;--f:2" aria-labelledby="sumario-titulo">
+          <h2 id="sumario-titulo">Neste artigo</h2>
+          <ol>
+            {sumario.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+          </ol>
+        </nav>
+      )}
+      <div class="v coluna" style={`--i:${sumario.length >= 3 ? 3 : 2};--f:7`}>
+        <div class="prosa"><Content /></div>
+
+        <p class="aviso">{t.conteudos.aviso}</p>
+
+        {d.referencias.length > 0 && (
+          <section class="refs" aria-labelledby="refs-titulo">
+            <h2 id="refs-titulo">Referências</h2>
+            <ol>
+              {d.referencias.map((r) => <li><a href={r.url} target="_blank" rel="noopener noreferrer">{r.titulo}<span class="so-leitor"> (abre em nova aba)</span></a></li>)}
+            </ol>
+          </section>
+        )}
+
+        <div class="partilha">
+          <span class="rotulo">Compartilhar</span>
+          <a class="botao botao--linha botao--compacto" href={compartilhar} target="_blank" rel="noopener noreferrer"><Icone nome="conversa" tamanho={18} />WhatsApp<span class="so-leitor"> (abre em nova aba)</span></a>
+          <button class="botao botao--linha botao--compacto" type="button" data-copiar={url}><Icone nome="copiar" tamanho={18} /><span data-copiar-rotulo>Copiar link</span></button>
+          <span class="so-leitor" role="status" aria-live="polite" data-copiar-estado></span>
+        </div>
+
+        {nome && (
+          <aside class="autor" aria-label="Sobre o autor">
+            <div class="autor-foto"><Foto arquivo={p.fotos?.retrato} tipo="retrato" alt={nome} proporcao="1 / 1" sizes="96px" larguras={[96, 192]} /></div>
+            <div class="autor-txt">
+              <strong>{nome}</strong>
+              <span>{identificacao}</span>
+              <BotaoAgendar />
+            </div>
+          </aside>
+        )}
+        <p class="voltar"><a class="link" href="/conteudos">Ver todos os conteúdos</a></p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .progresso { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 110; pointer-events: none; }
+  .progresso span { display: block; height: 100%; background: var(--tomate); transform-origin: left; transform: scaleX(0); }
+  .artigo { padding-top: calc(var(--header-h) + 56px); padding-bottom: var(--esp-secao); }
+  .cabeca { display: grid; gap: 18px; justify-items: start; margin-bottom: 40px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 2px 16px; font-size: var(--pequeno); color: var(--texto-suave); max-width: none; }
+  .cat { font-weight: 650; }
+  h1 { font-size: clamp(2.25rem, 1.3rem + 3.4vw, 4rem); line-height: 1.02; max-width: 20ch; }
+  .resumo { font-size: clamp(1.1875rem, 1.1rem + 0.4vw, 1.4375rem); line-height: 1.45; max-width: 46ch; color: var(--grafite); }
+  .corpo { row-gap: 32px; }
+  .sumario h2 { font-size: 1rem; font-weight: 650; letter-spacing: 0; font-stretch: 100%; }
+  .sumario ol { margin-top: 10px; border-top: 1px solid var(--pauta-forte); }
+  .sumario li { border-bottom: 1px solid var(--pauta-forte); }
+  .sumario a { display: flex; align-items: center; min-height: 44px; padding-block: 8px; font-size: var(--pequeno); line-height: 1.35; font-weight: 500; text-decoration: none; }
+  .coluna { max-width: calc(33em * 1.06 + var(--recuo) + var(--borda)); }
+
+  .prosa { font-size: clamp(1.125rem, 1.09rem + 0.14vw, 1.1875rem); line-height: 1.7; }
+  .prosa :global(p), .prosa :global(ul), .prosa :global(ol) { max-width: 33em; margin-top: 1.1em; } /* cerca de 68 caracteres */
+  .prosa :global(p:first-child) { margin-top: 0; }
+  .prosa :global(h2) { font-size: clamp(1.625rem, 1.4rem + 0.8vw, 2.125rem); line-height: 1.1; margin-top: 2em; scroll-margin-top: calc(var(--header-h) + 24px); }
+  .prosa :global(h3) { margin-top: 1.6em; }
+  .prosa :global(ul) { display: grid; gap: 0.5em; }
+  .prosa :global(ul li) { position: relative; padding-left: 1.3em; }
+  .prosa :global(ul li::before) { content: ''; position: absolute; left: 0; top: 0.82em; width: 0.7em; height: 1px; background: var(--tinta); }
+  .prosa :global(ol) { list-style: decimal; padding-left: 1.3em; }
+  .prosa :global(strong) { font-weight: 650; }
+
+  .aviso { margin-top: 48px; padding-left: 16px; border-left: 1px solid var(--tomate); font-weight: 500; max-width: 32em; }
+  .refs { margin-top: 48px; }
+  .refs h2 { font-size: var(--h3); }
+  .refs ol { list-style: decimal; padding-left: 1.3em; margin-top: 14px; display: grid; gap: 10px; font-size: var(--pequeno); line-height: 1.5; max-width: 40em; }
+  .refs a { overflow-wrap: anywhere; }
+  .partilha { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--pauta-forte); }
+  .partilha .rotulo { color: var(--tinta); margin-right: 6px; }
+  .autor { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 20px; align-items: center; margin-top: 40px; padding: 24px 0 0; border-top: 2px solid var(--tinta); }
+  .autor-txt { display: grid; gap: 2px; justify-items: start; }
+  .autor-txt strong { font-size: 1.25rem; font-weight: 650; color: var(--tinta); line-height: 1.2; }
+  .autor-txt span { font-size: var(--pequeno); color: var(--texto-suave); }
+  .autor-txt :global(.botao) { margin-top: 12px; }
+  .voltar { margin-top: 40px; }
+  @media (max-width: 480px) { .autor { grid-template-columns: 64px minmax(0, 1fr); } }
+</style>

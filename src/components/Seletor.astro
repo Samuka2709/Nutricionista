@@ -1,0 +1,78 @@
+---
+// Seletor de navegação, não ferramenta clínica: não pede dados, não calcula e não registra a escolha.
+import { objetivos, secoes, t } from '../lib/site';
+import BotaoAgendar from './BotaoAgendar.astro';
+import Preencher from './Preencher.astro';
+---
+{!secoes.seletor ? <Preencher bloco campo="especialidades[].comoTrabalho (ao menos duas)" /> : (
+  <section class="secao seletor" id="como-ajudar" aria-labelledby="seletor-titulo" data-seletor>
+    <div class="fio" data-fio></div>
+    <div class="sem">
+      <div class="v cabeca" style="--i:1;--f:3">
+        <h2 id="seletor-titulo" data-titulo>{t.seletor.titulo}</h2>
+        <p class="apoio">{t.seletor.apoio}</p>
+        <div class="resposta" aria-live="polite" data-resposta>
+          <p class="vazio pequeno" data-vazio>{t.seletor.vazio}</p>
+          {objetivos.map((o) => (
+            <div class="resp" id={`resp-${o.id}`} data-resp={o.id}>
+              <h3>{o.titulo}</h3>
+              <p>{o.comoTrabalho}</p>
+              <div class="resp-acoes">
+                <a class="link" href={`#esp-${o.id}`}>Ver {o.titulo.toLowerCase()} em especialidades</a>
+                <BotaoAgendar />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="v" style="--i:4;--f:7">
+        <div class="opcoes" role="radiogroup" aria-labelledby="seletor-titulo" data-opcoes>
+          {objetivos.map((o) => (
+            <button type="button" class="opcao" role="radio" aria-checked="false" data-opcao={o.id}>
+              <span class="marca" aria-hidden="true"></span>
+              <span>{o.objetivo || o.titulo}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .sem { row-gap: 32px; }
+  .opcoes { border-top: 1px solid var(--pauta-forte); }
+  .opcao {
+    display: flex; align-items: center; gap: 16px; width: 100%; min-height: 76px;
+    padding: 16px 16px 16px 12px; text-align: left;
+    border-bottom: 1px solid var(--pauta-forte);
+    font-size: var(--h3); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; color: var(--tinta);
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+  .marca { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor; display: grid; place-items: center; }
+  .marca::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--tomate); transform: scale(0); }
+  .opcao[aria-checked="true"] { background: var(--verde); color: var(--papel); }
+  .opcao[aria-checked="true"] .marca::after { transform: scale(1); }
+  .opcao:active { background: var(--tinta-clara); }
+  .opcao[aria-checked="true"]:active { background: var(--verde); }
+  @media (hover: hover) and (pointer: fine) {
+    .opcao[aria-checked="false"]:hover { background: var(--tinta-clara); }
+  }
+
+  .resposta { margin-top: 28px; }
+  .vazio { color: var(--texto-suave); padding-left: 14px; border-left: 1px solid var(--tomate); }
+  .resp { display: grid; gap: 12px; padding: 18px 0 0; border-top: 2px solid var(--tinta); margin-bottom: 24px; }
+  .resp h3 { font-size: 1.25rem; }
+  .resp-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 8px; }
+  /* Com JavaScript, só a resposta escolhida aparece */
+  :global(.js) .resp { display: none; margin-bottom: 0; }
+  :global(.js) .resp.ativa { display: grid; }
+  :global(html:not(.js)) .vazio, :global(html:not(.js)) .opcoes { display: none; }
+  :global(.js) .resposta.escolhida .vazio { display: none; }
+
+  @media (max-width: 1023px) {
+    .cabeca { display: contents; }
+    .cabeca > * { grid-column: 2; padding-inline: var(--recuo) var(--borda); }
+    .resposta { order: 3; margin-top: 0; }
+  }
+</style>

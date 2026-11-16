@@ -1,0 +1,108 @@
+{
+  "_aviso": "DADOS FICTÍCIOS. Servem só para demonstrar o layout (npm run dev:demo). Nada daqui pode ir para produção.",
+  "siteUrl": "",
+  "nome": "Henrique Valadares",
+  "nomeExibicao": "Henrique Valadares",
+  "crn": { "numero": "00000", "regiao": "CRN-9" },
+  "eNutricionista": true,
+  "especialidades": [
+    {
+      "titulo": "Alimentação no dia a dia",
+      "objetivo": "Melhorar a alimentação no dia a dia",
+      "descricao": "Para quem quer comer melhor sem transformar a comida em problema. Partimos do que você já come e do tempo que você tem.",
+      "comoTrabalho": "Começo entendendo como são seus dias: horários, quem cozinha, onde você come. A partir disso, ajustamos uma coisa de cada vez, com combinações que cabem no seu mercado e na sua cozinha.",
+      "imagem": ""
+    },
+    {
+      "titulo": "Nutrição esportiva",
+      "objetivo": "Performance esportiva",
+      "descricao": "Alimentação planejada em torno dos treinos e das provas, para quem pratica corrida, ciclismo ou musculação.",
+      "comoTrabalho": "Olho para o seu calendário de treinos e organizo a alimentação antes, durante e depois deles. O plano muda conforme a fase em que você está.",
+      "imagem": ""
+    },
+    {
+      "titulo": "Rotina alimentar",
+      "objetivo": "Organizar a rotina alimentar",
+      "descricao": "Planejamento de compras, preparo e refeições para semanas corridas, turnos e viagens a trabalho.",
+      "comoTrabalho": "Montamos juntos a semana: o que comprar, o que deixar pronto e o que resolver na hora. O objetivo é diminuir decisões, não criar regras.",
+      "imagem": ""
+    },
+    {
+      "titulo": "Composição corporal",
+      "objetivo": "Objetivos de composição corporal",
+      "descricao": "Acompanhamento individual para quem tem objetivos relacionados a peso e massa muscular, com avaliação e metas combinadas em consulta.",
+      "comoTrabalho": "Avalio seu histórico, sua rotina e seus exames, e combinamos metas realistas em consulta. Não trabalho com prazos nem com números prometidos.",
+      "imagem": ""
+    },
+    {
+      "titulo": "Alimentação e saúde",
+      "objetivo": "Acompanhamento relacionado à saúde",
+      "descricao": "Orientação alimentar para quem recebeu uma recomendação médica ou quer cuidar de exames alterados, em diálogo com a sua equipe de saúde.",
+      "comoTrabalho": "Leio seus exames e as orientações do seu médico e traduzo isso em comida de verdade, no seu dia a dia. Quando preciso, converso com os outros profissionais que acompanham você.",
+      "imagem": ""
+    }
+  ],
+  "publico": "adultos que querem organizar a alimentação sem dietas da moda",
+  "cidade": "Belo Horizonte/MG",
+  "modalidades": ["presencial", "online"],
+  "endereco": {
+    "rua": "Rua Exemplo, 123, sala 45",
+    "bairro": "Bairro Exemplo",
+    "cidade": "Belo Horizonte/MG",
+    "cep": "30000-000",
+    "referencia": "Ao lado da praça de exemplo",
+    "acesso": "Prédio com elevador e estacionamento rotativo em frente.",
+    "mapsUrl": ""
+  },
+  "whatsapp": "5531900000000",
+  "mensagemWhatsapp": "Olá! Vim pelo site e gostaria de agendar uma consulta.",
+  "linkAgendamento": "",
+  "email": "contato@exemplo.com.br",
+  "instagram": "exemplo.nutri",
+  "horarios": [
+    { "dias": "Segunda a quinta", "horas": "8h às 18h", "schema": "Mo-Th 08:00-18:00" },
+    { "dias": "Sexta", "horas": "8h às 13h", "schema": "Fr 08:00-13:00" }
+  ],
+  "plataformaOnline": "Google Meet",
+  "duracaoConsulta": "60 minutos",
+  "retornos": "Os retornos acontecem a cada 30 a 45 dias, presenciais ou online, e duram cerca de 40 minutos.",
+  "comunicacaoEntreConsultas": "Dúvidas entre as consultas são respondidas pelo WhatsApp, em dias úteis, das 8h às 18h.",
+  "formacao": [
+    { "titulo": "Graduação em Nutrição", "instituicao": "Universidade Exemplo", "ano": "2016" }
+  ],
+  "especializacoes": [
+    { "titulo": "Especialização em Nutrição Esportiva", "instituicao": "Instituto Exemplo", "ano": "2019" },
+    { "titulo": "Aprimoramento em Comportamento Alimentar", "instituicao": "Centro de Estudos Exemplo", "ano": "2022" }
+  ],
+  "experiencias": [
+    { "titulo": "Consultório próprio", "instituicao": "Belo Horizonte", "ano": "2020" }
+  ],
+  "publicacoes": [],
+  "associacoes": [
+    { "nome": "Associação Exemplo de Nutrição", "descricao": "Membro associado" }
+  ],
+  "recursosAcompanhamento": [
+    { "titulo": "Plano alimentar individual", "descricao": "Escrito a partir da sua rotina, com trocas possíveis e sem cardápio engessado.", "icone": "plano" },
+    { "titulo": "Lista de compras", "descricao": "Organizada pelos corredores do mercado, para a semana ou para o mês.", "icone": "compras" },
+    { "titulo": "Materiais educativos", "descricao": "Guias curtos sobre rótulos, preparo e porções, enviados conforme o que aparece nas consultas.", "icone": "materiais" },
+    { "titulo": "Comunicação entre consultas", "descricao": "WhatsApp em dias úteis, das 8h às 18h, para dúvidas sobre o plano.", "icone": "conversa" }
+  ],
+  "aplicativo": { "existe": false, "nome": "", "telas": [] },
+  "avaliacoesPublicas": [],
+  "fotos": { "retrato": "", "sobre": "", "consultorio": [], "atendimento": [], "trabalho": [] },
+  "fraseFilosofia": "Comer bem não é seguir uma dieta. É ter uma rotina que você consegue manter numa terça-feira qualquer.",
+  "sobre": { "paragrafos": [], "revisado": false },
+  "faq": [
+    { "pergunta": "Como funciona a primeira consulta?", "resposta": "Conversamos sobre sua rotina, seu histórico de saúde, seus hábitos e o que você espera do acompanhamento. Faço a avaliação nutricional e saímos com os primeiros combinados." },
+    { "pergunta": "Quanto tempo dura o atendimento?", "resposta": "A primeira consulta dura cerca de 60 minutos. Os retornos duram cerca de 40 minutos." },
+    { "pergunta": "Como funciona o acompanhamento?", "resposta": "Depois da primeira consulta você recebe o plano alimentar e os materiais de apoio. Nos retornos, revisamos o que funcionou e ajustamos o que for preciso." },
+    { "pergunta": "O atendimento pode ser online?", "resposta": "Sim. A consulta online acontece por videochamada no Google Meet, com a mesma duração e os mesmos materiais da presencial." },
+    { "pergunta": "Atende pacientes de outras cidades?", "resposta": "Sim, pelo atendimento online, para pessoas em qualquer cidade do Brasil." },
+    { "pergunta": "Preciso levar exames?", "resposta": "Se tiver exames dos últimos seis meses, leve ou envie antes. Se não tiver, não precisa fazer nenhum para a primeira consulta." },
+    { "pergunta": "Como são os retornos?", "resposta": "A cada 30 a 45 dias, presenciais ou online. O intervalo é combinado conforme a sua necessidade." },
+    { "pergunta": "Aceita plano de saúde ou emite recibo para reembolso?", "resposta": "" },
+    { "pergunta": "Como faço para agendar?", "resposta": "Pelo botão Agendar consulta, que abre uma conversa no WhatsApp. Respondo em dias úteis, das 8h às 18h." }
+  ],
+  "formulario": { "endpoint": "demo" },
+  "botaoFlutuanteWhatsapp": true
+}

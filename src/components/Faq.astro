@@ -1,0 +1,39 @@
+---
+// Pergunta sem resposta preenchida não aparece (nem no schema FAQPage).
+import { faq, t, p } from '../lib/site';
+import Icone from './Icone.astro';
+import Preencher from './Preencher.astro';
+const semResposta = (p.faq || []).filter((x: any) => x.pergunta && !x.resposta).length;
+---
+{faq.length === 0 ? <Preencher bloco campo="faq[].resposta" /> : (
+  <section class="secao" id="perguntas" aria-labelledby="faq-titulo">
+    <div class="fio" data-fio></div>
+    <div class="sem">
+      <div class="v gruda" style="--i:1;--f:3"><h2 id="faq-titulo" data-titulo>{t.faq.titulo}</h2></div>
+      <div class="v" style="--i:4;--f:7">
+        <div class="acordeao" data-acordeao data-unico>
+          {faq.map((x, i) => (
+            <div class="ac-item">
+              <h3>
+                <button class="ac-botao" type="button" aria-expanded="false" aria-controls={`faq-${i}`} id={`faq-b-${i}`}>
+                  <span>{x.pergunta}</span>
+                  <Icone nome="mais" tamanho={22} class="sinal" />
+                </button>
+              </h3>
+              <div class="ac-painel" id={`faq-${i}`} role="region" aria-labelledby={`faq-b-${i}`}>
+                <div><div class="ac-conteudo"><p>{x.resposta}</p></div></div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {semResposta > 0 && <Preencher campo="faq" nota={`${semResposta} pergunta(s) sem resposta estão ocultas`} />}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .sem { row-gap: 20px; }
+  .acordeao { border-top: 1px solid var(--pauta-forte); }
+  h3 { font: inherit; letter-spacing: 0; }
+</style>

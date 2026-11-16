@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import PadraoSemana from '../components/PadraoSemana.astro';
+---
+<Base titulo="Página não encontrada" noindex>
+  <section class="secao pagina" aria-labelledby="nf-titulo">
+    <div class="sem">
+      <div class="v" style="--i:1;--f:4">
+        <h1 id="nf-titulo">Esta página não está na agenda.</h1>
+        <p class="apoio">O endereço pode ter mudado ou sido digitado com erro. Volte ao início ou veja os conteúdos publicados.</p>
+        <p class="acoes">
+          <a class="botao botao--linha" href="/">Voltar ao início</a>
+          <a class="link" href="/conteudos">Ver todos os conteúdos</a>
+        </p>
+      </div>
+      <div class="v arte" style="--i:5;--f:7"><PadraoSemana semente={5} proporcao="4 / 3" /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagina { padding-top: calc(var(--header-h) + 72px); }
+  .sem { row-gap: 40px; align-items: center; }
+  h1 { font-size: var(--h2); line-height: 1.05; }
+  .acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 28px; max-width: none; }
+</style>

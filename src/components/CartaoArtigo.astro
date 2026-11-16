@@ -1,0 +1,45 @@
+---
+import { dataBR, slug } from '../lib/site';
+import Foto from './Foto.astro';
+import PadraoSemana from './PadraoSemana.astro';
+interface Props { artigo: any; variante?: 'destaque' | 'linha' | 'grade'; semente?: number; nivel?: 'h2' | 'h3' }
+const { artigo, variante = 'grade', semente = 0, nivel = 'h3' } = Astro.props;
+const d = artigo.data;
+const T = nivel;
+const proporcao = variante === 'linha' ? '1 / 1' : '16 / 10';
+---
+<article class:list={['cartao', `cartao--${variante}`]} data-categoria={slug(d.categoria)}>
+  <a class="midia" href={`/conteudos/${artigo.id}`} tabindex="-1" aria-hidden="true">
+    {d.imagem
+      ? <Foto arquivo={d.imagem} tipo="imagem do artigo" alt="" proporcao={proporcao} sizes={variante === 'linha' ? '120px' : '(min-width: 1024px) 50vw, 100vw'} />
+      : <PadraoSemana semente={semente} proporcao={proporcao} fundo={semente % 2 ? 'claro' : 'verde'} />}
+  </a>
+  <div class="txt">
+    <T class="titulo"><a href={`/conteudos/${artigo.id}`}>{d.titulo}</a></T>
+    {d.rascunho && <p><span class="rascunho">[RASCUNHO — revisar antes de publicar]</span></p>}
+    <p class="resumo">{d.resumo}</p>
+    <p class="meta"><span class="cat">{d.categoria}</span><time datetime={d.data.toISOString().slice(0, 10)}>{dataBR(d.data)}</time><span>{d.tempoLeitura} min de leitura</span></p>
+    <a class="link" href={`/conteudos/${artigo.id}`} aria-label={`Ler artigo: ${d.titulo}`}>Ler artigo</a>
+  </div>
+</article>
+
+<style>
+  .cartao { display: grid; gap: 20px; align-content: start; min-width: 0; }
+  .midia { display: block; overflow: hidden; border-radius: var(--raio-foto); }
+  .midia :global(svg), .midia :global(img) { transition: transform 500ms var(--ease-out); }
+  .txt { display: grid; gap: 10px; justify-items: start; align-content: start; min-width: 0; }
+  .meta { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 0.875rem; line-height: 1.4; color: var(--texto-suave); max-width: none; }
+  .cat { font-weight: 650; color: var(--tinta); }
+  .titulo { font-size: 1.4375rem; font-weight: 650; line-height: 1.15; letter-spacing: -0.01em; }
+  .titulo a { color: inherit; text-decoration: none; }
+  .resumo { font-size: var(--pequeno); line-height: 1.55; color: var(--texto-suave); }
+  .cartao--destaque .titulo { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); font-stretch: 90%; letter-spacing: -0.02em; line-height: 1.05; }
+  .cartao--destaque .resumo { font-size: var(--corpo); color: var(--grafite); max-width: 52ch; }
+  .cartao--linha { grid-template-columns: 96px minmax(0, 1fr); gap: 18px; padding-block: 22px; border-bottom: 1px solid var(--pauta-forte); }
+  .cartao--linha .titulo { font-size: 1.3125rem; }
+  @media (hover: hover) and (pointer: fine) {
+    .cartao:hover .midia :global(svg), .cartao:hover .midia :global(img) { transform: scale(1.03); }
+    .titulo a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+  }
+  @media (prefers-reduced-motion: reduce) { .midia :global(svg), .midia :global(img) { transition: none; } }
+</style>

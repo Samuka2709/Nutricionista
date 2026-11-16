@@ -1,0 +1,53 @@
+---
+// Avaliações públicas reais (com link de origem) ou, na falta delas, os princípios do atendimento.
+// Nada de estrelas, notas calculadas ou textos editados. Avaliações que citam resultado corporal são descartadas em site.ts.
+import { avaliacoes, t } from '../lib/site';
+const itens = t.principios.itens || [];
+---
+{avaliacoes.length > 0 ? (
+  <section class="secao" id="avaliacoes" aria-labelledby="rep-titulo">
+    <div class="fio" data-fio></div>
+    <div class="sem">
+      <div class="v gruda" style="--i:1;--f:3"><h2 id="rep-titulo" data-titulo>{t.reputacao.titulo}</h2></div>
+      <ul class="v linhas" style="--i:4;--f:7">
+        {avaliacoes.map((a) => (
+          <li>
+            <blockquote><p>{a.texto}</p></blockquote>
+            <p class="autor pequeno">
+              <strong>{a.nome}</strong>{a.data && <span>{a.data}</span>}
+              <a class="link" href={a.url} target="_blank" rel="noopener noreferrer">Ver no {a.origem || 'Google'}<span class="so-leitor"> (abre em nova aba)</span></a>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+) : itens.length > 0 && (
+  <section class="secao" id="principios" aria-labelledby="rep-titulo">
+    <div class="fio" data-fio></div>
+    <div class="sem">
+      <div class="v gruda" style="--i:1;--f:3"><h2 id="rep-titulo" data-titulo>{t.principios.titulo}</h2></div>
+      <ul class="v linhas" style="--i:4;--f:7" data-grupo>
+        {itens.map((x: any) => (
+          <li class="principio">
+            <h3>{x.titulo}</h3>
+            <p>{x.texto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .sem { row-gap: 28px; }
+  .linhas { border-top: 1px solid var(--pauta-forte); align-self: start; }
+  li { padding-block: 24px; border-bottom: 1px solid var(--pauta-forte); }
+  .principio { display: grid; gap: 8px; }
+  blockquote p { font-size: 1.25rem; line-height: 1.45; }
+  .autor { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin-top: 14px; max-width: none; color: var(--texto-suave); }
+  .autor strong { color: var(--grafite); font-weight: 650; }
+  @media (min-width: 1024px) {
+    .principio { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px; align-items: baseline; }
+  }
+</style>

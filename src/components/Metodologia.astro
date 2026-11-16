@@ -1,0 +1,125 @@
+---
+// Quatro etapas em sequência real (aqui os números fazem sentido).
+// Desktop com JavaScript: abas acessíveis. Celular ou sem JavaScript: acordeão.
+import { p, t, secoes, tem } from '../lib/site';
+import Icone from './Icone.astro';
+
+const r = t.metodologia.rotulos;
+const etapas = (t.metodologia.etapas || []).map((e: any, i: number) => ({
+  ...e,
+  n: i + 1,
+  durante: e.usaDuracao && tem(p.duracaoConsulta) ? `${e.durante} A consulta dura ${p.duracaoConsulta}.` : e.durante,
+  depois: e.usaRetornos && tem(p.retornos) ? `${e.depois} ${p.retornos}` : e.depois,
+}));
+---
+{secoes.metodologia && (
+  <section class="cheia metodo escuro" id="metodologia" aria-labelledby="metodo-titulo" data-metodo>
+    <div class="sem">
+      <div class="v cabeca" style="--i:1;--f:5">
+        <h2 id="metodo-titulo" data-titulo>{t.metodologia.titulo}</h2>
+        <p class="apoio">{t.metodologia.apoio}</p>
+      </div>
+
+      <div class="v abas" style="--i:1;--f:7">
+        <div class="tablist" role="tablist" aria-labelledby="metodo-titulo" style={`--total:${etapas.length}`}>
+          {etapas.map((e: any, i: number) => (
+            <button class="aba" type="button" role="tab" id={`aba-${e.n}`} aria-controls={`painel-${e.n}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+              <span class="num" aria-hidden="true">{e.n}</span>
+              <span class="nome"><span class="so-leitor">Etapa {e.n}: </span>{e.titulo}</span>
+            </button>
+          ))}
+          <div class="trilho" aria-hidden="true"><span class="progresso" data-progresso></span></div>
+        </div>
+        {etapas.map((e: any, i: number) => (
+          <div class="painel" role="tabpanel" id={`painel-${e.n}`} aria-labelledby={`aba-${e.n}`} tabindex="0" hidden={i !== 0}>
+            <div class="resumo">
+              <h3>{e.titulo}</h3>
+              <p>{e.resumo}</p>
+            </div>
+            <dl class="momentos">
+              <div><dt>{r.antes}</dt><dd>{e.antes}</dd></div>
+              <div><dt>{r.durante}</dt><dd>{e.durante}</dd></div>
+              <div><dt>{r.depois}</dt><dd>{e.depois}</dd></div>
+            </dl>
+          </div>
+        ))}
+      </div>
+
+      <div class="v acordeao" style="--i:1;--f:7" data-acordeao>
+        {etapas.map((e: any, i: number) => (
+          <div class:list={['ac-item', i === 0 && 'aberto']}>
+            <h3>
+              <button class="ac-botao" type="button" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`ac-etapa-${e.n}`} id={`ac-etapa-b-${e.n}`}>
+                <span class="ac-rotulo"><span class="num-p" aria-hidden="true">{e.n}</span><span class="so-leitor">Etapa {e.n}: </span>{e.titulo}</span>
+                <Icone nome="mais" tamanho={22} class="sinal" />
+              </button>
+            </h3>
+            <div class="ac-painel" id={`ac-etapa-${e.n}`} role="region" aria-labelledby={`ac-etapa-b-${e.n}`}>
+              <div>
+                <div class="ac-conteudo">
+                  <p>{e.resumo}</p>
+                  <dl class="momentos">
+                    <div><dt>{r.antes}</dt><dd>{e.antes}</dd></div>
+                    <div><dt>{r.durante}</dt><dd>{e.durante}</dd></div>
+                    <div><dt>{r.depois}</dt><dd>{e.depois}</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .metodo { background: var(--tinta); color: var(--papel); }
+  .metodo h2, .metodo h3 { color: var(--papel); }
+  .metodo .apoio { color: var(--sobre-tinta); }
+  .sem { row-gap: 40px; }
+
+  /* Abas: só no desktop e com JavaScript */
+  .abas { display: none; }
+  @media (min-width: 1024px) {
+    :global(.js) .abas { display: block; }
+    :global(.js) .acordeao { display: none; }
+  }
+  .tablist { position: relative; display: grid; grid-template-columns: repeat(var(--total), minmax(0, 1fr)); padding-bottom: 28px; }
+  .aba {
+    display: grid; gap: 8px; justify-items: start; align-content: start; text-align: left;
+    padding: 0 20px 0 0; color: var(--sobre-tinta);
+    transition: color 160ms ease;
+  }
+  .num {
+    font-size: clamp(4rem, 2rem + 4.4vw, 6rem); font-weight: 650; font-stretch: 86%; line-height: 0.9; letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums; color: var(--num-inativo);
+    transition: color 200ms ease;
+  }
+  .nome { font-size: 1.1875rem; font-weight: 600; line-height: 1.2; max-width: 14ch; }
+  .aba[aria-selected="true"] { color: var(--papel); }
+  .aba[aria-selected="true"] .num { color: var(--papel); }
+  @media (hover: hover) and (pointer: fine) { .aba:hover { color: var(--papel); } }
+  .trilho { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--pauta-tinta); }
+  .progresso { display: block; height: 100%; width: 100%; background: var(--papel); transform-origin: left; transform: scaleX(calc(1 / var(--total))); transition: transform 420ms var(--ease-in-out); }
+
+  .painel { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 5fr); gap: 48px; padding-top: 40px; }
+  .painel[hidden] { display: none; }
+  .painel:focus-visible { outline-offset: 8px; }
+  .resumo h3 { font-size: var(--h3); }
+  .resumo p { margin-top: 12px; color: var(--sobre-tinta); }
+  .momentos { display: grid; gap: 20px; margin: 0; }
+  .painel .momentos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .momentos div { padding-top: 14px; border-top: 1px solid var(--pauta-tinta); }
+  dt { font-size: var(--pequeno); font-weight: 650; color: var(--papel); }
+  dd { margin: 6px 0 0; color: var(--sobre-tinta); line-height: 1.55; }
+
+  /* Acordeão sobre fundo azul */
+  .acordeao { border-top: 1px solid var(--pauta-tinta); }
+  .acordeao :global(.ac-item) { border-bottom-color: var(--pauta-tinta); }
+  .acordeao :global(.ac-botao) { color: var(--papel); min-height: 72px; }
+  .ac-rotulo { display: flex; align-items: baseline; gap: 14px; }
+  .num-p { font-size: 1.75rem; font-weight: 650; font-variant-numeric: tabular-nums; color: var(--sobre-tinta); min-width: 1ch; }
+  .acordeao :global(.ac-conteudo) { color: var(--sobre-tinta); display: grid; gap: 20px; }
+  @media (prefers-reduced-motion: reduce) { .progresso { transition: none; } }
+</style>

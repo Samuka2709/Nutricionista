@@ -1,0 +1,75 @@
+---
+// Foto real (otimizada em AVIF/WebP com srcset) ou espaço reservado na proporção final.
+// As fotos ficam em src/assets/fotos e são referenciadas pelo nome do arquivo no arquivo de dados.
+// Nunca usar imagem gerada por IA para representar o profissional ou pacientes.
+import { Picture } from 'astro:assets';
+
+interface Props {
+  arquivo?: string;
+  tipo: string;
+  alt?: string;
+  proporcao?: string;
+  larguras?: number[];
+  sizes?: string;
+  prioridade?: boolean;
+  preenche?: boolean;
+  parallax?: boolean;
+  class?: string;
+}
+const {
+  arquivo = '', tipo, alt = '', proporcao = '4 / 5', larguras = [480, 768, 1080, 1440],
+  sizes = '(min-width: 1024px) 40vw, 100vw', prioridade = false, preenche = false, parallax = false, class: classe = '',
+} = Astro.props;
+
+const fotos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/fotos/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG}', { eager: true });
+const chave = arquivo ? Object.keys(fotos).find((k) => k.endsWith('/' + arquivo.split('/').pop())) : undefined;
+const imagem = chave ? fotos[chave].default : undefined;
+---
+<div class:list={['foto', preenche && 'foto--preenche', classe]} style={preenche ? undefined : `aspect-ratio: ${proporcao}`} data-foto>
+  {imagem ? (
+    <Picture
+      src={imagem}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={larguras.filter((w) => w <= imagem.width).concat(imagem.width)}
+      sizes={sizes}
+      loading={prioridade ? 'eager' : 'lazy'}
+      fetchpriority={prioridade ? 'high' : undefined}
+      decoding={prioridade ? 'sync' : 'async'}
+      data-parallax={parallax ? '' : undefined}
+    />
+  ) : (
+    <div class="reservado" role="img" aria-label={`Espaço reservado para foto: ${tipo}`} data-parallax={parallax ? '' : undefined}>
+      <svg viewBox="0 0 70 50" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        {[1, 2, 3, 4, 5, 6].map((i) => <line x1={i * 10} y1="0" x2={i * 10} y2="50" vector-effect="non-scaling-stroke" />)}
+        {[1, 2, 3, 4].map((i) => <line x1="0" y1={i * 10} x2="70" y2={i * 10} vector-effect="non-scaling-stroke" />)}
+      </svg>
+      <span>Foto: {tipo}{!preenche && <small>proporção {proporcao.replace(' / ', ':')}</small>}</span>
+    </div>
+  )}
+</div>
+
+<style>
+  .foto { position: relative; overflow: hidden; border-radius: var(--raio-foto); background: var(--verde); container-type: inline-size; }
+  .reservado svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .reservado line { stroke: var(--pauta-verde); stroke-width: 1; }
+  .reservado span { position: relative; display: grid; gap: 2px; }
+  .reservado small { font-size: 0.75rem; font-weight: 400; }
+  @container (max-width: 150px) { .reservado span, .reservado::before, .reservado::after { display: none; } }
+  .foto--preenche { position: absolute; inset: 0; }
+  .foto :global(picture), .foto :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .foto :global(img) { object-fit: cover; }
+  .reservado {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end;
+    padding: 16px 18px;
+    color: var(--sobre-verde);
+    font-size: var(--pequeno); font-weight: 500; line-height: 1.3;
+  }
+  /* cantoneiras de foto, como num álbum */
+  .reservado::before, .reservado::after {
+    content: ''; position: absolute; width: 18px; height: 18px; border: 1px solid var(--pauta-verde);
+  }
+  .reservado::before { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+  .reservado::after { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
+</style>

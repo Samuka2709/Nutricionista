@@ -1,0 +1,45 @@
+---
+// Arte abstrata da marca: um "padrão de semana" (7 dias x 5 faixas de hora).
+// Substitui foto de banco nos cards de especialidade e de artigo quando não há foto real.
+interface Props { semente?: number; fundo?: 'claro' | 'tinta' | 'verde'; proporcao?: string; class?: string }
+const { semente = 0, fundo = 'claro', proporcao = '4 / 3', class: classe = '' } = Astro.props;
+
+type Regra = (c: number, r: number) => 0 | 1 | 2 | 3;
+// 0 vazio, 1 tinta, 2 verde, 3 tomate (no máximo uma célula)
+const regras: Regra[] = [
+  (c, r) => (r === 1 && c < 5 ? 1 : r === 3 && c === 3 ? 3 : r === 3 && c < 5 ? 2 : 0),
+  (c, r) => (c === r + 1 ? 1 : c === r ? 2 : c === 6 && r === 0 ? 3 : 0),
+  (c, r) => (c % 2 === 0 && r < 2 ? 2 : c % 2 === 1 && r > 2 ? 1 : c === 3 && r === 2 ? 3 : 0),
+  (c, r) => (r === 0 ? 1 : r === 4 && c > 1 ? 2 : c === 5 && r === 2 ? 3 : 0),
+  (c, r) => (c === 1 || c === 4 ? (r % 2 === 0 ? 2 : 1) : c === 6 && r === 4 ? 3 : 0),
+  (c, r) => ((c + r) % 3 === 0 ? 1 : (c + r) % 3 === 1 && r > 1 ? 2 : 0),
+];
+const regra = regras[((semente % regras.length) + regras.length) % regras.length];
+const celulas = [];
+for (let r = 0; r < 5; r++) for (let c = 0; c < 7; c++) celulas.push({ c, r, v: regra(c, r) });
+---
+<div class:list={['padrao', `padrao--${fundo}`, classe]} style={`aspect-ratio: ${proporcao}`} aria-hidden="true">
+  <svg viewBox="0 0 70 50" preserveAspectRatio="none" focusable="false">
+    {celulas.filter((x) => x.v).map((x) => (
+      <rect class={`c${x.v}`} x={x.c * 10} y={x.r * 10} width="10" height="10" />
+    ))}
+    {[1, 2, 3, 4, 5, 6].map((i) => <line class="l" x1={i * 10} y1="0" x2={i * 10} y2="50" vector-effect="non-scaling-stroke" />)}
+    {[1, 2, 3, 4].map((i) => <line class="l" x1="0" y1={i * 10} x2="70" y2={i * 10} vector-effect="non-scaling-stroke" />)}
+  </svg>
+</div>
+
+<style>
+  .padrao { position: relative; overflow: hidden; border-radius: var(--raio-foto); background: var(--tinta-clara); }
+  .padrao svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .l { stroke: var(--pauta-forte); stroke-width: 1; }
+  .c1 { fill: var(--tinta); }
+  .c2 { fill: var(--verde); }
+  .c3 { fill: var(--tomate); }
+  .padrao--tinta { background: var(--tinta); }
+  .padrao--tinta .l { stroke: var(--pauta-tinta); }
+  .padrao--tinta .c1 { fill: var(--papel); }
+  .padrao--verde { background: var(--verde); }
+  .padrao--verde .l { stroke: var(--pauta-verde); }
+  .padrao--verde .c1 { fill: var(--papel); }
+  .padrao--verde .c2 { fill: var(--tinta); }
+</style>

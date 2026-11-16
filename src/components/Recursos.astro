@@ -1,0 +1,57 @@
+---
+// Só os recursos listados no arquivo de dados. Sem aplicativo real, nenhum mockup é simulado.
+import { p, t, secoes, tem } from '../lib/site';
+import Icone from './Icone.astro';
+import Foto from './Foto.astro';
+import Preencher from './Preencher.astro';
+const recursos = (p.recursosAcompanhamento || []).filter((x: any) => tem(x.titulo));
+const telas = (p.aplicativo?.telas || []).filter(tem);
+const temApp = p.aplicativo?.existe === true && telas.length > 0;
+---
+{!secoes.recursos ? <Preencher bloco campo="recursosAcompanhamento" /> : (
+  <section class="secao" id="recursos" aria-labelledby="recursos-titulo">
+    <div class="fio" data-fio></div>
+    <div class="sem">
+      <div class="v gruda" style="--i:1;--f:3">
+        <h2 id="recursos-titulo" data-titulo>{t.recursos.titulo}</h2>
+        <p class="apoio">{t.recursos.apoio}</p>
+      </div>
+      <div class="v" style="--i:4;--f:7">
+        <ul class="lista" data-grupo>
+          {recursos.map((x: any) => (
+            <li>
+              <Icone nome={x.icone || 'check'} tamanho={28} />
+              <h3>{x.titulo}</h3>
+              {tem(x.descricao) && <p>{x.descricao}</p>}
+            </li>
+          ))}
+        </ul>
+        {tem(p.comunicacaoEntreConsultas)
+          ? <p class="entre"><strong>Entre as consultas.</strong> {p.comunicacaoEntreConsultas}</p>
+          : <Preencher campo="comunicacaoEntreConsultas" />}
+        {temApp && (
+          <figure class="app">
+            <div class="aparelho">
+              <Foto arquivo={telas[0]} tipo="tela do aplicativo" alt={`Tela do aplicativo ${p.aplicativo.nome}`} proporcao="9 / 19" sizes="240px" larguras={[240, 480]} />
+            </div>
+            <figcaption class="pequeno">{p.aplicativo.nome}</figcaption>
+          </figure>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .sem { row-gap: 32px; }
+  .lista { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 32px; border-top: 1px solid var(--pauta-forte); }
+  li { display: grid; gap: 8px; align-content: start; padding-block: 24px; border-bottom: 1px solid var(--pauta-forte); }
+  li :global(svg) { color: var(--tinta); margin-bottom: 4px; }
+  li h3 { font-size: 1.3125rem; }
+  li p { font-size: var(--pequeno); line-height: 1.55; color: var(--texto-suave); }
+  .entre { margin-top: 28px; padding-left: 16px; border-left: 1px solid var(--tomate); }
+  .entre strong { font-weight: 650; color: var(--tinta); }
+  .app { margin-top: 40px; display: grid; gap: 12px; justify-items: start; }
+  .aparelho { width: 240px; padding: 10px; border-radius: 32px; border: 2px solid var(--tinta); background: var(--papel); }
+  .aparelho :global(.foto) { border-radius: 22px; }
+</style>

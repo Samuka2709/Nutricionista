@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import Preencher from '../components/Preencher.astro';
+import { p, nomeCompleto, crn, tem } from '../lib/site';
+const responsavel = nomeCompleto || '[nome do profissional]';
+const contato = tem(p.email) ? p.email : '[e-mail de contato]';
+---
+<Base titulo="Política de Privacidade" descricao="Como os dados enviados por este site são coletados, usados e protegidos.">
+  <article class="secao pagina">
+    <div class="sem">
+      <div class="v" style="--i:1;--f:5">
+        <h1>Política de Privacidade</h1>
+        <p class="marca"><span class="rascunho">[MODELO — a ser revisado pelo profissional antes da publicação]</span></p>
+      </div>
+    </div>
+    <div class="fio"></div>
+    <div class="sem">
+      <div class="v prosa" style="--i:2;--f:6">
+        <p>Esta política explica como os dados pessoais enviados por este site são tratados, de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+
+        <h2>Quem é o responsável</h2>
+        <p>O responsável pelo tratamento dos dados é {responsavel}{crn && `, nutricionista, ${crn}`}. Contato: {tem(p.email) ? <a href={`mailto:${p.email}`}>{p.email}</a> : contato}.{!tem(p.email) && <Preencher campo="email" />}</p>
+
+        <h2>Quais dados são coletados</h2>
+        <ul>
+          <li>Formulário de contato: nome, e-mail, telefone (opcional) e a mensagem que você escrever.</li>
+          <li>Este site não pede nem deve receber informações de saúde pelo formulário. Peso, exames, diagnósticos e medicamentos são tratados somente em consulta.</li>
+          <li>Ao clicar em "Agendar consulta" ou "Falar pelo WhatsApp", você é levado a um serviço de terceiros (WhatsApp ou agenda online), que tem política própria.</li>
+        </ul>
+
+        <h2>Para que os dados são usados</h2>
+        <p>Somente para responder à sua mensagem e, se você quiser, agendar uma consulta. Os dados não são vendidos, não são usados para publicidade e não são compartilhados, exceto com o serviço que entrega o formulário por e-mail.</p>
+
+        <h2>Por quanto tempo ficam guardados</h2>
+        <p>As mensagens ficam guardadas por até 12 meses após o último contato e depois são apagadas. Dados de quem se torna paciente passam a fazer parte do prontuário, que segue os prazos de guarda definidos pelas normas profissionais.</p>
+
+        <h2>Mapas e serviços de terceiros</h2>
+        <p>O mapa do Google só é carregado depois que você clica em "Ver no mapa". Antes desse clique, nenhum dado é enviado ao Google por este site. O site não usa cookies de publicidade nem ferramentas de rastreamento.</p>
+
+        <h2>Seus direitos</h2>
+        <p>Você pode pedir, a qualquer momento, a confirmação de que seus dados são tratados, o acesso a eles, a correção, a exclusão e a revogação do consentimento. Basta escrever para {contato}.</p>
+
+        <h2>Atualizações</h2>
+        <p>Esta política pode ser atualizada. A data da última revisão aparece abaixo.</p>
+        <p class="pequeno">Última revisão: [preencher a data na publicação].</p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .pagina { padding-top: calc(var(--header-h) + 56px); }
+  h1 { font-size: var(--h2); line-height: 1.05; }
+  .marca { margin-top: 16px; margin-bottom: 40px; }
+  .prosa { max-width: calc(34em + var(--recuo) + var(--borda)); }
+  .prosa h2 { font-size: var(--h3); margin-top: 2em; }
+  .prosa p, .prosa ul { margin-top: 0.9em; max-width: 34em; }
+  .prosa p:first-child { margin-top: 0; }
+  .prosa ul { display: grid; gap: 0.5em; }
+  .prosa li { position: relative; padding-left: 1.3em; }
+  .prosa li::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 0.7em; height: 1px; background: var(--tinta); }
+</style>

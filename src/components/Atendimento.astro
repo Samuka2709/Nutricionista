@@ -1,0 +1,91 @@
+---
+// Presencial e online com o mesmo peso. A modalidade online só aparece se estiver nos dados
+// (Resolução CFN nº 760/2023: exige cadastro no e-Nutricionista).
+import { p, t, presencial, online, enderecoLinhas, temEndereco, secoes, tem } from '../lib/site';
+import Foto from './Foto.astro';
+import PadraoSemana from './PadraoSemana.astro';
+import Icone from './Icone.astro';
+import Mapa from './Mapa.astro';
+import GradeHorarios from './GradeHorarios.astro';
+import Preencher from './Preencher.astro';
+const e = p.endereco || {};
+const horarios = (p.horarios || []).filter((h: any) => tem(h.dias));
+const fotoConsultorio = (p.fotos?.consultorio || []).find(tem);
+const titulo = presencial && online ? t.atendimento.titulo : presencial ? 'Atendimento presencial' : 'Atendimento online';
+const o = t.atendimento.online;
+---
+{!secoes.atendimento ? <Preencher bloco campo="modalidades" /> : (
+  <section class="cheia atend" id="atendimento" aria-labelledby="atend-titulo">
+    <div class="sem">
+      <div class="v" style="--i:1;--f:5"><h2 id="atend-titulo" data-titulo>{titulo}</h2></div>
+      <div class:list={['v', 'blocos', !(presencial && online) && 'blocos--um']} style="--i:1;--f:7">
+        {presencial && (
+          <article class="bloco">
+            <div class="midia" data-revela>
+              <Foto arquivo={fotoConsultorio} tipo="consultório" alt="Consultório" proporcao="3 / 2" parallax sizes="(min-width: 1024px) 45vw, 100vw" />
+            </div>
+            <div class="conteudo">
+              <h3>{t.atendimento.presencial.titulo}</h3>
+              <ul class="itens">
+                {temEndereco ? (
+                  <li><Icone nome="mapa" /><div><strong>Endereço</strong><address>{enderecoLinhas.map((l) => <span>{l}</span>)}</address>{tem(e.referencia) && <span class="nota">{e.referencia}</span>}</div></li>
+                ) : <li><Preencher campo="endereco" /></li>}
+                {tem(e.acesso) && <li><Icone nome="carro" /><div><strong>Acesso</strong><span>{e.acesso}</span></div></li>}
+                {horarios.length > 0 ? (
+                  <li><Icone nome="relogio" /><div><strong>Horários</strong>{horarios.map((h: any) => <span>{h.dias}, {h.horas}</span>)}<GradeHorarios /></div></li>
+                ) : <li><Preencher campo="horarios" /></li>}
+              </ul>
+              <Mapa id="mapa-atendimento" />
+            </div>
+          </article>
+        )}
+        {online && (
+          <article class="bloco">
+            <div class="midia" data-revela>
+              <PadraoSemana semente={3} fundo="tinta" proporcao="3 / 2" />
+            </div>
+            <div class="conteudo">
+              <h3>{o.titulo}</h3>
+              <ul class="itens">
+                <li><Icone nome="video" /><div><strong>Como funciona</strong><span>{o.comoFunciona}</span>{tem(p.plataformaOnline) ? <span class="nota">Plataforma: {p.plataformaOnline}</span> : <Preencher campo="plataformaOnline" />}</div></li>
+                {(tem(p.retornos) || tem(p.comunicacaoEntreConsultas)) && (
+                  <li><Icone nome="conversa" /><div><strong>Retornos e comunicação</strong>{tem(p.retornos) && <span>{p.retornos}</span>}{tem(p.comunicacaoEntreConsultas) && <span>{p.comunicacaoEntreConsultas}</span>}</div></li>
+                )}
+                <li><Icone nome="wifi" /><div><strong>{o.requisitosTitulo}</strong><ul class="requisitos">{o.requisitos.map((x: string) => <li>{x}</li>)}</ul></div></li>
+              </ul>
+              {p.eNutricionista === true
+                ? <p class="cadastro"><Icone nome="escudo" tamanho={20} /><span>{o.eNutricionista}</span></p>
+                : <Preencher campo="eNutricionista" nota="pendência: o atendimento online exige cadastro no e-Nutricionista (Resolução CFN nº 760/2023)" />}
+            </div>
+          </article>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .atend { background: var(--tinta-clara); }
+  .sem { row-gap: 40px; }
+  .blocos { display: grid; gap: 56px 48px; }
+  .bloco { display: grid; gap: 28px; align-content: start; min-width: 0; }
+  .midia { overflow: hidden; border-radius: var(--raio-foto); }
+  .conteudo { display: grid; gap: 24px; align-content: start; min-width: 0; }
+  .itens { display: grid; border-top: 1px solid var(--pauta-forte); }
+  .itens > li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 16px; padding-block: 16px; border-bottom: 1px solid var(--pauta-forte); }
+  .itens > li > :global(svg) { color: var(--tinta); margin-top: 2px; }
+  .itens div { display: grid; gap: 4px; }
+  .itens strong { font-weight: 650; color: var(--tinta); line-height: 1.3; }
+  address { font-style: normal; display: grid; }
+  .nota { font-size: var(--pequeno); color: var(--texto-suave); }
+  .requisitos { display: grid; gap: 2px; }
+  .requisitos li { position: relative; padding-left: 16px; }
+  .requisitos li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--tinta); }
+  .cadastro { display: flex; gap: 10px; align-items: flex-start; font-size: var(--pequeno); line-height: 1.5; color: var(--texto-suave); }
+  .cadastro :global(svg) { flex: none; color: var(--tinta); margin-top: 1px; }
+  @media (min-width: 1024px) {
+    .blocos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .blocos--um { grid-template-columns: minmax(0, 1fr); }
+    .blocos--um .bloco { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+  }
+</style>

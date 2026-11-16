@@ -1,0 +1,320 @@
+/* ==========================================================================
+   A semana — tokens e base
+   Nenhum componente escreve cor em hex: tudo passa por estes tokens.
+   ========================================================================== */
+
+:root {
+  /* Cor */
+  --papel: #F2F4F0;
+  --tinta: #2443B8;
+  --verde: #183B32;
+  --tomate: #C93D22;
+  --grafite: #1D2321;
+
+  --pauta: color-mix(in srgb, var(--tinta) 16%, var(--papel));
+  --pauta-forte: color-mix(in srgb, var(--tinta) 34%, var(--papel));
+  --tinta-clara: color-mix(in srgb, var(--tinta) 7%, var(--papel));
+  --tinta-funda: color-mix(in srgb, var(--tinta) 86%, var(--grafite));
+  --tomate-fundo: color-mix(in srgb, var(--tomate) 88%, var(--grafite));
+  --texto-suave: color-mix(in srgb, var(--grafite) 76%, var(--papel));
+  --sobre-tinta: color-mix(in srgb, var(--papel) 82%, var(--tinta));
+  --sobre-verde: color-mix(in srgb, var(--papel) 78%, var(--verde));
+  --pauta-tinta: color-mix(in srgb, var(--papel) 26%, var(--tinta));
+  --pauta-verde: color-mix(in srgb, var(--papel) 22%, var(--verde));
+  --num-inativo: color-mix(in srgb, var(--papel) 55%, var(--tinta)); /* 3,3:1 sobre a tinta */
+
+  /* Tipografia */
+  --fonte: "Bricolage Grotesque", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --h1: clamp(2.75rem, -0.6rem + 5.9vw, 5rem);
+  --h2: clamp(2.125rem, 1.4rem + 2.2vw, 3.25rem);
+  --h3: clamp(1.5rem, 1.35rem + 0.4vw, 1.75rem);
+  --destaque: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);
+  --corpo: clamp(1.0625rem, 1.03rem + 0.1vw, 1.125rem);
+  --pequeno: 0.9375rem;
+
+  /* Grade: a semana */
+  --calha: 40px;
+  --recuo: 14px;
+  --borda: 18px;
+  --folha-max: 1680px;
+  --header-h: 64px;
+  --aviso-h: 0px;
+
+  /* Espaço */
+  --esp-secao: 72px;
+  --esp-4: 4px; --esp-8: 8px; --esp-12: 12px; --esp-16: 16px; --esp-24: 24px;
+  --esp-32: 32px; --esp-48: 48px; --esp-72: 72px;
+
+  /* Raio */
+  --raio-foto: 4px;
+  --raio-botao: 4px; /* botões são blocos da agenda; para a pílula do briefing, use 999px */
+
+  /* Movimento */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-toque: 140ms;
+  --dur-painel: 240ms;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --calha: 96px;
+    --recuo: 24px;
+    --borda: 24px;
+    --header-h: 72px;
+    --esp-secao: 120px;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color: var(--pauta-forte) var(--papel);
+  scroll-padding-top: calc(var(--header-h) + var(--aviso-h) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--grafite);
+  font-family: var(--fonte);
+  font-size: var(--corpo);
+  font-weight: 400;
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  font-variant-numeric: lining-nums;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  caret-color: var(--tinta);
+  overflow-x: clip;
+}
+
+::selection { background: var(--tinta); color: var(--papel); }
+
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img, svg, iframe { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+
+h1, h2, h3 {
+  color: var(--tinta);
+  font-weight: 650;
+  text-wrap: balance;
+}
+h1 { font-size: var(--h1); line-height: 1; letter-spacing: -0.025em; font-stretch: 88%; }
+h2 { font-size: var(--h2); line-height: 1.05; letter-spacing: -0.02em; font-stretch: 90%; }
+h3 { font-size: var(--h3); line-height: 1.15; letter-spacing: -0.01em; font-weight: 600; }
+p { max-width: 34em; text-wrap: pretty; } /* cerca de 70 caracteres nesta fonte */
+
+a {
+  color: var(--tinta);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.escuro :focus-visible { outline-color: var(--papel); }
+
+.so-leitor {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+.pular {
+  position: fixed; left: 12px; top: 12px; z-index: 200;
+  padding: 12px 18px; background: var(--tinta); color: var(--papel);
+  border-radius: var(--raio-botao); text-decoration: none; font-weight: 600;
+  transform: translateY(-200%);
+}
+.pular:focus-visible { transform: none; outline-color: var(--tomate); }
+
+/* --------------------------------------------------------------------------
+   A folha e a pauta
+   -------------------------------------------------------------------------- */
+
+.folha {
+  position: relative;
+  isolation: isolate;
+  max-width: var(--folha-max);
+  margin-inline: auto;
+}
+
+/* Linhas verticais dos dias, da primeira à última seção */
+.pauta { position: absolute; inset: var(--header-h) 0 0 0; z-index: -1; pointer-events: none; }
+.pauta span {
+  position: absolute; top: 0; bottom: 0; width: 1px;
+  background: var(--pauta);
+  transform-origin: top;
+  display: none;
+}
+.pauta .margem { display: block; left: var(--calha); background: var(--tomate); opacity: 0.55; }
+@media (min-width: 1024px) {
+  .pauta span { display: block; left: calc(var(--calha) + var(--n) * (100% - var(--calha)) / 7); }
+}
+
+/* Grade da semana: calha + 7 dias no desktop; calha + 1 dia no celular */
+.sem {
+  display: grid;
+  grid-template-columns: var(--calha) minmax(0, 1fr);
+}
+.sem > * { grid-column: 2; min-width: 0; padding-inline: var(--recuo) var(--borda); }
+@media (min-width: 1024px) {
+  .sem { grid-template-columns: var(--calha) repeat(7, minmax(0, 1fr)); }
+  .sem > * { grid-column: 2 / -1; }
+  .sem > .v { grid-column: calc(var(--i) + 1) / calc(var(--f) + 2); }
+}
+
+/* Seção padrão: fio de tinta e respiro */
+.secao { padding-top: var(--esp-secao); }
+.secao:last-of-type { padding-bottom: var(--esp-secao); }
+.fio {
+  height: 2px; background: var(--tinta);
+  margin-left: var(--calha); margin-bottom: var(--esp-32);
+  transform-origin: left;
+}
+@media (min-width: 1024px) { .fio { margin-bottom: var(--esp-48); } }
+
+.cheia { position: relative; z-index: 1; margin-top: var(--esp-secao); padding-block: var(--esp-secao); }
+.cheia + .secao { padding-top: var(--esp-secao); }
+
+.apoio { color: var(--texto-suave); margin-top: var(--esp-16); max-width: 46ch; }
+.pequeno { font-size: var(--pequeno); line-height: 1.5; }
+.rotulo { font-size: var(--pequeno); font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; }
+
+/* Título de seção fixo ao rolar (desktop) */
+@media (min-width: 1024px) {
+  .gruda { position: sticky; top: calc(var(--header-h) + 32px); align-self: start; }
+}
+
+/* --------------------------------------------------------------------------
+   Botões
+   -------------------------------------------------------------------------- */
+
+.botao {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 24px;
+  border-radius: var(--raio-botao);
+  font-size: 1rem; font-weight: 650; line-height: 1.2; letter-spacing: 0;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: transform var(--dur-toque) var(--ease-out), background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+.botao:active { transform: scale(0.97); }
+.botao svg { flex: none; }
+
+.botao--acao { background: var(--tomate); color: var(--papel); }
+.botao--linha { border: 1.5px solid var(--tinta); color: var(--tinta); }
+.botao--claro { background: var(--papel); color: var(--verde); }
+.botao--linha-clara { border: 1.5px solid var(--papel); color: var(--papel); }
+.botao--compacto { min-height: 44px; padding: 0 18px; font-size: var(--pequeno); }
+
+@media (hover: hover) and (pointer: fine) {
+  .botao--acao:hover { background: var(--tomate-fundo); }
+  .botao--linha:hover { background: var(--tinta); color: var(--papel); }
+  .botao--claro:hover { background: var(--sobre-verde); }
+  .botao--linha-clara:hover { background: var(--papel); color: var(--verde); }
+}
+
+/* Link de texto com sublinhado que se desenha */
+.link {
+  display: inline-block; color: var(--tinta); font-weight: 600;
+  text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 0.24em;
+  transition: text-decoration-thickness 160ms ease, text-underline-offset 160ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .link:hover { text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
+}
+
+/* --------------------------------------------------------------------------
+   Acordeão (FAQ e metodologia no celular)
+   Sem JavaScript, os painéis ficam abertos.
+   -------------------------------------------------------------------------- */
+
+.ac-item { border-bottom: 1px solid var(--pauta-forte); }
+.ac-botao {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  width: 100%; min-height: 64px; padding: 16px 0; text-align: left;
+  font-size: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem); font-weight: 600; line-height: 1.3; color: var(--tinta);
+}
+.ac-botao .sinal { flex: none; transition: transform var(--dur-painel) var(--ease-out); }
+.ac-botao[aria-expanded="true"] .sinal { transform: rotate(45deg); }
+.ac-conteudo { padding-bottom: 20px; color: var(--grafite); }
+.js .ac-painel {
+  display: grid; grid-template-rows: 0fr; visibility: hidden;
+  transition: grid-template-rows 200ms var(--ease-out), visibility 0s linear 200ms;
+}
+.js .ac-painel > div { overflow: hidden; }
+.js .ac-item.aberto .ac-painel {
+  grid-template-rows: 1fr; visibility: visible;
+  transition: grid-template-rows var(--dur-painel) var(--ease-out), visibility 0s;
+}
+html:not(.js) .ac-botao .sinal { display: none; }
+
+/* --------------------------------------------------------------------------
+   Pré-visualização e marcações
+   -------------------------------------------------------------------------- */
+
+.preencher, .pendente { display: none; }
+html.preview .preencher {
+  display: inline-block; padding: 2px 8px; margin: 2px 0;
+  font-size: 0.8125rem; font-weight: 600; line-height: 1.4;
+  color: var(--grafite); background: color-mix(in srgb, var(--tomate) 18%, var(--papel));
+  border: 1px dashed var(--tomate); border-radius: 4px;
+}
+html.preview .pendente {
+  display: block; margin: 24px var(--borda) 0 calc(var(--calha) + var(--recuo)); padding: 12px 16px;
+  font-size: 0.875rem; font-weight: 600;
+  color: var(--grafite); background: color-mix(in srgb, var(--tomate) 12%, var(--papel));
+  border: 1px dashed var(--tomate); border-radius: 4px;
+}
+
+.rascunho {
+  display: inline-block; font-size: 0.8125rem; font-weight: 600; line-height: 1.4;
+  color: var(--tomate); border: 1px solid currentColor; border-radius: 4px; padding: 2px 8px;
+}
+
+.demo-aviso {
+  position: fixed; inset: 0 0 auto 0; z-index: 120; height: var(--aviso-h); max-width: none;
+  display: flex; align-items: center; justify-content: center; padding-inline: 12px;
+  background: var(--grafite); color: var(--papel);
+  font-size: 0.8125rem; font-weight: 500; line-height: 1; white-space: nowrap; overflow: hidden;
+}
+.demo-aviso span { display: none; }
+@media (min-width: 768px) { .demo-aviso span { display: inline; } }
+html[data-demo] { --aviso-h: 30px; }
+html[data-demo] body { padding-top: var(--aviso-h); }
+
+/* --------------------------------------------------------------------------
+   Movimento
+   -------------------------------------------------------------------------- */
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+
+/* A entrada do hero só esconde elementos quando o script confirmou que vai animar */
+.intro [data-entrada] { opacity: 0; }
+
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 180ms ease both sai; }
+::view-transition-new(root) { animation: 320ms var(--ease-out) both entra; }
+@keyframes sai { to { opacity: 0; } }
+@keyframes entra { from { opacity: 0; transform: translateY(8px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  .botao, .botao:active { transform: none; transition: background-color 160ms ease, color 160ms ease; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  .js .ac-painel, .js .ac-item.aberto .ac-painel, .ac-botao .sinal, .link { transition: none; }
+}

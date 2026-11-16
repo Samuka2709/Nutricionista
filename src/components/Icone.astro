@@ -1,0 +1,45 @@
+---
+// Ícones Lucide, sempre com o mesmo peso de traço (1.5) em todo o site.
+import GraduationCap from '@lucide/astro/icons/graduation-cap';
+import Award from '@lucide/astro/icons/award';
+import BadgeCheck from '@lucide/astro/icons/badge-check';
+import Users from '@lucide/astro/icons/users';
+import BookOpen from '@lucide/astro/icons/book-open';
+import ClipboardList from '@lucide/astro/icons/clipboard-list';
+import ShoppingBasket from '@lucide/astro/icons/shopping-basket';
+import BookOpenText from '@lucide/astro/icons/book-open-text';
+import MessageCircle from '@lucide/astro/icons/message-circle';
+import Smartphone from '@lucide/astro/icons/smartphone';
+import MapPin from '@lucide/astro/icons/map-pin';
+import Clock from '@lucide/astro/icons/clock';
+import Video from '@lucide/astro/icons/video';
+import Mail from '@lucide/astro/icons/mail';
+import AtSign from '@lucide/astro/icons/at-sign';
+import Menu from '@lucide/astro/icons/menu';
+import X from '@lucide/astro/icons/x';
+import Plus from '@lucide/astro/icons/plus';
+import Link from '@lucide/astro/icons/link';
+import Copy from '@lucide/astro/icons/copy';
+import Check from '@lucide/astro/icons/check';
+import CalendarPlus from '@lucide/astro/icons/calendar-plus';
+import Wifi from '@lucide/astro/icons/wifi';
+import Camera from '@lucide/astro/icons/camera';
+import IdCard from '@lucide/astro/icons/id-card';
+import FileText from '@lucide/astro/icons/file-text';
+import Car from '@lucide/astro/icons/car';
+import ShieldCheck from '@lucide/astro/icons/shield-check';
+import DoorClosed from '@lucide/astro/icons/door-closed';
+
+const mapa: Record<string, any> = {
+  formacao: GraduationCap, especializacao: Award, registro: BadgeCheck, associacao: Users, publicacao: BookOpen,
+  plano: ClipboardList, compras: ShoppingBasket, materiais: BookOpenText, conversa: MessageCircle, app: Smartphone,
+  mapa: MapPin, relogio: Clock, video: Video, email: Mail, arroba: AtSign, menu: Menu, fechar: X, mais: Plus,
+  link: Link, copiar: Copy, check: Check, agendar: CalendarPlus, wifi: Wifi, camera: Camera, documento: IdCard,
+  arquivo: FileText, carro: Car, escudo: ShieldCheck, porta: DoorClosed,
+};
+
+interface Props { nome: string; tamanho?: number; class?: string }
+const { nome, tamanho = 24, class: classe } = Astro.props;
+const Componente = mapa[nome] ?? mapa.check;
+---
+<Componente size={tamanho} stroke-width={1.5} class={classe} aria-hidden="true" focusable="false" />

@@ -1,0 +1,38 @@
+---
+// O Google Maps só é carregado depois do clique (LGPD e desempenho).
+import { mapsEmbed, mapsUrl, enderecoTexto } from '../lib/site';
+import Icone from './Icone.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+---
+{mapsEmbed && (
+  <div class="mapa" data-mapa data-src={mapsEmbed} data-titulo={`Mapa: ${enderecoTexto}`}>
+    <div class="fachada" data-fachada>
+      <svg class="grade" viewBox="0 0 70 30" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        {[1, 2, 3, 4, 5, 6].map((i) => <line x1={i * 10} y1="0" x2={i * 10} y2="30" vector-effect="non-scaling-stroke" />)}
+        {[1, 2].map((i) => <line x1="0" y1={i * 10} x2="70" y2={i * 10} vector-effect="non-scaling-stroke" />)}
+      </svg>
+      <span class="pino"><Icone nome="mapa" tamanho={26} /></span>
+      <button class="botao botao--linha botao--compacto" type="button" data-ver-mapa aria-describedby={`${id}-aviso`}>Ver no mapa</button>
+      <p class="aviso" id={`${id}-aviso`}>O mapa é carregado do Google Maps só depois do clique.</p>
+    </div>
+    <a class="link" href={mapsUrl} target="_blank" rel="noopener noreferrer">Abrir no Google Maps<span class="so-leitor"> (abre em nova aba)</span></a>
+  </div>
+)}
+
+<style>
+  .mapa { display: grid; gap: 14px; justify-items: start; }
+  .fachada {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 200px; overflow: hidden;
+    display: grid; place-content: center; justify-items: center; gap: 10px; padding: 16px;
+    border-radius: var(--raio-foto); background: var(--papel); border: 1px solid var(--pauta-forte);
+  }
+  .grade { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .grade line { stroke: var(--pauta); stroke-width: 1; }
+  .pino { position: relative; color: var(--tomate); }
+  .fachada .botao { position: relative; background: var(--papel); }
+  .aviso { position: relative; font-size: 0.8125rem; line-height: 1.4; color: var(--texto-suave); text-align: center; max-width: 30ch; }
+  :global(html:not(.js)) .fachada .botao, :global(html:not(.js)) .aviso { display: none; }
+  .mapa :global(iframe) { width: 100%; aspect-ratio: 16 / 9; min-height: 200px; border: 0; border-radius: var(--raio-foto); }
+  @media (hover: hover) and (pointer: fine) { .fachada .botao:hover { background: var(--tinta); } }
+</style>

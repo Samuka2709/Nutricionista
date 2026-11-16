@@ -1,0 +1,18 @@
+---
+// O único botão de agendamento do site: mesmo nome e mesmo destino em todo lugar.
+// Com linkAgendamento, abre a agenda online; sem ele, abre o WhatsApp.
+import { agendarUrl } from '../lib/site';
+import Preencher from './Preencher.astro';
+interface Props { variante?: 'acao' | 'claro'; compacto?: boolean; magnetico?: boolean; class?: string }
+const { variante = 'acao', compacto = false, magnetico = false, class: classe = '' } = Astro.props;
+---
+{agendarUrl ? (
+  <a
+    class:list={['botao', `botao--${variante}`, compacto && 'botao--compacto', classe]}
+    href={agendarUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    data-agendar
+    data-magnetico={magnetico ? '' : undefined}
+  >Agendar consulta<span class="so-leitor"> (abre em nova aba)</span></a>
+) : <Preencher campo="whatsapp ou linkAgendamento" />}

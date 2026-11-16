@@ -1,0 +1,46 @@
+---
+// Os horários de atendimento desenhados na folha da semana.
+// Lê o campo horarios[].schema (ex.: "Mo-Th 08:00-18:00"). O texto dos horários continua ao lado, para leitores de tela.
+import { p } from '../lib/site';
+
+const indice: Record<string, number> = { Mo: 0, Tu: 1, We: 2, Th: 3, Fr: 4, Sa: 5, Su: 6 };
+const dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
+const faixas: { dias: number[]; de: number; ate: number }[] = [];
+for (const h of p.horarios || []) {
+  const m = /^([A-Za-z,\-]+)\s+(\d{2}):(\d{2})-(\d{2}):(\d{2})$/.exec(String(h.schema || '').trim());
+  if (!m) continue;
+  const conjunto = new Set<number>();
+  for (const parte of m[1].split(',')) {
+    const [a, b] = parte.split('-');
+    if (!(a in indice)) continue;
+    const fim = b && b in indice ? indice[b] : indice[a];
+    for (let d = indice[a]; d <= fim; d++) conjunto.add(d);
+  }
+  faixas.push({ dias: [...conjunto], de: Number(m[2]) + Number(m[3]) / 60, ate: Number(m[4]) + Number(m[5]) / 60 });
+}
+const inicio = faixas.length ? Math.floor(Math.min(...faixas.map((f) => f.de))) : 0;
+const fim = faixas.length ? Math.ceil(Math.max(...faixas.map((f) => f.ate))) : 0;
+const horas = Array.from({ length: fim - inicio }, (_, i) => inicio + i);
+const aberto = (d: number, h: number) => faixas.some((f) => f.dias.includes(d) && h >= f.de && h + 1 <= f.ate);
+---
+{faixas.length > 0 && (
+  <div class="gh" aria-hidden="true">
+    <div class="gh-l gh-dias"><span></span>{dias.map((d) => <span>{d}</span>)}</div>
+    {horas.map((h) => (
+      <div class="gh-l">
+        <span class="gh-h">{h % 2 === inicio % 2 ? `${String(h).padStart(2, '0')}h` : ''}</span>
+        {dias.map((_, d) => <span class:list={['gh-c', aberto(d, h) && 'on']}></span>)}
+      </div>
+    ))}
+  </div>
+)}
+
+<style>
+  .gh { margin-top: 12px; max-width: 420px; border-bottom: 1px solid var(--pauta-forte); }
+  .gh-l { display: grid; grid-template-columns: 40px repeat(7, minmax(0, 1fr)); }
+  .gh-l > span { display: block; height: 14px; border-top: 1px solid var(--pauta-forte); border-left: 1px solid var(--pauta-forte); }
+  .gh-l > span:first-child { border-left: 0; }
+  .gh-dias > span { height: 24px; border-top: 0; font-size: 0.75rem; font-weight: 600; line-height: 24px; text-align: center; color: var(--tinta); }
+  .gh-h { font-size: 0.6875rem; font-weight: 600; line-height: 14px; color: var(--tinta); font-variant-numeric: tabular-nums; }
+  .gh-c.on { background: var(--verde); }
+</style>

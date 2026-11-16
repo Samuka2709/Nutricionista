@@ -1,0 +1,10 @@
+---
+// Marcação de campo vazio. Só entra no HTML em desenvolvimento (ou com PUBLIC_PREVIEW=1)
+// e só aparece na tela com ?preview=1. Em produção não existe.
+import { previewDisponivel } from '../lib/site';
+interface Props { campo: string; bloco?: boolean; nota?: string }
+const { campo, bloco = false, nota } = Astro.props;
+---
+{previewDisponivel && (bloco
+  ? <p class="pendente">[seção oculta — preencher: {campo}]{nota && ` ${nota}`}</p>
+  : <span class="preencher">[preencher: {campo}]{nota && ` ${nota}`}</span>)}

@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import { nomeCompleto, nome, identificacao, cidade, nav, instagramUrl, instagramExibicao, whatsappUrl, p } from '../lib/site';
+import Preencher from './Preencher.astro';
+const artigos = await getCollection('artigos');
+const links = nav(artigos.length > 0);
+const ano = new Date().getFullYear();
+---
+<footer class="rodape escuro">
+  <div class="sem">
+    <div class="v topo-rodape" style="--i:1;--f:7">
+      <p class="nome" data-nome-rodape>{nomeCompleto || nome || <Preencher campo="nome" />}</p>
+      <p class="ident">{[identificacao, cidade].filter(Boolean).join(', ')}{!identificacao.includes('CRN') && <Preencher campo="crn" />}</p>
+    </div>
+    <nav class="v" style="--i:1;--f:3" aria-label="Rodapé">
+      <ul>
+        {links.map((l) => <li><a href={`/#${l.id}`}>{l.rotulo}</a></li>)}
+      </ul>
+    </nav>
+    <div class="v" style="--i:4;--f:5">
+      <ul>
+        {whatsappUrl && <li><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>}
+        {instagramUrl && <li><a href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagram {instagramExibicao}</a></li>}
+        {p.email && <li><a href={`mailto:${p.email}`}>{p.email}</a></li>}
+      </ul>
+    </div>
+    <div class="v fim" style="--i:6;--f:7">
+      <a href="/privacidade">Política de Privacidade</a>
+      <p>© {ano}{nomeCompleto && ` ${nomeCompleto}`}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .rodape { position: relative; z-index: 1; background: var(--tinta); color: var(--papel); padding-block: 72px 40px; }
+  .sem { row-gap: 40px; }
+  .nome {
+    max-width: none;
+    font-size: clamp(2.75rem, 1rem + 6.4vw, 6rem); font-weight: 650; font-stretch: 86%;
+    line-height: 0.95; letter-spacing: -0.03em; color: var(--papel);
+    padding-bottom: 0.08em; overflow: hidden;
+  }
+  .ident { margin-top: 16px; color: var(--sobre-tinta); font-weight: 500; }
+  .topo-rodape { padding-bottom: 40px; border-bottom: 1px solid var(--pauta-tinta); }
+  ul { display: grid; gap: 4px; }
+  nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+  a { display: inline-flex; align-items: center; min-height: 44px; color: var(--papel); text-decoration: none; font-weight: 500; overflow-wrap: anywhere; }
+  @media (hover: hover) and (pointer: fine) { a:hover { text-decoration: underline; text-underline-offset: 0.25em; } }
+  .fim { display: grid; gap: 4px; align-content: start; color: var(--sobre-tinta); font-size: var(--pequeno); }
+</style>

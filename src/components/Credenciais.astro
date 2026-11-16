@@ -1,0 +1,41 @@
+---
+// Até 4 itens comprovados. Só com CRN, vira uma linha simples. Nunca números inventados.
+import { credenciais, crn, modalidadesTexto } from '../lib/site';
+import Icone from './Icone.astro';
+import Preencher from './Preencher.astro';
+const soRegistro = credenciais.length === 1 && credenciais[0].icone === 'registro';
+---
+{credenciais.length === 0 ? <Preencher bloco campo="crn, formacao, especializacoes, associacoes" /> : (
+  <section class="cred" aria-label="Formação e registro profissional">
+    <div class="sem">
+      {soRegistro ? (
+        <p class="v simples" style="--i:1;--f:7">
+          <Icone nome="registro" /> <span>{crn}{modalidadesTexto && `, ${modalidadesTexto.toLowerCase()}`}</span>
+        </p>
+      ) : (
+        <ul class="v lista" style="--i:1;--f:7" data-grupo>
+          {credenciais.map((c) => (
+            <li>
+              <Icone nome={c.icone} tamanho={28} />
+              <strong>{c.titulo}</strong>
+              {c.apoio && <span>{c.apoio}</span>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .cred { padding-top: 40px; }
+  .lista { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 28px 24px; }
+  li { display: grid; gap: 6px; align-content: start; padding-top: 16px; border-top: 2px solid var(--tinta); }
+  li :global(svg) { color: var(--tinta); margin-bottom: 6px; }
+  strong { font-weight: 650; line-height: 1.25; color: var(--grafite); }
+  span { font-size: var(--pequeno); line-height: 1.45; color: var(--texto-suave); }
+  .simples { display: flex; align-items: center; gap: 12px; max-width: none; padding-block: 16px; border-top: 2px solid var(--tinta); font-weight: 600; }
+  .simples :global(svg) { color: var(--tinta); flex: none; }
+  .simples span { font-size: inherit; color: var(--grafite); }
+  @media (min-width: 1024px) { .cred { padding-top: 56px; } }
+</style>

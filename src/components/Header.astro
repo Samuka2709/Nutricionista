@@ -1,0 +1,139 @@
+---
+import { getCollection } from 'astro:content';
+import { nome, identificacao, nav } from '../lib/site';
+import BotaoAgendar from './BotaoAgendar.astro';
+import Icone from './Icone.astro';
+import Preencher from './Preencher.astro';
+
+interface Props { inicio?: boolean }
+const { inicio = false } = Astro.props;
+const artigos = await getCollection('artigos');
+const links = nav(artigos.length > 0);
+---
+<header class:list={['topo', !inicio && 'topo--solido']} data-topo data-inicio={inicio ? '' : undefined}>
+  <div class="topo-in">
+    <a class="assinatura" href="/" aria-label={nome ? `${nome}, início` : 'Início'}>
+      <span class="a-nome">{nome || <Preencher campo="nome" />}</span>
+      <span class="a-crn">{identificacao}{!identificacao.includes('CRN') && <Preencher campo="crn" />}</span>
+    </a>
+    <nav class="menu" aria-label="Principal">
+      <ul>
+        {links.map((l) => <li><a href={`/#${l.id}`} data-nav={l.id}>{l.rotulo}</a></li>)}
+      </ul>
+      <span class="indicador" data-indicador aria-hidden="true"></span>
+    </nav>
+    <div class="acoes">
+      <BotaoAgendar compacto />
+      <button class="abre" type="button" aria-expanded="false" aria-controls="menu-movel" data-abre-menu>
+        <Icone nome="menu" />
+        <span class="so-leitor">Abrir menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="painel escuro" id="menu-movel" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu data-lenis-prevent>
+  <div class="painel-topo">
+    <span class="a-nome">{nome}</span>
+    <button class="fecha" type="button" data-fecha-menu>
+      <Icone nome="fechar" />
+      <span class="so-leitor">Fechar menu</span>
+    </button>
+  </div>
+  <nav aria-label="Menu">
+    <ul>
+      {links.map((l, n) => <li style={`--n:${n}`}><a href={`/#${l.id}`} data-nav-movel>{l.rotulo}</a></li>)}
+    </ul>
+  </nav>
+  <div class="painel-pe">
+    <BotaoAgendar variante="claro" />
+    <p class="pequeno">{identificacao}</p>
+  </div>
+</div>
+
+<style>
+  .topo {
+    position: fixed; inset: var(--aviso-h) 0 auto 0; z-index: 100;
+    height: var(--header-h);
+    transition: transform 320ms var(--ease-out), background-color 200ms ease, border-color 200ms ease;
+    border-bottom: 1px solid transparent;
+  }
+  .topo--solido, :global(.topo.rolou) {
+    background: color-mix(in srgb, var(--papel) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom-color: var(--pauta-forte);
+  }
+  :global(.topo.oculto) { transform: translateY(calc(-100% - var(--aviso-h))); transition-duration: 220ms; }
+  .topo-in {
+    max-width: var(--folha-max); height: 100%; margin-inline: auto;
+    padding-inline: calc(var(--calha) + var(--recuo)) var(--borda);
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+
+  .assinatura { display: grid; text-decoration: none; min-height: 44px; align-content: center; min-width: 0; }
+  .a-nome { font-size: 1.25rem; font-weight: 650; font-stretch: 90%; letter-spacing: -0.01em; line-height: 1.1; color: var(--tinta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .a-crn { font-size: 0.8125rem; font-weight: 500; line-height: 1.3; color: var(--texto-suave); white-space: nowrap; }
+
+  .menu { display: none; position: relative; }
+  .menu ul { display: flex; gap: clamp(12px, 1.6vw, 28px); }
+  .menu a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    font-size: var(--pequeno); font-weight: 500; color: var(--grafite); text-decoration: none;
+    transition: color 160ms ease;
+  }
+  .menu a[aria-current="true"] { color: var(--tinta); font-weight: 650; }
+  @media (hover: hover) and (pointer: fine) { .menu a:hover { color: var(--tinta); } }
+  .indicador {
+    position: absolute; left: 0; bottom: 4px; width: 1px; height: 2px; background: var(--tomate);
+    transform-origin: left; transform: translateX(0) scaleX(0);
+    transition: transform 320ms var(--ease-in-out);
+  }
+
+  .acoes { display: flex; align-items: center; gap: 8px; flex: none; }
+  .abre, .fecha { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--raio-botao); color: var(--tinta); }
+  :global(html:not(.js)) .abre { display: none; }
+
+  @media (min-width: 1100px) {
+    .menu { display: block; }
+    .abre { display: none; }
+  }
+  @media (max-width: 420px) {
+    .a-crn { display: none; }
+    .assinatura .a-nome { font-size: 1.0625rem; white-space: normal; line-height: 1.05; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .acoes :global(.botao--compacto) { padding: 0 14px; }
+  }
+
+  /* Painel do menu no celular */
+  .painel {
+    position: fixed; inset: 0; z-index: 150;
+    display: flex; flex-direction: column;
+    padding: 0 var(--borda) 28px calc(var(--calha) + var(--recuo));
+    background: var(--tinta); color: var(--papel);
+    overflow-y: auto;
+    opacity: 0; clip-path: inset(0 0 100% 0);
+    transition: clip-path 300ms var(--ease-out), opacity 200ms ease;
+  }
+  .painel[hidden] { display: none; }
+  :global(.painel.aberto) { opacity: 1; clip-path: inset(0); }
+  .painel::before { content: ''; position: absolute; left: var(--calha); top: 0; bottom: 0; width: 1px; background: var(--tomate); }
+  .painel-topo { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); flex: none; }
+  .painel .a-nome { color: var(--papel); }
+  .fecha { color: var(--papel); }
+  .painel nav { flex: 1; display: flex; align-items: center; }
+  .painel ul { width: 100%; }
+  .painel li { border-bottom: 1px solid var(--pauta-tinta); opacity: 0; transform: translateY(12px); transition: opacity 200ms ease, transform 200ms var(--ease-out); }
+  :global(.painel.aberto) li { opacity: 1; transform: none; transition: opacity 320ms ease, transform 420ms var(--ease-out); transition-delay: calc(70ms + var(--n) * 45ms); }
+  .painel a[data-nav-movel] {
+    display: flex; align-items: center; min-height: 64px;
+    font-size: 2rem; font-weight: 650; font-stretch: 90%; letter-spacing: -0.02em; line-height: 1.1;
+    color: var(--papel); text-decoration: none;
+  }
+  .painel-pe { display: grid; gap: 16px; justify-items: start; padding-top: 24px; color: var(--sobre-tinta); }
+  @media (prefers-reduced-motion: reduce) {
+    .painel { clip-path: none; transition: opacity 160ms ease; }
+    .painel li { opacity: 1; transform: none; transition: none; }
+    .topo { transition: background-color 200ms ease; }
+    :global(.topo.oculto) { transform: none; }
+    .indicador { transition: none; }
+  }
+</style>

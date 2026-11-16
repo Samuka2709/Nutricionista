@@ -1,0 +1,76 @@
+---
+// Texto em primeira pessoa. Sem texto revisado, gera um rascunho só com os dados fornecidos.
+import { p, t, nome, crn, cidadeCurta, online, presencial, especialidades, trajetoria, secoes, tem } from '../lib/site';
+import Foto from './Foto.astro';
+import Preencher from './Preencher.astro';
+
+const lista = (itens: string[]) => itens.length <= 1 ? itens.join('') : `${itens.slice(0, -1).join(', ')} e ${itens[itens.length - 1]}`;
+const escritos: string[] = (p.sobre?.paragrafos || []).filter(tem);
+const formacoes = [...(p.formacao || []), ...(p.especializacoes || [])].filter((x: any) => tem(x.titulo))
+  .map((x: any) => `${x.titulo}${x.instituicao ? ` (${x.instituicao}${x.ano ? `, ${x.ano}` : ''})` : ''}`);
+const rascunho = [
+  `Sou ${nome}, nutricionista${crn ? ` (${crn})` : ''}.${presencial && cidadeCurta ? ` Atendo em ${cidadeCurta}${online ? ' e também online' : ''}.` : online ? ' Atendo online.' : ''}${tem(p.publico) ? ` Trabalho com ${p.publico}.` : ''}`,
+  formacoes.length ? `Minha formação: ${lista(formacoes)}.` : '',
+  especialidades.length ? `No dia a dia, atuo com ${lista(especialidades.map((e) => e.titulo.toLowerCase()))}.` : '',
+].filter(Boolean);
+const paragrafos = escritos.length ? escritos : rascunho;
+const revisado = escritos.length > 0 && p.sobre?.revisado === true;
+---
+{!secoes.sobre ? <Preencher bloco campo="nome" /> : (
+  <section class="secao" id="sobre" aria-labelledby="sobre-titulo">
+    <div class="fio" data-fio></div>
+    <div class="sem">
+      <div class="v retrato" style="--i:1;--f:3" data-revela>
+        <Foto arquivo={p.fotos?.sobre || p.fotos?.retrato} tipo="retrato vertical" alt={`${nome} em atendimento`} proporcao="3 / 4" parallax sizes="(min-width: 1024px) 38vw, 100vw" />
+      </div>
+      <div class="v texto" style="--i:4;--f:7">
+        <h2 id="sobre-titulo" data-titulo>{t.sobre.titulo}</h2>
+        {!revisado && <p class="marca"><span class="rascunho">[RASCUNHO — revisar com o profissional]</span></p>}
+        <div class="prosa">
+          {paragrafos.map((par) => <p>{par}</p>)}
+        </div>
+        {tem(p.fraseFilosofia)
+          ? <blockquote class="frase"><p data-acende>{p.fraseFilosofia}</p></blockquote>
+          : <Preencher campo="fraseFilosofia" />}
+        {trajetoria.length > 0 ? (
+          <div class="trajetoria">
+            <h3>{t.sobre.trajetoria}</h3>
+            <ol data-grupo>
+              {trajetoria.map((x) => (
+                <li>
+                  <span class="ano">{x.ano}</span>
+                  <span class="oque"><strong>{x.titulo}</strong>{x.instituicao && <span>{x.instituicao}</span>}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ) : <Preencher campo="formacao, especializacoes, experiencias" />}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .sem { row-gap: 36px; }
+  .marca { margin-top: 16px; }
+  .prosa { display: grid; gap: 16px; margin-top: 24px; }
+  .frase { margin-top: 40px; padding-left: 22px; border-left: 1px solid var(--tomate); }
+  .frase p {
+    max-width: 24ch; font-size: var(--destaque); font-weight: 500; font-stretch: 92%;
+    line-height: 1.2; letter-spacing: -0.015em; color: var(--tinta); text-wrap: balance;
+  }
+  .trajetoria { margin-top: 48px; }
+  .trajetoria h3 { font-size: 1.125rem; }
+  ol { margin-top: 12px; border-top: 1px solid var(--pauta-forte); }
+  li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--pauta-forte); }
+  .ano { font-weight: 650; color: var(--tinta); font-variant-numeric: tabular-nums; }
+  .oque { display: grid; gap: 2px; }
+  .oque strong { font-weight: 600; line-height: 1.3; }
+  .oque span { font-size: var(--pequeno); color: var(--texto-suave); }
+  @media (min-width: 640px) and (max-width: 1023px) { .retrato { max-width: 560px; } }
+  @media (min-width: 1024px) {
+    .retrato { padding-right: 0; }
+    .texto { padding-left: 48px; }
+    .frase { margin-top: 56px; }
+  }
+</style>

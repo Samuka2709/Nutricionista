@@ -1,0 +1,33 @@
+---
+// Convite final: sem urgência, sem escassez, sem promessa.
+import { t, whatsappUrl } from '../lib/site';
+import BotaoAgendar from './BotaoAgendar.astro';
+---
+<section class="convite" aria-labelledby="convite-titulo" data-convite>
+  <div class="caixa escuro" data-convite-caixa>
+    <h2 id="convite-titulo" data-titulo>{t.convite.titulo}</h2>
+    <p>{t.convite.frase}</p>
+    <div class="acoes">
+      <BotaoAgendar variante="claro" magnetico />
+      {whatsappUrl && (
+        <a class="botao botao--linha-clara" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp<span class="so-leitor"> (abre em nova aba)</span></a>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .convite { position: relative; z-index: 1; margin-top: var(--esp-secao); }
+  .caixa {
+    display: grid; justify-items: center; gap: 20px; text-align: center;
+    padding: clamp(72px, 12vw, 160px) 24px;
+    background: var(--verde); color: var(--papel);
+  }
+  h2 { color: var(--papel); max-width: 20ch; }
+  p { color: var(--sobre-verde); max-width: 44ch; }
+  .acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 16px; }
+  @media (max-width: 480px) {
+    .acoes { width: 100%; flex-direction: column; }
+    .acoes :global(.botao) { width: 100%; }
+  }
+</style>

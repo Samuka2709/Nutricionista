@@ -1,0 +1,111 @@
+---
+// Contato: cada canal só aparece se informado. Formulário sem nenhum campo de saúde (LGPD).
+import { p, t, whatsappUrl, whatsappExibicao, instagramUrl, instagramExibicao, enderecoLinhas, temEndereco, formEndpoint, secoes, tem, demo } from '../lib/site';
+import Icone from './Icone.astro';
+import Mapa from './Mapa.astro';
+import Preencher from './Preencher.astro';
+const horarios = (p.horarios || []).filter((h: any) => tem(h.dias));
+const simulado = formEndpoint === 'demo';
+---
+{!secoes.contato ? <Preencher bloco campo="whatsapp, email, instagram, endereco, formulario.endpoint" /> : (
+  <section class="secao" id="contato" aria-labelledby="contato-titulo">
+    <div class="fio" data-fio></div>
+    <div class="sem">
+      <div class="v info" style="--i:1;--f:3">
+        <h2 id="contato-titulo" data-titulo>{t.contato.titulo}</h2>
+        <p class="apoio">{t.contato.apoio}</p>
+        <ul class="canais">
+          {whatsappUrl && <li><Icone nome="conversa" /><div><strong>WhatsApp</strong><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{whatsappExibicao}<span class="so-leitor"> (abre em nova aba)</span></a></div></li>}
+          {tem(p.email) && <li><Icone nome="email" /><div><strong>E-mail</strong><a href={`mailto:${p.email}`}>{p.email}</a></div></li>}
+          {instagramUrl && <li><Icone nome="arroba" /><div><strong>Instagram</strong><a href={instagramUrl} target="_blank" rel="noopener noreferrer">{instagramExibicao}<span class="so-leitor"> (abre em nova aba)</span></a></div></li>}
+          {temEndereco && <li><Icone nome="mapa" /><div><strong>Endereço</strong><address>{enderecoLinhas.map((l) => <span>{l}</span>)}</address></div></li>}
+          {horarios.length > 0 && <li><Icone nome="relogio" /><div><strong>Horários</strong>{horarios.map((h: any) => <span>{h.dias}, {h.horas}</span>)}</div></li>}
+        </ul>
+        <Mapa id="mapa-contato" />
+      </div>
+
+      <div class="v" style="--i:4;--f:7">
+        {tem(formEndpoint) ? (
+          <form class="form" action={simulado ? '#contato' : formEndpoint} method="post" novalidate data-form data-simulado={simulado ? '' : undefined}>
+            <div class="campo">
+              <label for="f-nome">Nome</label>
+              <input id="f-nome" name="nome" type="text" autocomplete="name" required aria-describedby="e-nome" />
+              <p class="erro" id="e-nome" data-erro="nome"></p>
+            </div>
+            <div class="campo">
+              <label for="f-email">E-mail</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email" />
+              <p class="erro" id="e-email" data-erro="email"></p>
+            </div>
+            <div class="campo">
+              <label for="f-telefone">Telefone <span class="opcional">(opcional)</span></label>
+              <input id="f-telefone" name="telefone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="e-telefone" />
+              <p class="erro" id="e-telefone" data-erro="telefone"></p>
+            </div>
+            <div class="campo">
+              <label for="f-mensagem">Mensagem</label>
+              <textarea id="f-mensagem" name="mensagem" rows="5" required aria-describedby="e-mensagem aviso-saude"></textarea>
+              <p class="erro" id="e-mensagem" data-erro="mensagem"></p>
+            </div>
+            <p class="mel" aria-hidden="true">
+              <label for="f-site">Não preencha este campo</label>
+              <input id="f-site" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+            </p>
+            <div class="campo aceite">
+              <label class="check" for="f-aceite">
+                <input id="f-aceite" name="consentimento" type="checkbox" value="sim" required aria-describedby="e-consentimento" />
+                <span>Li e concordo com a <a href="/privacidade">Política de Privacidade</a>.</span>
+              </label>
+              <p class="erro" id="e-consentimento" data-erro="consentimento"></p>
+            </div>
+            <p class="aviso-saude pequeno" id="aviso-saude">{t.contato.avisoSaude}</p>
+            <div class="envio">
+              <button class="botao botao--linha" type="submit" data-enviar>Enviar mensagem</button>
+              <p class="estado" role="status" aria-live="polite" data-estado></p>
+            </div>
+            {simulado && demo && <p class="pequeno simulado">Demonstração: o envio é simulado e nenhum dado sai do seu navegador.</p>}
+          </form>
+        ) : <Preencher campo="formulario.endpoint" nota="(Formspree, Netlify Forms ou similar); sem ele o formulário fica oculto" />}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .sem { row-gap: 40px; }
+  .canais { margin-top: 28px; border-top: 1px solid var(--pauta-forte); }
+  .canais li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--pauta-forte); }
+  .canais li > :global(svg) { color: var(--tinta); margin-top: 2px; }
+  .canais div { display: grid; gap: 2px; min-width: 0; }
+  .canais strong { font-size: var(--pequeno); font-weight: 650; color: var(--tinta); }
+  .canais a { color: var(--grafite); overflow-wrap: anywhere; min-height: 28px; display: inline-flex; align-items: center; }
+  address { font-style: normal; display: grid; }
+  .info :global(.mapa) { margin-top: 24px; }
+
+  .form { display: grid; gap: 20px; }
+  .campo { display: grid; gap: 6px; }
+  label { font-size: var(--pequeno); font-weight: 650; color: var(--tinta); }
+  .opcional { font-weight: 400; color: var(--texto-suave); }
+  input[type="text"], input[type="email"], input[type="tel"], textarea {
+    width: 100%; min-height: 52px; padding: 12px 14px;
+    background: var(--papel); border: 1.5px solid var(--pauta-forte); border-radius: 8px;
+    font-size: 1rem; line-height: 1.5; color: var(--grafite);
+    transition: border-color 160ms ease;
+  }
+  textarea { resize: vertical; min-height: 140px; }
+  input:focus-visible, textarea:focus-visible { outline: 2px solid var(--tinta); outline-offset: 2px; border-color: var(--tinta); }
+  :is(input, textarea)[aria-invalid="true"] { border-color: var(--tomate); }
+  .erro { font-size: 0.875rem; font-weight: 600; line-height: 1.4; color: var(--tomate); min-height: 0; }
+  .erro:empty { display: none; }
+  .mel { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .check { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: start; min-height: 44px; padding-block: 10px; font-weight: 400; color: var(--grafite); cursor: pointer; }
+  .check input { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--tinta); }
+  .aviso-saude { padding-left: 14px; border-left: 1px solid var(--tomate); color: var(--grafite); }
+  .envio { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+  .estado { font-weight: 600; max-width: none; }
+  .estado:empty { display: none; }
+  :global(.estado.ok) { color: var(--verde); }
+  :global(.estado.falha) { color: var(--tomate); }
+  :global([data-enviar][disabled]) { opacity: 0.6; cursor: progress; }
+  .simulado { color: var(--texto-suave); }
+</style>

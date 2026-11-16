@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Credenciais from '../components/Credenciais.astro';
+import Seletor from '../components/Seletor.astro';
+import Especialidades from '../components/Especialidades.astro';
+import Sobre from '../components/Sobre.astro';
+import Metodologia from '../components/Metodologia.astro';
+import Recursos from '../components/Recursos.astro';
+import Atendimento from '../components/Atendimento.astro';
+import Conteudos from '../components/Conteudos.astro';
+import Reputacao from '../components/Reputacao.astro';
+import Faq from '../components/Faq.astro';
+import Convite from '../components/Convite.astro';
+import Contato from '../components/Contato.astro';
+import { p, nomeCompleto, crn, instagramUrl, temEndereco, faq, especialidades, tem, descricaoSite } from '../lib/site';
+
+const site = Astro.site?.href ?? '';
+const e = p.endereco || {};
+const jsonld: object[] = [];
+if (nomeCompleto) {
+  jsonld.push({
+    '@context': 'https://schema.org', '@type': 'Person', '@id': `${site}#pessoa`,
+    name: nomeCompleto, jobTitle: 'Nutricionista', url: site,
+    ...(crn && { identifier: crn }),
+    ...(instagramUrl && { sameAs: [instagramUrl] }),
+    ...(especialidades.length && { knowsAbout: especialidades.map((x) => x.titulo) }),
+  });
+  const horarios = (p.horarios || []).map((h: any) => h.schema).filter(tem);
+  jsonld.push({
+    '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': `${site}#atendimento`,
+    name: `${nomeCompleto}, Nutricionista`, description: descricaoSite, url: site,
+    founder: { '@id': `${site}#pessoa` },
+    ...(tem(p.email) && { email: p.email }),
+    ...(tem(p.whatsapp) && { telephone: `+${String(p.whatsapp).replace(/\D/g, '')}` }),
+    ...(temEndereco && {
+      address: {
+        '@type': 'PostalAddress', streetAddress: e.rua,
+        addressLocality: String(e.cidade || '').split('/')[0], addressRegion: String(e.cidade || '').split('/')[1] || undefined,
+        postalCode: e.cep || undefined, addressCountry: 'BR',
+      },
+    }),
+    ...(horarios.length && { openingHours: horarios }),
+  });
+}
+if (faq.length) {
+  jsonld.push({
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: faq.map((x) => ({ '@type': 'Question', name: x.pergunta, acceptedAnswer: { '@type': 'Answer', text: x.resposta } })),
+  });
+}
+---
+<Base inicio jsonld={jsonld}>
+  <Hero />
+  <Credenciais />
+  <Seletor />
+  <Especialidades />
+  <Sobre />
+  <Metodologia />
+  <Recursos />
+  <Atendimento />
+  <Conteudos />
+  <Reputacao />
+  <Faq />
+  <Convite />
+  <Contato />
+</Base>
