@@ -45,6 +45,7 @@ Nutrição baseada em ciência, construída para a realidade de quem é atendido
 - Sensação: revista de saúde bem editada. Autoridade calma, ciência legível, proximidade humana. Não é clínica, academia nem loja de suplementos.
 - O elemento memorável é fotografia editorial do profissional com tipografia grande; o resto fica quieto.
 - O briefing propõe verde profundo #183B32, off-white #F3F0E8, grafite #222827, bronze #B58C5A e DM Serif Display + Manrope. Em 16/11/2026 o usuário liberou ousar mais: fontes e paleta podem mudar se o site ficar mais marcante.
+- Exceção registrada: o briefing (seção 7.1) pede o header "transparente sobre o hero; ao rolar, ganha fundo off-white com leve desfoque e borda inferior fina". Esse desfoque do header é a única exceção à regra de não usar glassmorphism.
 - Evitar: folhas, saladas, maçã com fita métrica, estetoscópio; visual de academia; kit de cards SaaS; rótulo em caixa alta acima de título; palavra do título em itálico ou outra cor; seta em todo botão; "01/02/03" fora de sequência real; gradiente decorativo; glassmorphism; emojis.
 - Movimento: nível "agência, elegante" (escolha do usuário em 16/11/2026). Sem WebGL, partículas ou cursor personalizado.
 

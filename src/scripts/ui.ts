@@ -329,11 +329,16 @@ if (grade) {
     if (!linha) return;
     const d = new Date();
     const h = d.getHours() + d.getMinutes() / 60;
-    const cabeca = $('.dia', grade)?.getBoundingClientRect().height || 44;
-    const altura = grade.getBoundingClientRect().height - cabeca;
-    if (h < 7 || h >= 22 || altura <= 0) { linha.hidden = true; return; }
+    // Cada fio de hora abre uma faixa de 3 horas (07h, 10h, 13h, 16h, 19h); as faixas têm alturas diferentes,
+    // então a posição é interpolada dentro da faixa certa.
+    const faixas = $$('[data-linha]', grade);
+    if (h < 7 || h >= 22 || !faixas.length) { linha.hidden = true; return; }
+    const i = Math.min(faixas.length - 1, Math.floor((h - 7) / 3));
+    const topoGrade = grade.getBoundingClientRect().top;
+    const r = faixas[i].getBoundingClientRect();
+    if (r.height <= 0) { linha.hidden = true; return; }
     linha.hidden = false;
-    linha.style.transform = `translateY(${Math.round(cabeca + ((h - 7) / 15) * altura)}px)`;
+    linha.style.transform = `translateY(${Math.round(r.top - topoGrade + ((h - 7 - i * 3) / 3) * r.height)}px)`;
     const rotulo = $('[data-agora-hora]', linha);
     if (rotulo) rotulo.textContent = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
   };

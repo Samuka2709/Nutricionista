@@ -18,7 +18,6 @@ const fatos = [
 const tres = especialidades.slice(0, 3);
 const destino = secoes.sobre ? '#sobre' : secoes.especialidades ? '#especialidades' : '#metodologia';
 const descricao = [t.hero.descricao, tem(p.publico) ? `Atendo ${p.publico}.` : ''].filter(Boolean).join(' ');
-const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoConsulta : ''].filter(Boolean).join(', ');
 ---
 <section class="hero" id="inicio" aria-labelledby="hero-titulo">
   <div class="grade" data-hero>
@@ -37,7 +36,7 @@ const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoCons
     <div class="b-cta" data-entrada>
       {agendarUrl ? (
         <>
-          <p class="ev-meta">{compromisso}</p>
+          <p class="ev-meta">Primeira consulta{tem(p.duracaoConsulta) && <>, <span class="nw">{p.duracaoConsulta}</span></>}</p>
           <a class="evento evento--acao" href={agendarUrl} target="_blank" rel="noopener noreferrer" data-agendar>
             <span>Agendar consulta<span class="so-leitor"> (abre em nova aba)</span></span>
           </a>
@@ -55,7 +54,9 @@ const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoCons
     ) : <div class="b-fatos"><Preencher campo="crn, modalidades, cidade" /></div>}
 
     <div class="b-foto" data-foto-hero>
-      <Foto arquivo={p.fotos?.retrato} tipo="retrato profissional" alt={nome ? `${nome}, nutricionista` : 'Nutricionista'} preenche prioridade sizes="(min-width: 1024px) 40vw, 100vw" />
+      {!tem(p.fotos?.retrato) && [2, 3].map((c) => <span class="pf pf-v" style={`--c:${c}`} aria-hidden="true"></span>)}
+      {!tem(p.fotos?.retrato) && [2, 3, 4].map((r) => <span class="pf pf-h" style={`--r:${r}`} aria-hidden="true"></span>)}
+      <Foto semGrade arquivo={p.fotos?.retrato} tipo="retrato profissional" alt={nome ? `${nome}, nutricionista` : 'Nutricionista'} preenche prioridade sizes="(min-width: 1024px) 40vw, 100vw" />
     </div>
     <p class="b-legenda" data-entrada>
       <strong>{nome || <Preencher campo="nome" />}</strong>
@@ -99,12 +100,13 @@ const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoCons
   .agora:not([hidden]) { display: block; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--tomate); pointer-events: none; z-index: 1; }
   .agora::before { content: ''; position: absolute; left: calc(var(--calha) - 4px); top: -4px; width: 9px; height: 9px; border-radius: 50%; background: var(--tomate); }
   .agora span {
-    position: absolute; left: 4px; top: -9px; padding-right: 4px; background: var(--papel);
+    position: absolute; left: 0; top: -9px; padding: 0 4px; background: var(--papel);
     font-size: 0.6875rem; font-weight: 650; line-height: 18px; color: var(--tomate); font-variant-numeric: tabular-nums;
   }
 
   /* ---------- Vista de um dia (celular e tablet) ---------- */
-  .b-fundo { display: none; }
+  @media (max-width: 1023px) { .agora:not([hidden]) { right: auto; width: calc(var(--calha) + 10px); } }
+  .b-fundo, .pf { display: none; }
   .b-titulo, .b-cta, .b-sec, .b-fatos, .b-foto, .b-legenda, .b-esp {
     position: relative; z-index: 2; grid-column: 2 / -1; min-width: 0;
     padding-inline: var(--recuo) var(--borda);
@@ -135,6 +137,7 @@ const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoCons
     font-size: 0.8125rem; font-weight: 600; line-height: 1.3; color: var(--papel); pointer-events: none; max-width: none;
   }
 
+  .nw { white-space: nowrap; }
   .b-fatos li { display: grid; gap: 2px; padding-block: 12px; border-bottom: 1px solid var(--pauta-forte); }
   .b-fatos li:last-child { border-bottom: 0; }
   .b-fatos strong, .b-legenda strong { font-weight: 650; color: var(--tinta); line-height: 1.25; }
@@ -161,7 +164,7 @@ const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoCons
     .dia span { gap: 8px; }
     :global(.dia.hoje) span::before { width: 8px; height: 8px; }
     .hora { padding: 10px 0 0 var(--recuo); font-size: var(--pequeno); }
-    .agora span { left: var(--recuo); padding-right: 6px; font-size: 0.75rem; }
+    .agora span { left: 0; padding: 0 6px 0 var(--recuo); font-size: 0.75rem; }
 
     .b-titulo, .b-cta, .b-sec, .b-fatos, .b-foto, .b-legenda, .b-esp { padding: 0; margin: 0; }
 
@@ -172,9 +175,15 @@ const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoCons
       padding: 28px 32px 28px var(--recuo);
       display: flex; flex-direction: column; justify-content: center;
     }
-    .descricao { margin-top: 20px; max-width: 35em; }
+    .descricao { margin-top: 20px; max-width: 34em; text-wrap: balance; }
 
-    .b-foto { grid-column: 6 / 9; grid-row: 2 / 6; aspect-ratio: auto; margin: 8px; }
+    .b-foto {
+      grid-column: 6 / 9; grid-row: 2 / 6; aspect-ratio: auto; margin: 8px;
+      display: grid; grid-template-columns: subgrid; grid-template-rows: subgrid;
+    }
+    .pf { display: block; position: relative; z-index: 1; pointer-events: none; }
+    .pf-v { grid-column: var(--c); grid-row: 1 / 4; border-left: 1px solid var(--pauta-verde); }
+    .pf-h { grid-row: var(--r); grid-column: 1 / -1; border-top: 1px solid var(--pauta-verde); }
     .b-legenda {
       grid-column: 6 / 9; grid-row: 6; align-self: start;
       padding: 14px 16px 0 22px; margin-left: 24px;
@@ -185,6 +194,8 @@ const compromisso = ['Primeira consulta', tem(p.duracaoConsulta) ? p.duracaoCons
     .b-fatos li { align-content: center; padding: 12px 14px 12px var(--recuo); border: 0; }
     .b-esp { grid-column: 2 / 5; grid-row: 6; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
     .b-esp li { display: flex; align-items: center; padding: 12px 14px 12px var(--recuo); line-height: 1.25; }
+    /* papel só atrás do texto: a linha do "agora" passa por trás sem cobrir as linhas dos dias */
+    .b-fatos li, .b-esp li { background: var(--papel); background-clip: content-box; }
 
     .b-cta { grid-column: 5; grid-row: 5; padding: 6px; }
     .b-sec { grid-column: 5; grid-row: 6; padding: 6px; }
