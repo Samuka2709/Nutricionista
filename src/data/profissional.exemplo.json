@@ -45,7 +45,7 @@
       "imagem": "esp-saude.jpg"
     }
   ],
-  "publico": "adultos que querem organizar a alimentação sem dietas da moda",
+  "publico": "",
   "cidade": "Belo Horizonte/MG",
   "modalidades": [
     "presencial",
@@ -167,13 +167,6 @@
       "origem": "Google (exemplo)",
       "url": "https://example.com/avaliacao-ficticia-2",
       "texto": "Avaliação fictícia de demonstração. Ele organizou minha alimentação em volta dos treinos de corrida, sem cortar o que eu gosto de comer."
-    },
-    {
-      "nome": "Luiza M.",
-      "data": "Agosto de 2026",
-      "origem": "Google (exemplo)",
-      "url": "https://example.com/avaliacao-ficticia-3",
-      "texto": "Avaliação fictícia de demonstração. Gostei de entender o porquê de cada orientação. A lista de compras mudou minhas semanas."
     }
   ],
   "fotos": {
@@ -195,9 +188,8 @@
   "fraseFilosofia": "Comer bem não é seguir uma dieta. É ter uma rotina que você consegue manter numa terça-feira qualquer.",
   "sobre": {
     "paragrafos": [
-      "Sou Henrique, nutricionista em Belo Horizonte desde 2016. Antes de qualquer plano, quero entender como são os seus dias: a que horas você acorda, onde almoça, quem cozinha e o que acontece quando a semana aperta.",
-      "Me especializei em nutrição esportiva e em comportamento alimentar porque percebi que a maior parte das dificuldades não está em saber o que comer, mas em conseguir fazer isso numa rotina real. Por isso meu trabalho é feito de ajustes pequenos, revistos a cada retorno.",
-      "Atendo no consultório e online, com o mesmo cuidado e os mesmos materiais. Uso as evidências científicas como base e a sua rotina como medida."
+      "Sou Henrique, nutricionista em Belo Horizonte desde 2016. Antes de qualquer plano, quero entender como são os seus dias.",
+      "Meu trabalho é feito de ajustes pequenos, revistos a cada retorno, com a ciência como base e a sua rotina como medida."
     ],
     "revisado": true
   },

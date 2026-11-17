@@ -7,7 +7,7 @@
       "Ciência da nutrição, traduzida para a vida que você leva.",
       "Um cuidado nutricional que começa por entender como você vive."
     ],
-    "descricao": "Acompanhamento nutricional individual, com um plano possível dentro da sua rotina e decisões apoiadas em evidência."
+    "descricao": "Acompanhamento nutricional individual, com um plano que cabe na sua rotina."
   },
   "seletor": {
     "titulo": "Como posso ajudar você?",
@@ -18,14 +18,17 @@
     "titulo": "Especialidades",
     "apoio": "As áreas em que eu atendo, e como costumo trabalhar cada uma."
   },
-  "sobre": { "titulo": "Sobre", "trajetoria": "Trajetória" },
+  "sobre": {
+    "titulo": "Sobre",
+    "trajetoria": "Trajetória"
+  },
   "metodologia": {
     "titulo": "Como funciona meu acompanhamento",
     "apoio": "Quatro etapas, do primeiro encontro aos ajustes ao longo do tempo.",
     "etapas": [
       {
         "titulo": "Primeira consulta",
-        "resumo": "Um encontro para conhecer sua rotina, seu histórico, seus hábitos, suas preferências e seus objetivos.",
+        "resumo": "Um encontro para conhecer sua rotina.",
         "antes": "Separe exames recentes, se tiver, e a lista de medicamentos e suplementos que usa. Não é preciso mudar nada na alimentação antes de vir.",
         "durante": "Conversamos sobre como são seus dias, o que você gosta de comer e o que já tentou.",
         "depois": "Você sai com os primeiros combinados e a data do retorno.",
@@ -47,14 +50,18 @@
       },
       {
         "titulo": "Acompanhamento",
-        "resumo": "Retornos, monitoramento e ajustes ao longo do tempo.",
+        "resumo": "Retornos.",
         "antes": "Anote o que funcionou e o que foi difícil de manter.",
         "durante": "Revisamos o plano e ajustamos o que for preciso.",
         "depois": "O plano é atualizado e combinamos o próximo retorno.",
         "usaRetornos": true
       }
     ],
-    "rotulos": { "antes": "Antes", "durante": "Durante", "depois": "Depois" }
+    "rotulos": {
+      "antes": "Antes",
+      "durante": "Durante",
+      "depois": "Depois"
+    }
   },
   "recursos": {
     "titulo": "Recursos do acompanhamento",
@@ -62,17 +69,17 @@
   },
   "atendimento": {
     "titulo": "Atendimento presencial e online",
-    "presencial": { "titulo": "Presencial" },
+    "presencial": {
+      "titulo": "Presencial"
+    },
     "online": {
       "titulo": "Online",
-      "comoFunciona": "A consulta acontece por videochamada, com a mesma duração e os mesmos materiais do atendimento presencial.",
+      "comoFunciona": "Por videochamada, com a mesma duração e os mesmos materiais do presencial.",
       "requisitosTitulo": "O que é preciso",
       "requisitos": [
-        "Conexão estável de internet",
-        "Um ambiente reservado",
-        "Câmera e microfone",
-        "Documento de identificação",
-        "Exames recentes, se houver"
+        "Internet estável",
+        "Ambiente reservado",
+        "Câmera e microfone"
       ],
       "eNutricionista": "Profissional cadastrado no e-Nutricionista, a plataforma do Conselho Federal de Nutrição para telenutrição."
     }
@@ -85,17 +92,33 @@
   "principios": {
     "titulo": "Princípios do meu atendimento",
     "itens": [
-      { "titulo": "Escuta sem julgamento", "texto": "Você conta o que come de verdade, e não o que acha que deveria comer. É daí que o trabalho começa." },
-      { "titulo": "Plano possível dentro da sua rotina", "texto": "Se o plano não cabe no seu horário, no seu orçamento e na sua cozinha, ele é refeito." },
-      { "titulo": "Decisões baseadas em evidência", "texto": "As orientações seguem diretrizes e estudos atuais. Quando a ciência ainda não tem resposta, eu digo." },
-      { "titulo": "Sigilo das suas informações", "texto": "O que você compartilha em consulta fica no seu prontuário e não é usado em nenhuma divulgação." }
+      {
+        "titulo": "Escuta sem julgamento",
+        "texto": "Você conta o que come de verdade, e não o que acha que deveria comer. É daí que o trabalho começa."
+      },
+      {
+        "titulo": "Plano possível dentro da sua rotina",
+        "texto": "Se o plano não cabe no seu horário, no seu orçamento e na sua cozinha, ele é refeito."
+      },
+      {
+        "titulo": "Decisões baseadas em evidência",
+        "texto": "As orientações seguem diretrizes e estudos atuais. Quando a ciência ainda não tem resposta, eu digo."
+      },
+      {
+        "titulo": "Sigilo das suas informações",
+        "texto": "O que você compartilha em consulta fica no seu prontuário e não é usado em nenhuma divulgação."
+      }
     ]
   },
-  "reputacao": { "titulo": "O que dizem pacientes" },
-  "faq": { "titulo": "Perguntas frequentes" },
+  "reputacao": {
+    "titulo": "O que dizem pacientes"
+  },
+  "faq": {
+    "titulo": "Perguntas frequentes"
+  },
   "convite": {
     "titulo": "Comece a construir uma relação mais consciente com a sua alimentação.",
-    "frase": "A primeira conversa serve para entender a sua rotina. O resto a gente constrói a partir dela."
+    "frase": ""
   },
   "contato": {
     "titulo": "Contato",

@@ -340,3 +340,7 @@ html.lenis, html.lenis body { height: auto; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   .js .ac-painel, .js .ac-item.aberto .ac-painel, .ac-botao .sinal, .link { transition: none; }
 }
+
+/* Site enxuto: subtítulos de seção, descrições de lista e resumos secundários ficam de fora */
+.secao .apoio { display: none; }
+.cartao--linha .resumo, #especialidades .lista p:not(.link-p), #recursos li p { display: none; }

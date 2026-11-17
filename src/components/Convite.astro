@@ -13,7 +13,7 @@ const fundo = (p.fotos?.trabalho || []).find(tem);
       </div>
     )}
     <h2 id="convite-titulo" data-titulo>{t.convite.titulo}</h2>
-    <p>{t.convite.frase}</p>
+    {t.convite.frase && <p>{t.convite.frase}</p>}
     <div class="acoes">
       <BotaoAgendar variante="claro" magnetico />
       {whatsappUrl && (
