@@ -75,9 +75,12 @@
     { "titulo": "Aprimoramento em Comportamento Alimentar", "instituicao": "Centro de Estudos Exemplo", "ano": "2022" }
   ],
   "experiencias": [
-    { "titulo": "Consultório próprio", "instituicao": "Belo Horizonte", "ano": "2020" }
+    { "titulo": "Consultório próprio", "instituicao": "Belo Horizonte", "ano": "2020" },
+    { "titulo": "Nutricionista em clínica multiprofissional", "instituicao": "Clínica Exemplo", "ano": "2017" }
   ],
-  "publicacoes": [],
+  "publicacoes": [
+    { "titulo": "Planejamento alimentar para trabalhadores em turnos", "veiculo": "Revista Exemplo de Nutrição", "ano": "2023", "url": "" }
+  ],
   "associacoes": [
     { "nome": "Associação Exemplo de Nutrição", "descricao": "Membro associado" }
   ],
@@ -88,10 +91,21 @@
     { "titulo": "Comunicação entre consultas", "descricao": "WhatsApp em dias úteis, das 8h às 18h, para dúvidas sobre o plano.", "icone": "conversa" }
   ],
   "aplicativo": { "existe": false, "nome": "", "telas": [] },
-  "avaliacoesPublicas": [],
+  "avaliacoesPublicas": [
+    { "nome": "Mariana S.", "data": "Outubro de 2026", "origem": "Google (exemplo)", "url": "https://example.com/avaliacao-ficticia-1", "texto": "Avaliação fictícia de demonstração. Consulta sem pressa, com explicações claras e um plano que realmente coube na minha rotina de plantões." },
+    { "nome": "Rafael T.", "data": "Setembro de 2026", "origem": "Google (exemplo)", "url": "https://example.com/avaliacao-ficticia-2", "texto": "Avaliação fictícia de demonstração. Ele organizou minha alimentação em volta dos treinos de corrida, sem cortar o que eu gosto de comer." },
+    { "nome": "Luiza M.", "data": "Agosto de 2026", "origem": "Google (exemplo)", "url": "https://example.com/avaliacao-ficticia-3", "texto": "Avaliação fictícia de demonstração. Gostei de entender o porquê de cada orientação. A lista de compras mudou minhas semanas." }
+  ],
   "fotos": { "retrato": "", "sobre": "", "consultorio": [], "atendimento": [], "trabalho": [] },
   "fraseFilosofia": "Comer bem não é seguir uma dieta. É ter uma rotina que você consegue manter numa terça-feira qualquer.",
-  "sobre": { "paragrafos": [], "revisado": false },
+  "sobre": {
+    "paragrafos": [
+      "Sou Henrique, nutricionista em Belo Horizonte desde 2016. Antes de qualquer plano, quero entender como são os seus dias: a que horas você acorda, onde almoça, quem cozinha e o que acontece quando a semana aperta.",
+      "Me especializei em nutrição esportiva e em comportamento alimentar porque percebi que a maior parte das dificuldades não está em saber o que comer, mas em conseguir fazer isso numa rotina real. Por isso meu trabalho é feito de ajustes pequenos, revistos a cada retorno.",
+      "Atendo no consultório e online, com o mesmo cuidado e os mesmos materiais. Uso as evidências científicas como base e a sua rotina como medida."
+    ],
+    "revisado": true
+  },
   "faq": [
     { "pergunta": "Como funciona a primeira consulta?", "resposta": "Conversamos sobre sua rotina, seu histórico de saúde, seus hábitos e o que você espera do acompanhamento. Faço a avaliação nutricional e saímos com os primeiros combinados." },
     { "pergunta": "Quanto tempo dura o atendimento?", "resposta": "A primeira consulta dura cerca de 60 minutos. Os retornos duram cerca de 40 minutos." },
@@ -100,7 +114,7 @@
     { "pergunta": "Atende pacientes de outras cidades?", "resposta": "Sim, pelo atendimento online, para pessoas em qualquer cidade do Brasil." },
     { "pergunta": "Preciso levar exames?", "resposta": "Se tiver exames dos últimos seis meses, leve ou envie antes. Se não tiver, não precisa fazer nenhum para a primeira consulta." },
     { "pergunta": "Como são os retornos?", "resposta": "A cada 30 a 45 dias, presenciais ou online. O intervalo é combinado conforme a sua necessidade." },
-    { "pergunta": "Aceita plano de saúde ou emite recibo para reembolso?", "resposta": "" },
+    { "pergunta": "Aceita plano de saúde ou emite recibo para reembolso?", "resposta": "O atendimento é particular. Emito recibo com CRN e CPF, que pode ser usado para pedir reembolso ao seu plano, conforme as regras do seu contrato." },
     { "pergunta": "Como faço para agendar?", "resposta": "Pelo botão Agendar consulta, que abre uma conversa no WhatsApp. Respondo em dias úteis, das 8h às 18h." }
   ],
   "formulario": { "endpoint": "demo" },
