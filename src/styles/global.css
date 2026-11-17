@@ -93,6 +93,22 @@ body {
 
 ::selection { background: var(--tinta); color: var(--papel); }
 
+/* Textura de papel: grão quase imperceptível por cima de tudo, sem capturar clique */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 90; pointer-events: none;
+  opacity: 0.05; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.14 0 0 0 0 0.13 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* Cantoneiras de corte, como numa prova de revista: só nas fotos principais */
+.cantos { position: relative; }
+.cantos::before, .cantos::after {
+  content: ''; position: absolute; z-index: 1; width: 14px; height: 14px; pointer-events: none;
+  border: 1px solid var(--tinta); opacity: 0.55;
+}
+.cantos::before { top: -9px; left: -9px; border-right: 0; border-bottom: 0; }
+.cantos::after { bottom: -9px; right: -9px; border-left: 0; border-top: 0; }
+
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 img, svg, iframe { display: block; max-width: 100%; }
@@ -176,9 +192,15 @@ a {
 .secao { padding-top: var(--esp-secao); }
 .secao:last-of-type { padding-bottom: var(--esp-secao); }
 .fio {
+  position: relative;
   height: 2px; background: var(--tinta);
   margin-left: var(--calha); margin-bottom: var(--esp-32);
   transform-origin: left;
+}
+/* ponto tomate onde o fio começa, herança do "agora" da folha */
+.fio::before {
+  content: ''; position: absolute; left: var(--recuo); top: -3px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--tomate);
 }
 @media (min-width: 1024px) { .fio { margin-bottom: var(--esp-48); } }
 

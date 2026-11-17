@@ -1,7 +1,40 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    { "name": "demo", "runtimeExecutable": "npx", "runtimeArgs": ["astro", "dev", "--mode", "demo", "--port", "4321"], "port": 4321 },
-    { "name": "real", "runtimeExecutable": "npx", "runtimeArgs": ["astro", "dev", "--port", "4322"], "port": 4322 }
-  ]
+﻿{
+    "version":  "0.0.1",
+    "configurations":  [
+                           {
+                               "name":  "demo",
+                               "runtimeExecutable":  "npx",
+                               "runtimeArgs":  [
+                                                   "astro",
+                                                   "dev",
+                                                   "--mode",
+                                                   "demo",
+                                                   "--port",
+                                                   "4321"
+                                               ],
+                               "port":  4321
+                           },
+                           {
+                               "name":  "real",
+                               "runtimeExecutable":  "npx",
+                               "runtimeArgs":  [
+                                                   "astro",
+                                                   "dev",
+                                                   "--port",
+                                                   "4322"
+                                               ],
+                               "port":  4322
+                           },
+                           {
+                               "name":  "producao",
+                               "runtimeExecutable":  "npx",
+                               "runtimeArgs":  [
+                                                   "astro",
+                                                   "preview",
+                                                   "--port",
+                                                   "4323"
+                                               ],
+                               "port":  4323
+                           }
+                       ]
 }

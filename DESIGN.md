@@ -152,6 +152,8 @@ components:
 
 **Creative North Star: "A folha de rotina da semana"**
 
+> **Revisão de 17/11/2026, a pedido do usuário:** a pauta visível saiu do site: linhas verticais dos dias, linha de margem tomate, calha de horas, rótulos de dia e hora do hero, linha do "agora", padrões de semana quadriculados e grade de horários. A grade de 7 colunas continua organizando os blocos, mas não é mais desenhada, e a calha mede 0. O hero virou uma abertura editorial: texto em 7/12 com as duas ações lado a lado e a faixa de fatos com fios verticais; à direita, a foto alta em `figure` com legenda. Novos detalhes: aspas tipográficas tomate na frase de filosofia e nas avaliações, e foto de fundo com véu verde a 86% no convite final (`fotos.trabalho`). Os trechos abaixo que descrevem a pauta, a calha e o hero em faixas de hora valem como história do sistema, não como regra atual.
+
 O site inteiro é uma folha de agenda semanal impressa em papel claro: uma calha de horas à esquerda e sete colunas de dias que descem a página de borda a borda, pautadas em tinta azul. O conteúdo não fica em cards soltos; ele é marcado na grade como compromisso. Títulos ocupam faixas de dias, a foto ocupa um bloco de dias e horas, e a ação principal é uma célula tomate na quinta-feira às 16h. A linha de margem tomate atravessa toda a folha, como no caderno.
 
 A densidade é de papelaria, não de painel: muito papel, fios finos, blocos cheios só onde algo foi "marcado". Uma família tipográfica só (Bricolage Grotesque variável, com eixo de largura) faz tudo, do título de 80px ao rótulo de hora de 12px; a hierarquia vem de tamanho, peso e largura, nunca de uma segunda fonte. A arte abstrata da marca é o padrão de semana 7x5, gerado a partir da mesma grade.

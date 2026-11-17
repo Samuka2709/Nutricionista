@@ -44,7 +44,13 @@ const itens = t.principios.itens || [];
   .linhas { border-top: 1px solid var(--pauta-forte); align-self: start; }
   li { padding-block: 24px; border-bottom: 1px solid var(--pauta-forte); }
   .principio { display: grid; gap: 8px; }
-  blockquote p { font-size: 1.25rem; line-height: 1.45; }
+  blockquote p { font-size: 1.25rem; line-height: 1.45; text-wrap: pretty; }
+  blockquote p::before { content: '\201C'; margin-right: 0.08em; font-weight: 650; color: var(--tomate); }
+  blockquote p::after { content: '\201D'; margin-left: 0.04em; font-weight: 650; color: var(--tomate); }
+  @media (min-width: 1024px) {
+    /* aspa de abertura pendurada fora da medida, como em revista */
+    blockquote p { text-indent: -0.42em; }
+  }
   .autor { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin-top: 14px; max-width: none; color: var(--texto-suave); }
   .autor strong { color: var(--grafite); font-weight: 650; }
   @media (min-width: 1024px) {

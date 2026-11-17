@@ -177,15 +177,20 @@
     }
   ],
   "fotos": {
-    "retrato": "",
-    "sobre": "",
+    "retrato": "retrato.jpg",
+    "sobre": "sobre.jpg",
     "consultorio": [
       "consultorio.jpg"
     ],
     "atendimento": [
       "online.jpg"
     ],
-    "trabalho": []
+    "trabalho": [
+      "artigo-comida-de-verdade.jpg"
+    ],
+    "descricaoRetrato": "Foto ilustrativa: homem de jaleco branco, sorrindo",
+    "descricaoSobre": "Foto ilustrativa: homem de jaleco branco segurando uma caneta",
+    "credito": "Foto ilustrativa de banco de imagens (Unsplash), não é o profissional"
   },
   "fraseFilosofia": "Comer bem não é seguir uma dieta. É ter uma rotina que você consegue manter numa terça-feira qualquer.",
   "sobre": {

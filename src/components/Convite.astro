@@ -1,10 +1,17 @@
 ---
 // Convite final: sem urgência, sem escassez, sem promessa.
-import { t, whatsappUrl } from '../lib/site';
+import { p, t, whatsappUrl, tem } from '../lib/site';
 import BotaoAgendar from './BotaoAgendar.astro';
+import Foto from './Foto.astro';
+const fundo = (p.fotos?.trabalho || []).find(tem);
 ---
 <section class="convite" aria-labelledby="convite-titulo" data-convite>
-  <div class="caixa escuro" data-convite-caixa>
+  <div class:list={['caixa escuro', fundo && 'caixa--foto']} data-convite-caixa>
+    {fundo && (
+      <div class="fundo" aria-hidden="true">
+        <Foto arquivo={fundo} tipo="fundo" alt="" preenche sizes="100vw" larguras={[768, 1280, 1920]} />
+      </div>
+    )}
     <h2 id="convite-titulo" data-titulo>{t.convite.titulo}</h2>
     <p>{t.convite.frase}</p>
     <div class="acoes">
@@ -23,6 +30,13 @@ import BotaoAgendar from './BotaoAgendar.astro';
     padding: clamp(72px, 12vw, 160px) 24px;
     background: var(--verde); color: var(--papel);
   }
+  .caixa--foto { position: relative; isolation: isolate; overflow: hidden; }
+  .caixa--foto > :not(.fundo) { position: relative; }
+  .fundo { position: absolute; inset: 0; z-index: -1; }
+  .fundo :global(.foto) { border-radius: 0; }
+  .fundo :global(img) { filter: grayscale(0.35) contrast(1.05); }
+  /* véu verde por cima da foto: o texto claro mantém contraste de texto corrido */
+  .fundo::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--verde) 86%, transparent); }
   h2 { color: var(--papel); max-width: 20ch; }
   p { color: var(--sobre-verde); max-width: 44ch; }
   .acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 16px; }

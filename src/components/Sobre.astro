@@ -21,7 +21,8 @@ const revisado = escritos.length > 0 && p.sobre?.revisado === true;
     <div class="fio" data-fio></div>
     <div class="sem">
       <div class="v retrato" style="--i:1;--f:3" data-revela>
-        <Foto arquivo={p.fotos?.sobre || p.fotos?.retrato} tipo="retrato vertical" alt={`${nome} em atendimento`} proporcao="3 / 4" parallax sizes="(min-width: 1024px) 38vw, 100vw" />
+        <Foto arquivo={p.fotos?.sobre || p.fotos?.retrato} tipo="retrato vertical" alt={p.fotos?.descricaoSobre || `${nome} em atendimento`} proporcao="3 / 4" parallax sizes="(min-width: 1024px) 38vw, 100vw" />
+        {tem(p.fotos?.credito) && <p class="credito">{p.fotos.credito}</p>}
       </div>
       <div class="v texto" style="--i:4;--f:7">
         <h2 id="sobre-titulo" data-titulo>{t.sobre.titulo}</h2>
@@ -53,8 +54,14 @@ const revisado = escritos.length > 0 && p.sobre?.revisado === true;
 <style>
   .sem { row-gap: 36px; }
   .marca { margin-top: 16px; }
+  .credito { margin-top: 10px; font-size: 0.75rem; line-height: 1.4; color: var(--texto-suave); max-width: none; }
   .prosa { display: grid; gap: 16px; margin-top: 24px; }
-  .frase { margin-top: 40px; padding-left: 22px; border-left: 1px solid var(--tomate); }
+  .frase { margin-top: 48px; }
+  /* aspas tipográficas grandes, penduradas acima da frase */
+  .frase::before {
+    content: '\201C'; display: block; height: 0.42em; margin-bottom: 8px;
+    font-size: 6rem; font-weight: 600; line-height: 0.85; color: var(--tomate);
+  }
   .frase p {
     max-width: 24ch; font-size: var(--destaque); font-weight: 500; font-stretch: 92%;
     line-height: 1.2; letter-spacing: -0.015em; color: var(--tinta); text-wrap: balance;

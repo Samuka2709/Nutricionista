@@ -51,7 +51,7 @@ Nutrição baseada em ciência, construída para a realidade de quem é atendido
 
 ## Evidence on Hand
 
-Nenhum dado real ainda. Não há nome, CRN, formação, avaliações nem fotos. O site usa um profissional fictício claramente marcado como demonstração (escolha do usuário) e espaços reservados "Foto: [tipo]". Nada disso pode ir para produção. Referências dos artigos: somente fontes reais e verificáveis.
+Nenhum dado real ainda. Não há nome, CRN, formação, avaliações nem fotos. O site usa um profissional fictício claramente marcado como demonstração (escolha do usuário). Em 17/11/2026 o usuário pediu fotos de exemplo, inclusive de um profissional: são fotos reais do Unsplash (nunca geradas por IA), e o retrato traz a legenda "Foto ilustrativa de banco de imagens (Unsplash), não é o profissional" (`fotos.credito`). Nada disso pode ir para produção. Referências dos artigos: somente fontes reais e verificáveis.
 
 ## Product Principles
 

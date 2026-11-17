@@ -1,12 +1,9 @@
 ---
-// A folha da semana: calha de horas + sete dias. Os blocos são "compromissos" marcados na grade.
-// No desktop é a semana inteira; no celular, a mesma folha vira a vista de um dia.
-import { p, t, nome, crn, identificacao, modalidadesTexto, especialidades, online, presencial, cidadeCurta, agendarUrl, secoes, tem } from '../lib/site';
+// Abertura editorial: título grande, as duas ações lado a lado, fatos comprovados e a foto em moldura alta.
+import { p, t, nome, crn, identificacao, modalidadesTexto, online, presencial, cidadeCurta, agendarUrl, secoes, tem } from '../lib/site';
 import Foto from './Foto.astro';
 import Preencher from './Preencher.astro';
 
-const dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
-const horas = ['07h', '10h', '13h', '16h', '19h'];
 const fatos = [
   crn && { forte: crn, apoio: 'registro profissional de nutricionista' },
   modalidadesTexto && {
@@ -15,196 +12,117 @@ const fatos = [
   },
   online && tem(p.plataformaOnline) && { forte: p.plataformaOnline, apoio: 'plataforma do atendimento online' },
 ].filter(Boolean) as { forte: string; apoio: string }[];
-const tres = especialidades.slice(0, 3);
 const destino = secoes.sobre ? '#sobre' : secoes.especialidades ? '#especialidades' : '#metodologia';
 const descricao = [t.hero.descricao, tem(p.publico) ? `Atendo ${p.publico}.` : ''].filter(Boolean).join(' ');
 ---
 <section class="hero" id="inicio" aria-labelledby="hero-titulo">
   <div class="grade" data-hero>
-    <div class="canto" aria-hidden="true"></div>
-    {dias.map((d, i) => <div class="dia" style={`--c:${i + 1}`} data-dia={i} aria-hidden="true"><span>{d}</span></div>)}
-    {horas.map((h, i) => <div class="hora" style={`--r:${i + 1}`} aria-hidden="true">{h}</div>)}
-    {horas.map((_, i) => <div class="linha" style={`--r:${i + 1}`} aria-hidden="true" data-linha></div>)}
-    <div class="b-fundo" aria-hidden="true"></div>
-    <div class="agora" data-agora hidden aria-hidden="true"><span data-agora-hora></span></div>
-
-    <div class="b-titulo">
+    <div class="b-texto">
       <h1 id="hero-titulo" data-entrada data-titulo-hero>{t.hero.titulo}</h1>
       <p class="descricao" data-entrada>{descricao}{!tem(p.publico) && <Preencher campo="publico" />}</p>
+
+      <div class="b-acoes">
+        <div class="b-cta" data-entrada>
+          {agendarUrl ? (
+            <a class="evento evento--acao" href={agendarUrl} target="_blank" rel="noopener noreferrer" data-agendar>
+              {tem(p.duracaoConsulta) && <span class="ev-meta">Primeira consulta, <span class="nw">{p.duracaoConsulta}</span></span>}
+              <span class="ev-rotulo">Agendar consulta<span class="so-leitor"> (abre em nova aba)</span></span>
+            </a>
+          ) : <Preencher campo="whatsapp ou linkAgendamento" />}
+        </div>
+        <div class="b-sec" data-entrada>
+          <a class="evento evento--linha" href={destino}><span class="ev-rotulo">Conhecer meu trabalho</span></a>
+        </div>
+      </div>
+
+      {fatos.length > 0 ? (
+        <ul class="b-fatos" data-entrada>
+          {fatos.map((f) => <li><strong>{f.forte}</strong><span>{f.apoio}</span></li>)}
+        </ul>
+      ) : <div class="b-fatos"><Preencher campo="crn, modalidades, cidade" /></div>}
     </div>
 
-    <div class="b-cta" data-entrada>
-      {agendarUrl ? (
-        <>
-          <p class="ev-meta">Primeira consulta{tem(p.duracaoConsulta) && <>, <span class="nw">{p.duracaoConsulta}</span></>}</p>
-          <a class="evento evento--acao" href={agendarUrl} target="_blank" rel="noopener noreferrer" data-agendar>
-            <span>Agendar consulta<span class="so-leitor"> (abre em nova aba)</span></span>
-          </a>
-        </>
-      ) : <Preencher campo="whatsapp ou linkAgendamento" />}
-    </div>
-    <div class="b-sec" data-entrada>
-      <a class="evento evento--linha" href={destino}><span>Conhecer meu trabalho</span></a>
-    </div>
-
-    {fatos.length > 0 ? (
-      <ul class="b-fatos" data-entrada>
-        {fatos.map((f) => <li><strong>{f.forte}</strong><span>{f.apoio}</span></li>)}
-      </ul>
-    ) : <div class="b-fatos"><Preencher campo="crn, modalidades, cidade" /></div>}
-
-    <div class="b-foto" data-foto-hero>
-      {!tem(p.fotos?.retrato) && [2, 3].map((c) => <span class="pf pf-v" style={`--c:${c}`} aria-hidden="true"></span>)}
-      {!tem(p.fotos?.retrato) && [2, 3, 4].map((r) => <span class="pf pf-h" style={`--r:${r}`} aria-hidden="true"></span>)}
-      <Foto semGrade arquivo={p.fotos?.retrato} tipo="retrato profissional" alt={nome ? `${nome}, nutricionista` : 'Nutricionista'} preenche prioridade sizes="(min-width: 1024px) 40vw, 100vw" />
-    </div>
-    <p class="b-legenda" data-entrada>
-      <strong>{nome || <Preencher campo="nome" />}</strong>
-      <span>{identificacao}{!crn && <Preencher campo="crn.numero e crn.regiao" />}</span>
-    </p>
-
-    {tres.length > 0 ? (
-      <ul class="b-esp" data-entrada aria-label="Especialidades principais">
-        {tres.map((e) => <li>{e.titulo}</li>)}
-      </ul>
-    ) : <div class="b-esp"><Preencher campo="especialidades" /></div>}
+    <figure class="b-figura">
+      <div class="cantos">
+        <div class="b-foto" data-foto-hero>
+          <Foto arquivo={p.fotos?.retrato} tipo="retrato profissional" alt={p.fotos?.descricaoRetrato || (nome ? `${nome}, nutricionista` : 'Nutricionista')} preenche prioridade sizes="(min-width: 1024px) 42vw, 100vw" />
+        </div>
+      </div>
+      <figcaption class="b-legenda" data-entrada>
+        <strong>{nome || <Preencher campo="nome" />}</strong>
+        <span>{identificacao}{!crn && <Preencher campo="crn.numero e crn.regiao" />}</span>
+        {tem(p.fotos?.credito) && <small class="credito">{p.fotos.credito}</small>}
+      </figcaption>
+    </figure>
   </div>
 </section>
 
 <style>
   .hero { padding-top: var(--header-h); }
 
-  /* ---------- A folha: a mesma grade em todos os tamanhos ---------- */
+  /* ---------- Celular e tablet: uma coluna ---------- */
   .grade {
     position: relative;
-    display: grid; grid-template-columns: var(--calha) repeat(7, minmax(0, 1fr));
-    border-top: 2px solid var(--tinta);
+    display: grid; gap: 40px;
+    padding: 28px var(--borda) 8px var(--recuo);
   }
-  .canto { grid-area: 1 / 1; border-bottom: 1px solid var(--pauta-forte); }
-  .dia {
-    grid-row: 1; grid-column: calc(var(--c) + 1);
-    display: flex; align-items: center; justify-content: center; min-height: 36px;
-    border-bottom: 1px solid var(--pauta-forte);
-    font-size: 0.8125rem; font-weight: 600; color: var(--tinta);
-  }
-  .dia span { display: inline-flex; align-items: center; gap: 5px; }
-  :global(.dia.hoje) span::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--tomate); }
-  .hora {
-    grid-column: 1; grid-row: calc(var(--r) + 1);
-    padding: 10px 0 0 7px;
-    font-size: 0.75rem; font-weight: 600; line-height: 1.3; color: var(--tinta); font-variant-numeric: tabular-nums;
-  }
-  .linha { grid-column: 1 / -1; grid-row: calc(var(--r) + 1); border-top: 1px solid var(--pauta); pointer-events: none; transform-origin: left; }
+  h1 { text-wrap: balance; }
+  .descricao { margin-top: 18px; max-width: 34em; color: var(--grafite); text-wrap: pretty; }
 
-  /* A linha do "agora" passa por cima do papel e por trás do texto */
-  .agora:not([hidden]) { display: block; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--tomate); pointer-events: none; z-index: 1; }
-  .agora::before { content: ''; position: absolute; left: calc(var(--calha) - 4px); top: -4px; width: 9px; height: 9px; border-radius: 50%; background: var(--tomate); }
-  .agora span {
-    position: absolute; left: 0; top: -9px; padding: 0 4px; background: var(--papel);
-    font-size: 0.6875rem; font-weight: 650; line-height: 18px; color: var(--tomate); font-variant-numeric: tabular-nums;
-  }
+  .b-acoes { display: grid; gap: 10px; margin-top: 32px; }
 
-  /* ---------- Vista de um dia (celular e tablet) ---------- */
-  @media (max-width: 1023px) { .agora:not([hidden]) { right: auto; width: calc(var(--calha) + 10px); } }
-  .b-fundo, .pf { display: none; }
-  /* Sem pauta: a folha da semana fica só na estrutura, sem linhas, dias, horas nem linha do "agora" */
-  .canto, .dia, .hora, .linha, .agora, .agora:not([hidden]) { display: none; }
-  .grade { border-top: 0; }
-  @media (min-width: 1024px) { .pf { display: none !important; } }
-  .b-titulo, .b-cta, .b-sec, .b-fatos, .b-foto, .b-legenda, .b-esp {
-    position: relative; z-index: 2; grid-column: 2 / -1; min-width: 0;
-    padding-inline: var(--recuo) var(--borda);
-  }
-  .b-titulo { grid-row: 2; padding-block: 22px 24px; }
-  .b-cta { grid-row: 3; padding-block: 8px; }
-  .b-sec { grid-row: 4; padding-block: 8px; }
-  .b-fatos { grid-row: 5; padding-block: 6px 10px; }
-  .b-foto { grid-row: 6; aspect-ratio: 4 / 5; margin: 10px var(--borda) 0 var(--recuo); padding: 0; }
-  .b-legenda { grid-row: 7; display: grid; gap: 2px; padding-top: 12px; max-width: none; }
-  .b-esp { grid-row: 8; display: flex; flex-wrap: wrap; gap: 4px 20px; padding-top: 20px; font-weight: 600; color: var(--tinta); }
-
-  .descricao { margin-top: 16px; max-width: 30em; color: var(--grafite); }
-
-  /* Compromissos: blocos da agenda, não pílulas */
+  /* Ações: blocos retos de agenda, rótulo forte e uma linha de apoio */
   .evento {
-    display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
-    width: 100%; min-height: 60px; padding: 12px 16px;
+    display: flex; flex-direction: column; justify-content: center; gap: 2px;
+    width: 100%; min-height: 60px; padding: 12px 20px;
     border-radius: var(--raio-botao);
-    font-size: 1.1875rem; font-weight: 650; line-height: 1.12; text-align: left; text-decoration: none;
-    transition: transform var(--dur-toque) var(--ease-out), background-color 160ms ease, color 160ms ease;
+    font-size: 1.125rem; font-weight: 650; line-height: 1.15; text-decoration: none;
+    transition: transform var(--dur-toque) var(--ease-out), background-color 180ms ease, color 180ms ease, border-color 180ms ease;
   }
   .evento:active { transform: scale(0.97); }
-  .evento--acao { min-height: 78px; background: var(--tomate); color: var(--papel); }
-  .evento--linha { border: 1.5px solid var(--tinta); color: var(--tinta); background: var(--papel); }
-  .ev-meta {
-    position: absolute; z-index: 1; top: 19px; left: calc(var(--recuo) + 16px); right: calc(var(--borda) + 16px);
-    font-size: 0.8125rem; font-weight: 600; line-height: 1.3; color: var(--papel); pointer-events: none; max-width: none;
-  }
-
+  .evento--acao { background: var(--tomate); color: var(--papel); }
+  .evento--linha { border: 1.5px solid var(--tinta); color: var(--tinta); background: transparent; }
+  .ev-meta { font-size: 0.8125rem; font-weight: 550; letter-spacing: 0.005em; opacity: 0.9; }
   .nw { white-space: nowrap; }
-  .b-fatos li { display: grid; gap: 2px; padding-block: 12px; border-bottom: 1px solid var(--pauta-forte); }
-  .b-fatos li:last-child { border-bottom: 0; }
+
+  .b-fatos { display: grid; margin-top: 36px; border-top: 1px solid var(--pauta-forte); }
+  .b-fatos li { display: grid; gap: 3px; padding-block: 14px; border-bottom: 1px solid var(--pauta-forte); }
   .b-fatos strong, .b-legenda strong { font-weight: 650; color: var(--tinta); line-height: 1.25; }
   .b-fatos span, .b-legenda span { font-size: var(--pequeno); line-height: 1.4; color: var(--texto-suave); }
+
+  .b-figura { margin: 0; display: grid; gap: 14px; }
+  .b-foto { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--raio-foto); background: var(--verde); }
+  .b-legenda { display: grid; gap: 2px; padding-left: 14px; border-left: 1px solid var(--tomate); }
+  .credito { margin-top: 6px; font-size: 0.75rem; line-height: 1.4; color: var(--texto-suave); }
 
   @media (hover: hover) and (pointer: fine) {
     .evento--acao:hover { background: var(--tomate-fundo); }
     .evento--linha:hover { background: var(--tinta); color: var(--papel); }
   }
-  @media (min-width: 640px) and (max-width: 1023px) { .b-foto { max-width: 520px; } }
-  @media (min-width: 1024px) and (max-width: 1279px) {
-    .b-fatos strong { font-size: 1rem; }
-    .b-fatos span { font-size: 0.8125rem; }
-    .b-esp li { font-size: 1rem; }
+  @media (min-width: 560px) {
+    .b-acoes { grid-template-columns: repeat(2, minmax(0, max-content)); }
+    .evento { min-width: 240px; }
+    .b-fatos { grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--pauta-forte); }
+    .b-fatos li { border-bottom: 0; padding-inline: 16px; border-left: 1px solid var(--pauta-forte); }
+    .b-fatos li:first-child { padding-left: 0; border-left: 0; }
   }
+  @media (min-width: 640px) and (max-width: 1023px) { .b-figura { max-width: 520px; } }
 
-  /* ---------- Semana inteira (desktop) ---------- */
+  /* ---------- Desktop: texto à esquerda, foto alta à direita ---------- */
   @media (min-width: 1024px) {
     .grade {
-      grid-template-rows: 44px repeat(5, minmax(118px, auto));
-      min-height: min(calc(100svh - var(--header-h) - var(--aviso-h)), 1000px);
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: clamp(48px, 5vw, 96px);
+      align-items: center;
+      min-height: min(calc(100svh - var(--header-h) - var(--aviso-h)), 960px);
+      padding-block: 40px 56px;
     }
-    .dia { justify-content: flex-start; padding-left: 14px; min-height: 0; font-size: var(--pequeno); }
-    .dia span { gap: 8px; }
-    :global(.dia.hoje) span::before { width: 8px; height: 8px; }
-    .hora { padding: 10px 0 0 var(--recuo); font-size: var(--pequeno); }
-    .agora span { left: 0; padding: 0 6px 0 var(--recuo); font-size: 0.75rem; }
-
-    .b-titulo, .b-cta, .b-sec, .b-fatos, .b-foto, .b-legenda, .b-esp { padding: 0; margin: 0; }
-
-    /* O papel do título é um bloco próprio, para o "agora" passar entre ele e o texto */
-    .b-fundo { display: block; grid-column: 2 / 6; grid-row: 2 / 5; z-index: 0; background: var(--papel); border-bottom: 2px solid var(--tinta); }
-    .b-titulo {
-      grid-column: 2 / 6; grid-row: 2 / 5;
-      padding: 28px 32px 28px var(--recuo);
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .descricao { margin-top: 20px; max-width: 34em; text-wrap: balance; }
-
-    .b-foto {
-      grid-column: 6 / 9; grid-row: 2 / 6; aspect-ratio: auto; margin: 8px;
-      display: grid; grid-template-columns: subgrid; grid-template-rows: subgrid;
-    }
-    .pf { display: block; position: relative; z-index: 1; pointer-events: none; }
-    .pf-v { grid-column: var(--c); grid-row: 1 / 4; border-left: 1px solid var(--pauta-verde); }
-    .pf-h { grid-row: var(--r); grid-column: 1 / -1; border-top: 1px solid var(--pauta-verde); }
-    .b-legenda {
-      grid-column: 6 / 9; grid-row: 6; align-self: start;
-      padding: 14px 16px 0 22px; margin-left: 24px;
-      border-left: 1px solid var(--tinta);
-    }
-
-    .b-fatos { grid-column: 2 / 5; grid-row: 5; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .b-fatos li { align-content: center; padding: 12px 14px 12px var(--recuo); border: 0; }
-    .b-esp { grid-column: 2 / 5; grid-row: 6; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
-    .b-esp li { display: flex; align-items: center; padding: 12px 14px 12px var(--recuo); line-height: 1.25; }
-    /* papel só atrás do texto: a linha do "agora" passa por trás sem cobrir as linhas dos dias */
-    .b-fatos li, .b-esp li { background: var(--papel); background-clip: content-box; }
-
-    .b-cta { grid-column: 5; grid-row: 5; padding: 6px; }
-    .b-sec { grid-column: 5; grid-row: 6; padding: 6px; }
-    .evento { height: 100%; min-height: 0; padding: 14px 16px; font-size: clamp(1.125rem, 0.7rem + 0.8vw, 1.5rem); }
-    .ev-meta { top: 20px; left: 22px; right: 22px; }
+    .descricao { margin-top: 24px; font-size: 1.1875rem; max-width: 33em; }
+    .b-acoes { margin-top: 40px; }
+    .evento { min-height: 68px; padding: 14px 24px; font-size: 1.25rem; }
+    .b-fatos { margin-top: 56px; }
+    .b-fatos li { padding-block: 16px; }
+    .b-foto { aspect-ratio: auto; height: min(calc(100svh - var(--header-h) - var(--aviso-h) - 150px), 760px); min-height: 460px; }
   }
 
   @media (prefers-reduced-motion: reduce) { .evento, .evento:active { transform: none; } }

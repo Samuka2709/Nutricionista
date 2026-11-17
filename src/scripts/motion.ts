@@ -61,7 +61,7 @@ if (reduz) {
     if (alvo) requestAnimationFrame(() => lenis.scrollTo(alvo, { offset: deslocamento(), immediate: true }));
   }
 
-  /* ---------- Hero: a folha se preenche ---------- */
+  /* ---------- Hero: o título sobe por linhas e a foto se revela ---------- */
   const hero = $('[data-hero]');
   const comIntro = hero && raiz.classList.contains('intro') && window.scrollY < 40;
   const entradaHero = () => {
@@ -75,32 +75,24 @@ if (reduz) {
     const dentro = $('img, .reservado', foto);
     const divisao = SplitText.create(h1, { type: 'lines', mask: 'lines', linesClass: 'ln' });
     const resto = $$('[data-entrada]', hero).filter((el) => el !== h1);
-    const itens = [...$$('.b-fatos li', hero), ...$$('.b-esp li', hero)];
+    const itens = $$('.b-fatos li', hero);
     const cta = $('.b-cta .evento', hero);
 
     gsap.set(resto, { opacity: 0, y: 12 });
     gsap.set(itens, { opacity: 0, y: 10 });
-    gsap.set([$('.b-fatos', hero), $('.b-esp', hero)], { opacity: 1, y: 0 });
-    gsap.set($$('[data-linha]', hero), { scaleX: 0 });
-    gsap.set($$('[data-pauta]'), { scaleY: 0 });
-    gsap.set($$('.dia span, .hora', hero), { opacity: 0, y: 6 });
+    gsap.set($('.b-fatos', hero), { opacity: 1, y: 0 });
     gsap.set(divisao.lines, { yPercent: 110 });
     if (cta) gsap.set(cta, { clipPath: 'inset(0 100% 0 0)' });
     gsap.set(h1, { opacity: 1 });
     liberaIntro();
 
     const tl = gsap.timeline({ onComplete: () => { divisao.revert(); cortina.remove(); ScrollTrigger.refresh(); } });
-    tl.to($$('[data-pauta]'), { scaleY: 1, duration: 1.2, ease: 'mov', stagger: 0.04 }, 0)
-      .to($$('[data-linha]', hero), { scaleX: 1, duration: 0.9, ease: 'mov', stagger: 0.05 }, 0.05)
-      .to($$('.dia span, .hora', hero), { opacity: 1, y: 0, duration: 0.4, stagger: 0.025 }, 0.25)
-      .to(divisao.lines, { yPercent: 0, duration: 0.95, stagger: 0.09 }, 0.3)
+    tl.to(divisao.lines, { yPercent: 0, duration: 0.95, stagger: 0.09 }, 0.3)
       .to(cortina, { scaleY: 0, duration: 1.15, ease: 'mov' }, 0.35)
       .fromTo(dentro, { scale: 1.14 }, { scale: 1, duration: 1.5, ease: 'saida' }, 0.35)
       .to(resto, { opacity: 1, y: 0, duration: 0.5, stagger: 0.06 }, 0.75)
       .to(itens, { opacity: 1, y: 0, duration: 0.45, stagger: 0.05 }, 0.9);
     if (cta) tl.to(cta, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: 'mov', clearProps: 'clipPath' }, 1.0);
-    const agora = $('[data-agora]', hero);
-    if (agora) tl.fromTo(agora, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.4);
   };
   if (comIntro) {
     // Espera a fonte (no máximo 500 ms) para a quebra de linhas do título sair certa.
