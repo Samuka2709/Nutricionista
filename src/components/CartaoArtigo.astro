@@ -1,45 +1,45 @@
 ---
 import { dataBR, slug } from '../lib/site';
 import Foto from './Foto.astro';
-import PadraoSemana from './PadraoSemana.astro';
+import Icone from './Icone.astro';
 interface Props { artigo: any; variante?: 'destaque' | 'linha' | 'grade'; semente?: number; nivel?: 'h2' | 'h3' }
-const { artigo, variante = 'grade', semente = 0, nivel = 'h3' } = Astro.props;
+const { artigo, nivel = 'h3' } = Astro.props;
 const d = artigo.data;
 const T = nivel;
-const proporcao = variante === 'linha' ? '1 / 1' : '16 / 10';
 ---
-<article class:list={['cartao', `cartao--${variante}`]} data-categoria={slug(d.categoria)}>
+<article class="cartao-suave cartao" data-categoria={slug(d.categoria)}>
   <a class="midia" href={`/conteudos/${artigo.id}`} tabindex="-1" aria-hidden="true">
     {d.imagem
-      ? <Foto arquivo={d.imagem} tipo="imagem do artigo" alt="" proporcao={proporcao} sizes={variante === 'linha' ? '120px' : '(min-width: 1024px) 50vw, 100vw'} />
-      : <PadraoSemana semente={semente} proporcao={proporcao} fundo={semente % 2 ? 'claro' : 'verde'} />}
+      ? <Foto arquivo={d.imagem} tipo="imagem do artigo" alt="" proporcao="16 / 11" larguras={[400, 640, 800]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+      : <div class="sem-foto"><Icone nome="publicacao" tamanho={36} /></div>}
+    <span class="cat">{d.categoria}</span>
   </a>
   <div class="txt">
     <T class="titulo"><a href={`/conteudos/${artigo.id}`}>{d.titulo}</a></T>
-    {d.rascunho && <p><span class="rascunho">[RASCUNHO — revisar antes de publicar]</span></p>}
-    <p class="resumo">{d.resumo}</p>
-    <p class="meta"><span class="cat">{d.categoria}</span><time datetime={d.data.toISOString().slice(0, 10)}>{dataBR(d.data)}</time><span>{d.tempoLeitura} min de leitura</span></p>
-    <a class="link" href={`/conteudos/${artigo.id}`} aria-label={`Ler artigo: ${d.titulo}`}>Ler artigo</a>
+    {d.rascunho && <p><span class="rascunho">Rascunho: revisar antes de publicar</span></p>}
+    <p class="meta"><time datetime={d.data.toISOString().slice(0, 10)}>{dataBR(d.data)}</time><span>{d.tempoLeitura} min de leitura</span></p>
   </div>
 </article>
 
 <style>
-  .cartao { display: grid; gap: 20px; align-content: start; min-width: 0; }
-  .midia { display: block; overflow: hidden; border-radius: var(--raio-foto); }
-  .midia :global(svg), .midia :global(img) { transition: transform 500ms var(--ease-out); }
-  .txt { display: grid; gap: 10px; justify-items: start; align-content: start; min-width: 0; }
-  .meta { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 0.875rem; line-height: 1.4; color: var(--texto-suave); max-width: none; }
-  .cat { font-weight: 650; color: var(--tinta); }
-  .titulo { font-size: 1.4375rem; font-weight: 650; line-height: 1.15; letter-spacing: -0.01em; }
-  .titulo a { color: inherit; text-decoration: none; }
-  .resumo { font-size: var(--pequeno); line-height: 1.55; color: var(--texto-suave); }
-  .cartao--destaque .titulo { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); font-stretch: 90%; letter-spacing: -0.02em; line-height: 1.05; }
-  .cartao--destaque .resumo { font-size: var(--corpo); color: var(--grafite); max-width: 52ch; }
-  .cartao--linha { grid-template-columns: 96px minmax(0, 1fr); gap: 18px; padding-block: 22px; border-bottom: 1px solid var(--pauta-forte); }
-  .cartao--linha .titulo { font-size: 1.3125rem; }
-  @media (hover: hover) and (pointer: fine) {
-    .cartao:hover .midia :global(svg), .cartao:hover .midia :global(img) { transform: scale(1.03); }
-    .titulo a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.18em; }
+  .cartao { display: flex; flex-direction: column; overflow: hidden; min-width: 0; transition: transform 320ms var(--ease-out); }
+  .midia { position: relative; display: block; overflow: hidden; }
+  .midia :global(.foto) { border-radius: 0; }
+  .midia :global(img) { transition: scale 700ms var(--ease-out); }
+  .sem-foto { aspect-ratio: 16 / 11; display: grid; place-items: center; background: var(--salvia-clara); color: var(--salvia); }
+  .cat {
+    position: absolute; left: 16px; top: 16px; padding: 6px 12px; border-radius: 6px;
+    background: color-mix(in srgb, var(--branco) 92%, transparent); color: var(--oliva); font-size: 0.75rem; font-weight: 700;
   }
-  @media (prefers-reduced-motion: reduce) { .midia :global(svg), .midia :global(img) { transition: none; } }
+  .txt { display: grid; gap: 10px; padding: 22px 24px 26px; align-content: start; }
+  .titulo { font-family: var(--serif); font-weight: 560; font-size: 1.35rem; line-height: 1.22; }
+  .titulo a { color: var(--oliva); text-decoration: none; }
+  .titulo a::after { content: ''; position: absolute; inset: 0; }
+  .cartao { position: relative; }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.8rem; color: var(--texto-suave); }
+  @media (hover: hover) and (pointer: fine) {
+    .cartao:hover { transform: translateY(-4px); }
+    .cartao:hover .midia :global(img) { scale: 1.05; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cartao, .midia :global(img) { transition: none; } }
 </style>

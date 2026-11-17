@@ -1,40 +1,26 @@
 ---
-// Três artigos em destaque na página inicial, o mais recente maior.
+// Três artigos recentes na página inicial.
 import { getCollection } from 'astro:content';
-import { t } from '../lib/site';
+import { t, enfase } from '../lib/site';
 import CartaoArtigo from './CartaoArtigo.astro';
+import Icone from './Icone.astro';
 const artigos = (await getCollection('artigos')).sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf()).slice(0, 3);
-const [recente, ...outros] = artigos;
 ---
 {artigos.length > 0 && (
   <section class="secao" id="conteudos" aria-labelledby="conteudos-titulo">
-    <div class="fio" data-fio></div>
-    <div class="sem cabeca">
-      <div class="v" style="--i:1;--f:5">
-        <h2 id="conteudos-titulo" data-titulo>{t.conteudos.titulo}</h2>
+    <div class="caixa-l">
+      <div class="cabeca cabeca--lado">
+        <h2 id="conteudos-titulo" data-titulo set:html={enfase(t.conteudos.titulo)} />
+        <p class="todos"><a class="link" href="/conteudos">Ver todos os conteúdos<Icone nome="seta" tamanho={16} /></a></p>
       </div>
-      <p class="v todos" style="--i:6;--f:7"><a class="link" href="/conteudos">Ver todos os conteúdos</a></p>
-    </div>
-    <div class="sem corpo">
-      <div class="v" style={`--i:1;--f:${outros.length ? 4 : 7}`} data-revela>
-        <CartaoArtigo artigo={recente} variante="destaque" semente={0} />
+      <div class="grade">
+        {artigos.map((a) => <CartaoArtigo artigo={a} />)}
       </div>
-      {outros.length > 0 && (
-        <div class="v lista" style="--i:5;--f:7">
-          {outros.map((a, i) => <CartaoArtigo artigo={a} variante="linha" semente={i + 1} />)}
-        </div>
-      )}
     </div>
   </section>
 )}
 
 <style>
-  .cabeca { row-gap: 16px; margin-bottom: 40px; align-items: end; }
-  .todos { max-width: none; }
-  .corpo { row-gap: 32px; }
-  .lista { border-top: 1px solid var(--pauta-forte); align-self: start; }
-  @media (min-width: 1024px) {
-    .cabeca { margin-bottom: 56px; }
-    .todos { justify-self: end; }
-  }
+  .todos { justify-self: end; }
+  .grade { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
 </style>

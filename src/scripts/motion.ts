@@ -161,7 +161,7 @@ if (reduz) {
   const metodo = $('[data-metodo]');
   if (metodo) {
     const st = { trigger: $('.tablist', metodo) || metodo, start: 'top 82%', once: true };
-    gsap.from($$('.aba', metodo), { opacity: 0, y: 28, duration: 0.7, stagger: 0.08, scrollTrigger: st });
+    gsap.from($$('.passo', metodo), { opacity: 0, y: 28, duration: 0.7, stagger: 0.1, scrollTrigger: st });
     gsap.from($('.trilho', metodo), { scaleX: 0, transformOrigin: 'left', duration: 1.2, ease: 'mov', scrollTrigger: st });
   }
 
@@ -174,8 +174,8 @@ if (reduz) {
   // Convite final: o bloco cresce de cartão a faixa inteira
   const caixa = $('[data-convite-caixa]');
   if (caixa) {
-    gsap.fromTo(caixa, { clipPath: 'inset(10% 7% 10% 7% round 28px)' }, {
-      clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
+    gsap.fromTo(caixa, { clipPath: 'inset(10% 7% 10% 7% round 12px)' }, {
+      clipPath: 'inset(0% 0% 0% 0% round 12px)', ease: 'none',
       scrollTrigger: { trigger: caixa, start: 'top 92%', end: 'top 28%', scrub: 0.4 },
     });
   }

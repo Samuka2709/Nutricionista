@@ -128,3 +128,10 @@ export const descricaoSite: string = [
   modalidadesTexto ? `${modalidadesTexto}.` : '',
   t.hero.descricao,
 ].filter(Boolean).join(' ');
+
+/** Títulos editoriais: trechos entre *asteriscos* viram ênfase em itálico. O resto é escapado. */
+export const enfase = (s: string): string =>
+  String(s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+export const semEnfase = (s: string): string => String(s || '').replace(/\*/g, '');

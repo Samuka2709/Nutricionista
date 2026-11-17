@@ -1,50 +1,45 @@
 ---
 import { getCollection } from 'astro:content';
 import { nomeCompleto, nome, identificacao, cidade, nav, instagramUrl, instagramExibicao, whatsappUrl, p } from '../lib/site';
+import Icone from './Icone.astro';
 import Preencher from './Preencher.astro';
 const artigos = await getCollection('artigos');
 const links = nav(artigos.length > 0);
 const ano = new Date().getFullYear();
 ---
 <footer class="rodape escuro">
-  <div class="sem">
-    <div class="v topo-rodape" style="--i:1;--f:7">
-      <p class="nome" data-nome-rodape>{nomeCompleto || nome || <Preencher campo="nome" />}</p>
-      <p class="ident">{[identificacao, cidade].filter(Boolean).join(', ')}{!identificacao.includes('CRN') && <Preencher campo="crn" />}</p>
+  <div class="caixa-l">
+    <div class="topo-rodape">
+      <div>
+        <p class="nome" data-nome-rodape>{nomeCompleto || nome || <Preencher campo="nome" />}</p>
+        <p class="ident">{[identificacao, cidade].filter(Boolean).join(', ')}{!identificacao.includes('CRN') && <Preencher campo="crn" />}</p>
+      </div>
+      <span class="selo" aria-hidden="true"><Icone nome="registro" tamanho={22} /></span>
     </div>
-    <nav class="v" style="--i:1;--f:3" aria-label="Rodapé">
-      <ul>
-        {links.map((l) => <li><a href={`/#${l.id}`}>{l.rotulo}</a></li>)}
-      </ul>
-    </nav>
-    <div class="v" style="--i:4;--f:5">
+    <div class="colunas">
+      <nav aria-label="Rodapé"><ul>{links.map((l) => <li><a href={`/#${l.id}`}>{l.rotulo}</a></li>)}</ul></nav>
       <ul>
         {whatsappUrl && <li><a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>}
         {instagramUrl && <li><a href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagram {instagramExibicao}</a></li>}
         {p.email && <li><a href={`mailto:${p.email}`}>{p.email}</a></li>}
       </ul>
-    </div>
-    <div class="v fim" style="--i:6;--f:7">
-      <a href="/privacidade">Política de Privacidade</a>
-      <p>© {ano}{nomeCompleto && ` ${nomeCompleto}`}</p>
+      <div class="fim">
+        <a href="/privacidade">Política de Privacidade</a>
+        <p>© {ano}{nomeCompleto && ` ${nomeCompleto}`}</p>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
-  .rodape { position: relative; z-index: 1; background: var(--tinta); color: var(--papel); padding-block: 72px 40px; }
-  .sem { row-gap: 40px; }
-  .nome {
-    max-width: none;
-    font-size: clamp(2.75rem, 1rem + 6.4vw, 6rem); font-weight: 650; font-stretch: 86%;
-    line-height: 0.95; letter-spacing: -0.03em; color: var(--papel);
-    padding-bottom: 0.08em; overflow: hidden;
-  }
-  .ident { margin-top: 16px; color: var(--sobre-tinta); font-weight: 500; }
-  .topo-rodape { padding-bottom: 40px; border-bottom: 1px solid var(--pauta-tinta); }
-  ul { display: grid; gap: 4px; }
-  nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
-  a { display: inline-flex; align-items: center; min-height: 44px; color: var(--papel); text-decoration: none; font-weight: 500; overflow-wrap: anywhere; }
-  @media (hover: hover) and (pointer: fine) { a:hover { text-decoration: underline; text-underline-offset: 0.25em; } }
-  .fim { display: grid; gap: 4px; align-content: start; color: var(--sobre-tinta); font-size: var(--pequeno); }
+  .rodape { background: var(--oliva); color: var(--sobre-oliva); padding-block: clamp(64px, 8vw, 104px) 40px; }
+  .topo-rodape { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding-bottom: 40px; border-bottom: 1px solid color-mix(in srgb, var(--creme) 16%, transparent); }
+  .nome { font-family: var(--serif); font-weight: 500; font-size: clamp(2.4rem, 1.4rem + 4vw, 5rem); line-height: 1; letter-spacing: -0.02em; color: var(--creme); max-width: none; }
+  .ident { margin-top: 14px; font-size: 0.9rem; }
+  .selo { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--creme) 30%, transparent); color: var(--cobre-claro); }
+  .colunas { display: grid; gap: 28px; padding-top: 36px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  ul { display: grid; gap: 10px; }
+  a { color: var(--creme); text-decoration: none; font-size: 0.92rem; }
+  @media (hover: hover) { a:hover { text-decoration: underline; } }
+  .fim { display: grid; gap: 10px; align-content: start; font-size: 0.85rem; }
 </style>

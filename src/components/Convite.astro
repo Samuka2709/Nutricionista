@@ -1,47 +1,39 @@
 ---
 // Convite final: sem urgência, sem escassez, sem promessa.
-import { p, t, whatsappUrl, tem } from '../lib/site';
+import { p, t, whatsappUrl, tem, enfase } from '../lib/site';
 import BotaoAgendar from './BotaoAgendar.astro';
 import Foto from './Foto.astro';
 const fundo = (p.fotos?.trabalho || []).find(tem);
 ---
 <section class="convite" aria-labelledby="convite-titulo" data-convite>
-  <div class:list={['caixa escuro', fundo && 'caixa--foto']} data-convite-caixa>
-    {fundo && (
-      <div class="fundo" aria-hidden="true">
-        <Foto arquivo={fundo} tipo="fundo" alt="" preenche sizes="100vw" larguras={[768, 1280, 1920]} />
+  <div class="caixa-l">
+    <div class:list={['caixa escuro', fundo && 'caixa--foto']} data-convite-caixa>
+      {fundo && <div class="fundo" aria-hidden="true"><Foto arquivo={fundo} tipo="fundo" alt="" preenche sizes="100vw" larguras={[768, 1280, 1920]} /></div>}
+      <h2 id="convite-titulo" data-titulo set:html={enfase(t.convite.titulo)} />
+      {t.convite.frase && <p>{t.convite.frase}</p>}
+      <div class="acoes">
+        <BotaoAgendar variante="claro" />
+        {whatsappUrl && <a class="botao botao--linha-clara" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp<span class="so-leitor"> (abre em nova aba)</span></a>}
       </div>
-    )}
-    <h2 id="convite-titulo" data-titulo>{t.convite.titulo}</h2>
-    {t.convite.frase && <p>{t.convite.frase}</p>}
-    <div class="acoes">
-      <BotaoAgendar variante="claro" magnetico />
-      {whatsappUrl && (
-        <a class="botao botao--linha-clara" href={whatsappUrl} target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp<span class="so-leitor"> (abre em nova aba)</span></a>
-      )}
     </div>
   </div>
 </section>
 
 <style>
-  .convite { position: relative; z-index: 1; margin-top: var(--esp-secao); }
+  .convite { padding-block: 0 var(--esp-secao); }
   .caixa {
-    display: grid; justify-items: center; gap: 20px; text-align: center;
-    padding: clamp(72px, 12vw, 160px) 24px;
-    background: var(--verde); color: var(--papel);
+    position: relative; isolation: isolate; overflow: hidden;
+    display: grid; justify-items: center; gap: 18px; text-align: center;
+    padding: clamp(64px, 9vw, 120px) 24px; border-radius: var(--raio);
+    background: var(--oliva); color: var(--sobre-oliva);
   }
-  .caixa--foto { position: relative; isolation: isolate; overflow: hidden; }
-  .caixa--foto > :not(.fundo) { position: relative; }
   .fundo { position: absolute; inset: 0; z-index: -1; }
   .fundo :global(.foto) { border-radius: 0; }
-  .fundo :global(img) { filter: grayscale(0.35) contrast(1.05); }
-  /* véu verde por cima da foto: o texto claro mantém contraste de texto corrido */
-  .fundo::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--verde) 86%, transparent); }
-  h2 { color: var(--papel); max-width: 20ch; }
-  p { color: var(--sobre-verde); max-width: 44ch; }
-  .acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 16px; }
-  @media (max-width: 480px) {
-    .acoes { width: 100%; flex-direction: column; }
-    .acoes :global(.botao) { width: 100%; }
-  }
+  .fundo :global(img) { filter: grayscale(0.3); }
+  .fundo::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--oliva) 84%, transparent); }
+  h2 { color: var(--creme); max-width: 16ch; }
+  h2 :global(em) { color: var(--cobre-claro); }
+  p { max-width: 44ch; }
+  .acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 10px; }
+  @media (max-width: 480px) { .acoes { width: 100%; flex-direction: column; } .acoes :global(.botao) { width: 100%; } }
 </style>

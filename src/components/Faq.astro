@@ -1,23 +1,26 @@
 ---
 // Pergunta sem resposta preenchida não aparece (nem no schema FAQPage).
-import { faq, t, p } from '../lib/site';
+import { faq, t, p, whatsappUrl, enfase } from '../lib/site';
 import Icone from './Icone.astro';
 import Preencher from './Preencher.astro';
 const semResposta = (p.faq || []).filter((x: any) => x.pergunta && !x.resposta).length;
 ---
 {faq.length === 0 ? <Preencher bloco campo="faq[].resposta" /> : (
   <section class="secao" id="perguntas" aria-labelledby="faq-titulo">
-    <div class="fio" data-fio></div>
-    <div class="sem">
-      <div class="v gruda" style="--i:1;--f:3"><h2 id="faq-titulo" data-titulo>{t.faq.titulo}</h2></div>
-      <div class="v" style="--i:4;--f:7">
+    <div class="caixa-l grade">
+      <div class="lado gruda">
+        <h2 id="faq-titulo" data-titulo set:html={enfase(t.faq.titulo)} />
+        {t.faq.apoio && <p class="apoio">{t.faq.apoio}</p>}
+        {whatsappUrl && <a class="botao botao--linha" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><Icone nome="conversa" tamanho={18} />Falar no WhatsApp<span class="so-leitor"> (abre em nova aba)</span></a>}
+      </div>
+      <div>
         <div class="acordeao" data-acordeao data-unico>
           {faq.map((x, i) => (
             <div class="ac-item">
               <h3>
                 <button class="ac-botao" type="button" aria-expanded="false" aria-controls={`faq-${i}`} id={`faq-b-${i}`}>
                   <span>{x.pergunta}</span>
-                  <Icone nome="mais" tamanho={22} class="sinal" />
+                  <span class="sinal"><Icone nome="mais" tamanho={18} /></span>
                 </button>
               </h3>
               <div class="ac-painel" id={`faq-${i}`} role="region" aria-labelledby={`faq-b-${i}`}>
@@ -33,7 +36,9 @@ const semResposta = (p.faq || []).filter((x: any) => x.pergunta && !x.resposta).
 )}
 
 <style>
-  .sem { row-gap: 20px; }
-  .acordeao { border-top: 1px solid var(--pauta-forte); }
-  h3 { font: inherit; letter-spacing: 0; }
+  .grade { display: grid; gap: 40px; }
+  @media (min-width: 1024px) { .grade { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(48px, 6vw, 96px); } }
+  .lado { display: grid; gap: 18px; justify-items: start; align-content: start; }
+  .lado :global(.botao) { margin-top: 6px; }
+  .acordeao { border-top: 1px solid var(--linha-forte); }
 </style>

@@ -1,9 +1,8 @@
 ---
-// Presencial e online com o mesmo peso. A modalidade online só aparece se estiver nos dados
+// Presencial e online lado a lado, em cartões com foto. O online só aparece se estiver nos dados
 // (Resolução CFN nº 760/2023: exige cadastro no e-Nutricionista).
-import { p, t, presencial, online, enderecoLinhas, temEndereco, secoes, tem } from '../lib/site';
+import { p, t, presencial, online, enderecoLinhas, temEndereco, cidadeCurta, secoes, tem, enfase } from '../lib/site';
 import Foto from './Foto.astro';
-import PadraoSemana from './PadraoSemana.astro';
 import Icone from './Icone.astro';
 import Mapa from './Mapa.astro';
 import Preencher from './Preencher.astro';
@@ -11,52 +10,47 @@ const e = p.endereco || {};
 const horarios = (p.horarios || []).filter((h: any) => tem(h.dias));
 const fotoConsultorio = (p.fotos?.consultorio || []).find(tem);
 const fotoOnline = (p.fotos?.atendimento || []).find(tem);
-const titulo = presencial && online ? t.atendimento.titulo : presencial ? 'Atendimento presencial' : 'Atendimento online';
 const o = t.atendimento.online;
 ---
 {!secoes.atendimento ? <Preencher bloco campo="modalidades" /> : (
-  <section class="cheia atend" id="atendimento" aria-labelledby="atend-titulo">
-    <div class="sem">
-      <div class="v" style="--i:1;--f:5"><h2 id="atend-titulo" data-titulo>{titulo}</h2></div>
-      <div class:list={['v', 'blocos', !(presencial && online) && 'blocos--um']} style="--i:1;--f:7">
+  <section class="secao" id="atendimento" aria-labelledby="atend-titulo">
+    <div class="caixa-l">
+      <div class="cabeca cabeca--lado">
+        <h2 id="atend-titulo" data-titulo set:html={enfase(t.atendimento.titulo)} />
+        <ul class="chips">
+          {presencial && <li><Icone nome="mapa" tamanho={16} />Presencial{cidadeCurta && ` em ${cidadeCurta}`}</li>}
+          {online && <li><Icone nome="video" tamanho={16} />Online para todo o Brasil</li>}
+        </ul>
+      </div>
+
+      <div class:list={['blocos', !(presencial && online) && 'blocos--um']}>
         {presencial && (
-          <article class="bloco">
-            <div class="midia" data-revela>
-              <Foto arquivo={fotoConsultorio} tipo="consultório" alt="Consultório" proporcao="3 / 2" parallax sizes="(min-width: 1024px) 45vw, 100vw" />
-            </div>
+          <article class="cartao-suave bloco">
+            <div class="midia"><Foto arquivo={fotoConsultorio} tipo="consultório" alt="Consultório" proporcao="16 / 10" sizes="(min-width: 1024px) 45vw, 100vw" /></div>
             <div class="conteudo">
               <h3>{t.atendimento.presencial.titulo}</h3>
-              <ul class="itens">
-                {temEndereco ? (
-                  <li><Icone nome="mapa" /><div><strong>Endereço</strong><address>{enderecoLinhas.map((l) => <span>{l}</span>)}</address>{tem(e.referencia) && <span class="nota">{e.referencia}</span>}</div></li>
-                ) : <li><Preencher campo="endereco" /></li>}
-                {tem(e.acesso) && <li><Icone nome="carro" /><div><strong>Acesso</strong><span>{e.acesso}</span></div></li>}
-                {horarios.length > 0 ? (
-                  <li><Icone nome="relogio" /><div><strong>Horários</strong>{horarios.map((h: any) => <span>{h.dias}, {h.horas}</span>)}</div></li>
-                ) : <li><Preencher campo="horarios" /></li>}
-              </ul>
+              <dl>
+                {temEndereco ? <div><dt><Icone nome="mapa" tamanho={18} />Endereço</dt><dd>{enderecoLinhas.join(', ')}</dd></div> : <Preencher campo="endereco" />}
+                {horarios.length > 0 ? <div><dt><Icone nome="relogio" tamanho={18} />Horários</dt><dd>{horarios.map((h: any) => `${h.dias}, ${h.horas}`).join(' · ')}</dd></div> : <Preencher campo="horarios" />}
+                {tem(e.acesso) && <div><dt><Icone nome="carro" tamanho={18} />Acesso</dt><dd>{e.acesso}</dd></div>}
+              </dl>
               <Mapa id="mapa-atendimento" />
             </div>
           </article>
         )}
         {online && (
-          <article class="bloco">
-            <div class="midia" data-revela>
-              {fotoOnline
-                ? <Foto arquivo={fotoOnline} tipo="atendimento online" alt="" proporcao="3 / 2" parallax sizes="(min-width: 1024px) 45vw, 100vw" />
-                : <PadraoSemana semente={3} fundo="tinta" proporcao="3 / 2" />}
+          <article class="cartao-suave bloco">
+            <div class="midia">
+              {fotoOnline ? <Foto arquivo={fotoOnline} tipo="atendimento online" alt="" proporcao="16 / 10" sizes="(min-width: 1024px) 45vw, 100vw" /> : <div class="sem-foto"><Icone nome="video" tamanho={40} /></div>}
             </div>
             <div class="conteudo">
               <h3>{o.titulo}</h3>
-              <ul class="itens">
-                <li><Icone nome="video" /><div><strong>Como funciona</strong><span>{o.comoFunciona}</span>{tem(p.plataformaOnline) ? <span class="nota">Plataforma: {p.plataformaOnline}</span> : <Preencher campo="plataformaOnline" />}</div></li>
-                {(tem(p.retornos) || tem(p.comunicacaoEntreConsultas)) && (
-                  <li><Icone nome="conversa" /><div><strong>Retornos e comunicação</strong>{tem(p.retornos) && <span>{p.retornos}</span>}{tem(p.comunicacaoEntreConsultas) && <span>{p.comunicacaoEntreConsultas}</span>}</div></li>
-                )}
-                <li><Icone nome="wifi" /><div><strong>{o.requisitosTitulo}</strong><ul class="requisitos">{o.requisitos.map((x: string) => <li>{x}</li>)}</ul></div></li>
-              </ul>
+              <dl>
+                <div><dt><Icone nome="video" tamanho={18} />Como funciona</dt><dd>{o.comoFunciona}{tem(p.plataformaOnline) && ` Plataforma: ${p.plataformaOnline}.`}</dd></div>
+                <div><dt><Icone nome="wifi" tamanho={18} />{o.requisitosTitulo}</dt><dd>{o.requisitos.join(', ')}.</dd></div>
+              </dl>
               {p.eNutricionista === true
-                ? <p class="cadastro"><Icone nome="escudo" tamanho={20} /><span>{o.eNutricionista}</span></p>
+                ? <p class="cadastro"><Icone nome="escudo" tamanho={18} /><span>{o.eNutricionista}</span></p>
                 : <Preencher campo="eNutricionista" nota="pendência: o atendimento online exige cadastro no e-Nutricionista (Resolução CFN nº 760/2023)" />}
             </div>
           </article>
@@ -67,27 +61,20 @@ const o = t.atendimento.online;
 )}
 
 <style>
-  .atend { background: var(--tinta-clara); }
-  .sem { row-gap: 40px; }
-  .blocos { display: grid; gap: 56px 48px; }
-  .bloco { display: grid; gap: 28px; align-content: start; min-width: 0; }
-  .midia { overflow: hidden; border-radius: var(--raio-foto); }
-  .conteudo { display: grid; gap: 24px; align-content: start; min-width: 0; }
-  .itens { display: grid; border-top: 1px solid var(--pauta-forte); }
-  .itens > li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 16px; padding-block: 16px; border-bottom: 1px solid var(--pauta-forte); }
-  .itens > li > :global(svg) { color: var(--tinta); margin-top: 2px; }
-  .itens div { display: grid; gap: 4px; }
-  .itens strong { font-weight: 650; color: var(--tinta); line-height: 1.3; }
-  address { font-style: normal; display: grid; }
-  .nota { font-size: var(--pequeno); color: var(--texto-suave); }
-  .requisitos { display: grid; gap: 2px; }
-  .requisitos li { position: relative; padding-left: 16px; }
-  .requisitos li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 8px; height: 1px; background: var(--tinta); }
-  .cadastro { display: flex; gap: 10px; align-items: flex-start; font-size: var(--pequeno); line-height: 1.5; color: var(--texto-suave); }
-  .cadastro :global(svg) { flex: none; color: var(--tinta); margin-top: 1px; }
-  @media (min-width: 1024px) {
-    .blocos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .blocos--um { grid-template-columns: minmax(0, 1fr); }
-    .blocos--um .bloco { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
-  }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; justify-self: end; }
+  .chips li { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 8px; border: 1px solid var(--linha-forte); font-size: 0.85rem; font-weight: 550; color: var(--oliva); }
+  .chips :global(svg) { color: var(--salvia); }
+  .blocos { display: grid; gap: 24px; }
+  @media (min-width: 900px) { .blocos { grid-template-columns: 1fr 1fr; } .blocos--um { grid-template-columns: minmax(0, 720px); } }
+  .bloco { overflow: hidden; display: flex; flex-direction: column; }
+  .midia :global(.foto) { border-radius: 0; }
+  .sem-foto { aspect-ratio: 16 / 10; display: grid; place-items: center; background: var(--salvia-clara); color: var(--salvia); }
+  .conteudo { display: grid; gap: 20px; align-content: start; padding: 28px clamp(22px, 3vw, 34px) 32px; }
+  .conteudo h3 { font-family: var(--serif); font-weight: 560; font-size: 1.75rem; }
+  dl { display: grid; gap: 16px; }
+  dl > div { display: grid; gap: 4px; padding-bottom: 16px; border-bottom: 1px solid var(--linha); }
+  dt { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--salvia); }
+  dd { margin: 0; font-size: 0.95rem; color: var(--carvao); }
+  .cadastro { display: flex; gap: 10px; align-items: flex-start; font-size: 0.82rem; color: var(--texto-suave); }
+  .cadastro :global(svg) { flex: none; color: var(--salvia); margin-top: 2px; }
 </style>

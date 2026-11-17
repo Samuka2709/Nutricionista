@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
-import fonteUrl from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wdth-normal.woff2?url';
+import serifUrl from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+import serifItalicoUrl from '@fontsource-variable/fraunces/files/fraunces-latin-wght-italic.woff2?url';
+import textoUrl from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Rodape from '../components/Rodape.astro';
 import Icone from '../components/Icone.astro';
@@ -18,7 +20,7 @@ const { titulo, descricao = descricaoSite, tipo = 'website', jsonld = [], noinde
 const tituloPagina = titulo ? `${titulo} | ${nome || 'Nutricionista'}` : tituloSite;
 const canonica = new URL(Astro.url.pathname, Astro.site);
 const og = new URL('/og.png', Astro.site);
-const fontes = `@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-display:swap;font-weight:200 800;font-stretch:75% 100%;src:url(${fonteUrl}) format("woff2-variations");}`;
+const fontes = `@font-face{font-family:"Fraunces Variable";font-style:normal;font-display:swap;font-weight:100 900;src:url(${serifUrl}) format("woff2-variations");}@font-face{font-family:"Fraunces Variable";font-style:italic;font-display:swap;font-weight:100 900;src:url(${serifItalicoUrl}) format("woff2-variations");}@font-face{font-family:"Manrope Variable";font-style:normal;font-display:swap;font-weight:200 800;src:url(${textoUrl}) format("woff2-variations");}`;
 const cabeca = `(function(){var d=document.documentElement;d.classList.add('js');try{if(new URLSearchParams(location.search).has('preview'))d.classList.add('preview');}catch(e){}if(d.hasAttribute('data-inicio')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('intro');window.__introFalha=setTimeout(function(){d.classList.remove('intro')},3000);}})();`;
 ---
 <!doctype html>
@@ -30,9 +32,10 @@ const cabeca = `(function(){var d=document.documentElement;d.classList.add('js')
     <meta name="description" content={descricao} />
     <link rel="canonical" href={canonica} />
     {(noindex || demo) && <meta name="robots" content="noindex, nofollow" />}
-    <meta name="theme-color" content="#F2F4F0" />
+    <meta name="theme-color" content="#F2EFE8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preload" href={fonteUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={textoUrl} as="font" type="font/woff2" crossorigin />
     <style set:html={fontes}></style>
     <meta property="og:type" content={tipo} />
     <meta property="og:locale" content="pt_BR" />
@@ -74,9 +77,9 @@ const cabeca = `(function(){var d=document.documentElement;d.classList.add('js')
   main:focus { outline: none; }
   .flutuante {
     position: fixed; right: 16px; bottom: 16px; z-index: 60;
-    display: grid; place-items: center; width: 48px; height: 48px;
+    display: grid; place-items: center; width: 54px; height: 54px; box-shadow: var(--sombra);
     border-radius: var(--raio-botao);
-    background: var(--verde); color: var(--papel);
+    background: var(--salvia); color: var(--branco);
     opacity: 0; visibility: hidden; transform: translateY(8px);
     transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
   }

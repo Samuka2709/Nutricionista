@@ -1,129 +1,86 @@
 ---
-// Abertura editorial: título grande, as duas ações lado a lado, fatos comprovados e a foto em moldura alta.
-import { p, t, nome, crn, identificacao, modalidadesTexto, online, presencial, cidadeCurta, agendarUrl, secoes, tem } from '../lib/site';
+// Abertura: título em serifa com ênfase em itálico, duas ações e o retrato em arco.
+import { p, t, nome, crn, identificacao, modalidadesTexto, presencial, online, agendarUrl, secoes, tem, enfase } from '../lib/site';
 import Foto from './Foto.astro';
+import Icone from './Icone.astro';
 import Preencher from './Preencher.astro';
 
-const fatos = [
-  crn && { forte: crn, apoio: 'registro profissional de nutricionista' },
-  modalidadesTexto && {
-    forte: presencial && online ? `${cidadeCurta || 'Presencial'} e online` : presencial ? cidadeCurta || 'Presencial' : 'Online',
-    apoio: presencial && online ? 'presencial e por vídeo' : presencial ? 'atendimento presencial' : 'atendimento por vídeo',
-  },
-  online && tem(p.plataformaOnline) && { forte: p.plataformaOnline, apoio: 'plataforma do atendimento online' },
-].filter(Boolean) as { forte: string; apoio: string }[];
 const destino = secoes.sobre ? '#sobre' : secoes.especialidades ? '#especialidades' : '#metodologia';
-const descricao = [t.hero.descricao, tem(p.publico) ? `Atendo ${p.publico}.` : ''].filter(Boolean).join(' ');
 ---
 <section class="hero" id="inicio" aria-labelledby="hero-titulo">
-  <div class="grade" data-hero>
-    <div class="b-texto">
-      <h1 id="hero-titulo" data-entrada data-titulo-hero>{t.hero.titulo}</h1>
-      <p class="descricao" data-entrada>{descricao}{!tem(p.publico) && <Preencher campo="publico" />}</p>
-
-      <div class="b-acoes">
-        <div class="b-cta" data-entrada>
-          {agendarUrl ? (
-            <a class="evento evento--acao" href={agendarUrl} target="_blank" rel="noopener noreferrer" data-agendar>
-              {tem(p.duracaoConsulta) && <span class="ev-meta">Primeira consulta, <span class="nw">{p.duracaoConsulta}</span></span>}
-              <span class="ev-rotulo">Agendar consulta<span class="so-leitor"> (abre em nova aba)</span></span>
-            </a>
-          ) : <Preencher campo="whatsapp ou linkAgendamento" />}
-        </div>
-        <div class="b-sec" data-entrada>
-          <a class="evento evento--linha" href={destino}><span class="ev-rotulo">Conhecer meu trabalho</span></a>
-        </div>
+  <div class="fundo-areia" aria-hidden="true"></div>
+  <div class="grade caixa-l" data-hero>
+    <div class="texto">
+      <h1 id="hero-titulo" data-entrada data-titulo-hero set:html={enfase(t.hero.titulo)} />
+      <p class="descricao" data-entrada>{t.hero.descricao}</p>
+      <div class="acoes b-cta" data-entrada>
+        {agendarUrl ? (
+          <a class="botao botao--acao evento" href={agendarUrl} target="_blank" rel="noopener noreferrer" data-agendar>
+            Agendar consulta<span class="so-leitor"> (abre em nova aba)</span>
+          </a>
+        ) : <Preencher campo="whatsapp ou linkAgendamento" />}
+        <a class="botao botao--linha" href={destino}>Conhecer meu trabalho</a>
       </div>
-
-      {fatos.length > 0 ? (
-        <ul class="b-fatos" data-entrada>
-          {fatos.map((f) => <li><strong>{f.forte}</strong><span>{f.apoio}</span></li>)}
-        </ul>
-      ) : <div class="b-fatos"><Preencher campo="crn, modalidades, cidade" /></div>}
     </div>
 
-    <figure class="b-figura">
-      <div class="cantos">
-        <div class="b-foto" data-foto-hero>
-          <Foto arquivo={p.fotos?.retrato} tipo="retrato profissional" alt={p.fotos?.descricaoRetrato || (nome ? `${nome}, nutricionista` : 'Nutricionista')} preenche prioridade sizes="(min-width: 1024px) 42vw, 100vw" />
-        </div>
+    <figure class="arte">
+      <div class="moldura" aria-hidden="true"></div>
+      <div class="arco b-foto" data-foto-hero>
+        <Foto arquivo={p.fotos?.retrato} tipo="retrato profissional" alt={p.fotos?.descricaoRetrato || (nome ? `${nome}, nutricionista` : 'Nutricionista')} preenche prioridade sizes="(min-width: 1024px) 40vw, 90vw" />
       </div>
-      <figcaption class="b-legenda" data-entrada>
-        <strong>{nome || <Preencher campo="nome" />}</strong>
-        <span>{identificacao}{!crn && <Preencher campo="crn.numero e crn.regiao" />}</span>
-        {tem(p.fotos?.credito) && <small class="credito">{p.fotos.credito}</small>}
+      {modalidadesTexto && <span class="selo-mod" data-entrada><Icone nome="video" tamanho={16} />{presencial && online ? 'Presencial e online' : presencial ? 'Atendimento presencial' : 'Atendimento online'}</span>}
+      <figcaption class="cartao-nome b-legenda" data-entrada>
+        <span class="icone"><Icone nome="registro" tamanho={20} /></span>
+        <span><strong>{nome}</strong><small>{identificacao}</small></span>
       </figcaption>
+      {tem(p.fotos?.credito) && <p class="credito">{p.fotos.credito}</p>}
     </figure>
   </div>
 </section>
 
 <style>
-  .hero { padding-top: var(--header-h); }
-
-  /* ---------- Celular e tablet: uma coluna ---------- */
-  .grade {
-    position: relative;
-    display: grid; gap: 40px;
-    padding: 28px var(--borda) 8px var(--recuo);
+  .hero { position: relative; padding-top: calc(var(--header-h) + 24px); padding-bottom: clamp(56px, 8vw, 104px); overflow: hidden; }
+  .fundo-areia {
+    position: absolute; z-index: -1; top: var(--header-h); right: 0; width: 44%; bottom: 0; border-top-left-radius: var(--raio);
+    background: var(--oliva);
   }
-  h1 { text-wrap: balance; }
-  .descricao { margin-top: 18px; max-width: 34em; color: var(--grafite); text-wrap: pretty; }
+  .grade { display: grid; gap: 56px; align-items: center; }
 
-  .b-acoes { display: grid; gap: 10px; margin-top: 32px; }
+  .texto { display: grid; gap: 22px; justify-items: start; }
+  h1 { max-width: 17ch; }
+  .descricao { font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem); color: var(--texto-suave); max-width: 40ch; }
+  .acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
 
-  /* Ações: blocos retos de agenda, rótulo forte e uma linha de apoio */
-  .evento {
-    display: flex; flex-direction: column; justify-content: center; gap: 2px;
-    width: 100%; min-height: 60px; padding: 12px 20px;
-    border-radius: var(--raio-botao);
-    font-size: 1.125rem; font-weight: 650; line-height: 1.15; text-decoration: none;
-    transition: transform var(--dur-toque) var(--ease-out), background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  .arte { position: relative; margin: 0 auto; width: min(100%, 440px); padding: 22px 22px 0 0; }
+  .moldura { position: absolute; top: 0; right: 0; bottom: 58px; left: 22px; border: 1px solid var(--cobre-claro); border-radius: var(--raio); opacity: 0.8; }
+  .arco {
+    position: relative; aspect-ratio: 4 / 5; overflow: hidden;
+    border-radius: var(--raio); background: var(--salvia);
+    box-shadow: 0 40px 70px -40px rgb(0 0 0 / 0.65);
   }
-  .evento:active { transform: scale(0.97); }
-  .evento--acao { background: var(--tomate); color: var(--papel); }
-  .evento--linha { border: 1.5px solid var(--tinta); color: var(--tinta); background: transparent; }
-  .ev-meta { font-size: 0.8125rem; font-weight: 550; letter-spacing: 0.005em; opacity: 0.9; }
-  .nw { white-space: nowrap; }
-
-  .b-fatos { display: grid; margin-top: 36px; border-top: 1px solid var(--pauta-forte); }
-  .b-fatos li { display: grid; gap: 3px; padding-block: 14px; border-bottom: 1px solid var(--pauta-forte); }
-  .b-fatos strong, .b-legenda strong { font-weight: 650; color: var(--tinta); line-height: 1.25; }
-  .b-fatos span, .b-legenda span { font-size: var(--pequeno); line-height: 1.4; color: var(--texto-suave); }
-
-  .b-figura { margin: 0; display: grid; gap: 14px; }
-  .b-foto { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--raio-foto); background: var(--verde); }
-  .b-legenda { display: grid; gap: 2px; padding-left: 14px; border-left: 1px solid var(--tomate); }
-  .credito { margin-top: 6px; font-size: 0.75rem; line-height: 1.4; color: var(--texto-suave); }
-
-  @media (hover: hover) and (pointer: fine) {
-    .evento--acao:hover { background: var(--tomate-fundo); }
-    .evento--linha:hover { background: var(--tinta); color: var(--papel); }
+  .arco :global(.foto) { border-radius: 0; }
+  .arco::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgb(18 34 44 / 0.28), transparent 38%); }
+  .selo-mod {
+    position: absolute; top: 46px; left: -22px; display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px; border-radius: 8px; background: var(--branco); color: var(--oliva);
+    font-size: 0.78rem; font-weight: 650; box-shadow: var(--sombra);
   }
-  @media (min-width: 560px) {
-    .b-acoes { grid-template-columns: repeat(2, minmax(0, max-content)); }
-    .evento { min-width: 240px; }
-    .b-fatos { grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--pauta-forte); }
-    .b-fatos li { border-bottom: 0; padding-inline: 16px; border-left: 1px solid var(--pauta-forte); }
-    .b-fatos li:first-child { padding-left: 0; border-left: 0; }
+  .selo-mod :global(svg) { color: var(--terra); }
+  .cartao-nome {
+    position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; width: calc(100% - 44px);
+    margin: -44px 0 0 -22px; padding: 16px 20px 16px 16px; border-radius: 10px; background: var(--branco);
+    box-shadow: 0 24px 50px -28px rgb(0 0 0 / 0.55);
   }
-  @media (min-width: 640px) and (max-width: 1023px) { .b-figura { max-width: 520px; } }
+  .cartao-nome .icone { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 8px; background: var(--oliva); color: var(--cobre-claro); }
+  .cartao-nome strong { display: block; font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--oliva); line-height: 1.2; }
+  .cartao-nome small { display: block; font-size: 0.78rem; color: var(--texto-suave); }
+  .credito { margin-top: 14px; font-size: 0.72rem; line-height: 1.4; color: var(--sobre-oliva); max-width: none; }
 
-  /* ---------- Desktop: texto à esquerda, foto alta à direita ---------- */
+  @media (max-width: 1023px) { .fundo-areia { top: auto; bottom: 0; width: 100%; height: 52%; } .arte { width: min(100% - 24px, 440px); } }
   @media (min-width: 1024px) {
-    .grade {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      column-gap: clamp(48px, 5vw, 96px);
-      align-items: center;
-      min-height: min(calc(100svh - var(--header-h) - var(--aviso-h)), 960px);
-      padding-block: 40px 56px;
-    }
-    .descricao { margin-top: 24px; font-size: 1.1875rem; max-width: 33em; }
-    .b-acoes { margin-top: 40px; }
-    .evento { min-height: 68px; padding: 14px 24px; font-size: 1.25rem; }
-    .b-fatos { margin-top: 56px; }
-    .b-fatos li { padding-block: 16px; }
-    .b-foto { aspect-ratio: auto; height: min(calc(100svh - var(--header-h) - var(--aviso-h) - 150px), 760px); min-height: 460px; }
+    .hero { padding-top: calc(var(--header-h) + 40px); min-height: min(calc(100svh - var(--aviso-h)), 900px); display: flex; align-items: center; }
+    .grade { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: clamp(48px, 6vw, 96px); }
+    .arte { margin-right: 0; }
   }
-
-  @media (prefers-reduced-motion: reduce) { .evento, .evento:active { transform: none; } }
+  @media (max-width: 480px) { .acoes { width: 100%; } .acoes :global(.botao) { flex: 1 1 100%; } }
 </style>

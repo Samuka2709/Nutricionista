@@ -1,53 +1,43 @@
 ---
-// Um destaque grande + lista com fios. Quantidade e conteúdo vêm do arquivo de dados.
-import { especialidades, secoes, t, tem } from '../lib/site';
+// Cartões com foto e ícone, numa faixa de areia com bordas curvas. Detalhe em gaveta lateral.
+import { especialidades, secoes, t, tem, enfase } from '../lib/site';
 import Foto from './Foto.astro';
-import PadraoSemana from './PadraoSemana.astro';
 import BotaoAgendar from './BotaoAgendar.astro';
 import Icone from './Icone.astro';
 import Preencher from './Preencher.astro';
-const [destaque, ...outras] = especialidades;
-const rotuloLink = (titulo: string) => `Saiba como trabalho com ${titulo.toLowerCase()}`;
+const icones = ['plano', 'atividade', 'semana', 'alvo', 'coracao', 'registro'];
 ---
 {!secoes.especialidades ? <Preencher bloco campo="especialidades" /> : (
-  <section class="secao" id="especialidades" aria-labelledby="esp-titulo">
-    <div class="fio" data-fio></div>
-    <div class="sem cabeca">
-      <div class="v" style="--i:1;--f:4">
-        <h2 id="esp-titulo" data-titulo>{t.especialidades.titulo}</h2>
+  <section class="secao secao--areia" id="especialidades" aria-labelledby="esp-titulo">
+    <span class="curva curva--topo" aria-hidden="true"></span>
+    <div class="caixa-l">
+      <div class="cabeca cabeca--lado">
+        <h2 id="esp-titulo" data-titulo set:html={enfase(t.especialidades.titulo)} />
         <p class="apoio">{t.especialidades.apoio}</p>
       </div>
-    </div>
-    <div class="sem corpo">
-      <article class="v destaque" style={`--i:1;--f:${outras.length ? 4 : 7}`} id={`esp-${destaque.id}`}>
-        <div class="midia" data-revela>
-          {destaque.imagem
-            ? <Foto arquivo={destaque.imagem} tipo={destaque.titulo} alt={destaque.titulo} proporcao="4 / 3" parallax />
-            : <PadraoSemana semente={0} proporcao="4 / 3" />}
-        </div>
-        <h3>{destaque.titulo}</h3>
-        {tem(destaque.descricao) ? <p>{destaque.descricao}</p> : <Preencher campo="especialidades[0].descricao" />}
-        {tem(destaque.comoTrabalho) && <a class="link" href={`#det-${destaque.id}`} data-abre-detalhe={`det-${destaque.id}`}>{rotuloLink(destaque.titulo)}</a>}
-      </article>
-      {outras.length > 0 && (
-        <ul class="v lista" style="--i:5;--f:7">
-          {outras.map((e, i) => (
-            <li id={`esp-${e.id}`}>
-              <div class="mini">
-                {e.imagem
-                  ? <Foto arquivo={e.imagem} tipo={e.titulo} alt="" proporcao="1 / 1" larguras={[160, 320]} sizes="88px" />
-                  : <PadraoSemana semente={i + 1} proporcao="1 / 1" />}
+      <ul class="cartoes" data-grupo>
+        {especialidades.map((e, i) => (
+          <li class="cartao-suave cartao" id={`esp-${e.id}`}>
+            {e.imagem && (
+              <div class="midia">
+                <Foto arquivo={e.imagem} tipo={e.titulo} alt="" proporcao="16 / 10" larguras={[400, 640, 800]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
               </div>
-              <div class="txt">
-                <h3>{e.titulo}</h3>
-                {tem(e.descricao) && <p>{e.descricao}</p>}
-                {tem(e.comoTrabalho) && <a class="link" href={`#det-${e.id}`} data-abre-detalhe={`det-${e.id}`}>{rotuloLink(e.titulo)}</a>}
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+            )}
+            <div class="corpo">
+              <span class="icone"><Icone nome={icones[i % icones.length]} tamanho={20} /></span>
+              <h3>{e.titulo}</h3>
+              {tem(e.descricao) && <p>{e.descricao}</p>}
+              {tem(e.comoTrabalho) && (
+                <a class="link" href={`#det-${e.id}`} data-abre-detalhe={`det-${e.id}`}>
+                  Como eu trabalho<span class="so-leitor"> com {e.titulo.toLowerCase()}</span><Icone nome="seta" tamanho={16} />
+                </a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
+    <span class="curva curva--base" aria-hidden="true"></span>
 
     {especialidades.filter((e) => tem(e.comoTrabalho)).map((e) => (
       <dialog class="gaveta" id={`det-${e.id}`} aria-labelledby={`det-t-${e.id}`} data-lenis-prevent>
@@ -55,6 +45,7 @@ const rotuloLink = (titulo: string) => `Saiba como trabalho com ${titulo.toLower
           <form method="dialog" class="fecha-form">
             <button class="fecha" type="submit"><Icone nome="fechar" /><span class="so-leitor">Fechar</span></button>
           </form>
+          {e.imagem && <div class="gaveta-foto"><Foto arquivo={e.imagem} tipo={e.titulo} alt="" proporcao="16 / 9" larguras={[520, 1040]} sizes="520px" /></div>}
           <h3 id={`det-t-${e.id}`}>{e.titulo}</h3>
           {tem(e.descricao) && <p class="lead">{e.descricao}</p>}
           <h4>Como eu trabalho esse tema</h4>
@@ -67,57 +58,52 @@ const rotuloLink = (titulo: string) => `Saiba como trabalho com ${titulo.toLower
 )}
 
 <style>
-  .cabeca { margin-bottom: 40px; }
-  .corpo { row-gap: 48px; }
-  .midia { margin-bottom: 24px; overflow: hidden; border-radius: var(--raio-foto); }
-  .destaque h3 { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); font-weight: 650; font-stretch: 90%; letter-spacing: -0.02em; line-height: 1.05; }
-  .destaque p { margin-top: 12px; max-width: 48ch; }
-  .destaque .link, .txt .link { margin-top: 14px; }
-  .midia :global([data-parallax]), .mini :global(svg) { transition: transform 500ms var(--ease-out); }
-
-  .lista { border-top: 1px solid var(--pauta-forte); align-self: start; }
-  .lista li { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 18px; padding-block: 22px; border-bottom: 1px solid var(--pauta-forte); scroll-margin-top: calc(var(--header-h) + 24px); }
-  .mini { overflow: hidden; border-radius: var(--raio-foto); align-self: start; }
-  .txt h3 { font-size: 1.3125rem; }
-  .txt p { margin-top: 6px; font-size: var(--pequeno); line-height: 1.55; color: var(--texto-suave); }
-  .txt .link { font-size: var(--pequeno); }
-
+  .cartoes { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+  .cartao { display: flex; flex-direction: column; overflow: hidden; transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out); }
+  .midia { overflow: hidden; }
+  .midia :global(.foto) { border-radius: 0; }
+  .midia :global(img) { transition: scale 700ms var(--ease-out); }
+  .corpo { position: relative; display: grid; gap: 10px; justify-items: start; padding: 34px 26px 28px; flex: 1; align-content: start; }
+  .icone {
+    position: absolute; top: -24px; left: 24px; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 10px;
+    background: var(--branco); color: var(--salvia); border: 1px solid var(--linha); box-shadow: var(--sombra);
+  }
+  .corpo p { font-size: 0.95rem; color: var(--texto-suave); }
+  .corpo .link { margin-top: auto; padding-top: 6px; font-size: 0.9rem; }
+  .cartao:not(:has(.midia)) .corpo { padding-top: 84px; }
+  .cartao:not(:has(.midia)) .icone { top: 24px; }
   @media (hover: hover) and (pointer: fine) {
-    .destaque:hover .midia :global(svg), .destaque:hover .midia :global(img), .lista li:hover .mini :global(svg), .lista li:hover .mini :global(img) { transform: scale(1.03); }
-  }
-  @media (min-width: 1024px) {
-    .cabeca { margin-bottom: 56px; }
-    .lista li { grid-template-columns: 88px minmax(0, 1fr); }
+    .cartao:hover { transform: translateY(-4px); }
+    .cartao:hover .midia :global(img) { scale: 1.05; }
   }
 
-  /* Painel lateral de detalhe */
   .gaveta {
     position: fixed; inset: 0 0 0 auto; margin: 0; width: min(520px, 100vw); height: 100dvh; max-height: none; max-width: none;
-    padding: 0; border: 0; background: var(--papel); color: var(--grafite);
-    box-shadow: -24px 0 60px -30px color-mix(in srgb, var(--grafite) 45%, transparent);
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform 240ms var(--ease-out), overlay 240ms allow-discrete, display 240ms allow-discrete;
+    padding: 0; border: 0; background: var(--creme); color: var(--carvao);
+    box-shadow: -24px 0 60px -30px color-mix(in srgb, var(--oliva) 45%, transparent);
+    overflow-y: auto; transform: translateX(100%);
+    transition: transform 260ms var(--ease-out), overlay 260ms allow-discrete, display 260ms allow-discrete;
+    border-radius: 0;
   }
-  .gaveta[open] { transform: none; transition-duration: 380ms; }
+  .gaveta[open] { transform: none; transition-duration: 420ms; }
   @starting-style { .gaveta[open] { transform: translateX(100%); } }
-  .gaveta::backdrop { background: color-mix(in srgb, var(--grafite) 40%, transparent); opacity: 0; transition: opacity 240ms ease, overlay 240ms allow-discrete, display 240ms allow-discrete; }
+  .gaveta::backdrop { background: color-mix(in srgb, var(--oliva) 40%, transparent); opacity: 0; transition: opacity 260ms ease, overlay 260ms allow-discrete, display 260ms allow-discrete; }
   .gaveta[open]::backdrop { opacity: 1; }
   @starting-style { .gaveta[open]::backdrop { opacity: 0; } }
-  .gaveta-in { display: grid; gap: 16px; justify-items: start; padding: 20px 28px 40px 32px; border-left: 1px solid var(--tinta); min-height: 100%; align-content: start; }
+  .gaveta-in { display: grid; gap: 16px; justify-items: start; padding: 18px 32px 40px; }
   .fecha-form { justify-self: end; }
-  .fecha { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--raio-botao); color: var(--tinta); }
-  .gaveta h3 { font-size: var(--h2); font-weight: 650; font-stretch: 90%; letter-spacing: -0.02em; line-height: 1.05; }
-  .gaveta h4 { margin: 12px 0 0; font-size: 1rem; font-weight: 650; color: var(--tinta); }
+  .fecha { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; border: 1px solid var(--linha-forte); color: var(--oliva); }
+  .gaveta-foto { width: 100%; }
+  .gaveta h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 1.5rem + 1.4vw, 2.6rem); line-height: 1.1; }
+  .gaveta h4 { margin: 8px 0 0; font-size: 0.95rem; font-weight: 700; color: var(--oliva); }
   .lead { color: var(--texto-suave); }
   .gaveta :global(.botao) { margin-top: 12px; }
-  /* Sem JavaScript: o link rola até o detalhe, que aparece no fluxo da página */
-  .gaveta:target:not([open]) { display: block; position: static; width: auto; height: auto; transform: none; box-shadow: none; margin: 32px var(--borda) 0 calc(var(--calha) + var(--recuo)); }
+  .gaveta:target:not([open]) { display: block; position: static; width: min(100% - 2 * var(--borda), 720px); height: auto; transform: none; box-shadow: none; margin: 32px auto 0; border-radius: var(--raio); }
   .gaveta:target:not([open]) .fecha-form { display: none; }
   @media (prefers-reduced-motion: reduce) {
     .gaveta { transform: none; opacity: 0; transition: opacity 160ms ease, overlay 160ms allow-discrete, display 160ms allow-discrete; }
     .gaveta[open] { opacity: 1; }
     @starting-style { .gaveta[open] { transform: none; opacity: 0; } }
-    .midia :global([data-parallax]), .mini :global(svg) { transition: none; }
+    .cartao, .midia :global(img) { transition: none; }
   }
 </style>

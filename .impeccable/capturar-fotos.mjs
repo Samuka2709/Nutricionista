@@ -68,7 +68,7 @@ for (const a of alvos) {
   if (process.env.DBG) {
     const dbg = await cdp('Runtime.evaluate', { returnByValue: true, expression: `JSON.stringify([...document.querySelectorAll('#sobre img, #especialidades img')].slice(0,2).map(i=>({c:i.complete,nw:i.naturalWidth,src:(i.currentSrc||'').slice(-50),ld:i.loading,w:Math.round(i.getBoundingClientRect().width),h:Math.round(i.getBoundingClientRect().height),op:getComputedStyle(i).opacity,clip:getComputedStyle(i.closest('[data-revela]')||i).clipPath})))` });
     console.log(a.nome, dbg.result.value);
-    for (const sel of ['#especialidades', '#sobre', '#atendimento', '[data-convite]']) {
+    for (const sel of ['#sobre', '#especialidades', '#atendimento', '#metodologia', '#conteudos', '#avaliacoes', '#perguntas', '[data-convite]', '#contato']) {
       await cdp('Runtime.evaluate', { expression: `window.scrollTo(0, document.querySelector('${sel}').getBoundingClientRect().top + scrollY - 60)` });
       await espera(1500);
       const t = await cdp('Page.captureScreenshot', { format: 'png' });

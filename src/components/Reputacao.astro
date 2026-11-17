@@ -1,19 +1,20 @@
 ---
 // Avaliações públicas reais (com link de origem) ou, na falta delas, os princípios do atendimento.
 // Nada de estrelas, notas calculadas ou textos editados. Avaliações que citam resultado corporal são descartadas em site.ts.
-import { avaliacoes, t } from '../lib/site';
+import { avaliacoes, t, enfase } from '../lib/site';
+import Icone from './Icone.astro';
 const itens = t.principios.itens || [];
 ---
 {avaliacoes.length > 0 ? (
   <section class="secao" id="avaliacoes" aria-labelledby="rep-titulo">
-    <div class="fio" data-fio></div>
-    <div class="sem">
-      <div class="v gruda" style="--i:1;--f:3"><h2 id="rep-titulo" data-titulo>{t.reputacao.titulo}</h2></div>
-      <ul class="v linhas" style="--i:4;--f:7">
+    <div class="caixa-l">
+      <div class="cabeca"><h2 id="rep-titulo" data-titulo set:html={enfase(t.reputacao.titulo)} /></div>
+      <ul class="grade">
         {avaliacoes.map((a) => (
-          <li>
+          <li class="cartao-suave depo">
+            <span class="aspas" aria-hidden="true"><Icone nome="aspas" tamanho={22} /></span>
             <blockquote><p>{a.texto}</p></blockquote>
-            <p class="autor pequeno">
+            <p class="autor">
               <strong>{a.nome}</strong>{a.data && <span>{a.data}</span>}
               <a class="link" href={a.url} target="_blank" rel="noopener noreferrer">Ver no {a.origem || 'Google'}<span class="so-leitor"> (abre em nova aba)</span></a>
             </p>
@@ -24,15 +25,11 @@ const itens = t.principios.itens || [];
   </section>
 ) : itens.length > 0 && (
   <section class="secao" id="principios" aria-labelledby="rep-titulo">
-    <div class="fio" data-fio></div>
-    <div class="sem">
-      <div class="v gruda" style="--i:1;--f:3"><h2 id="rep-titulo" data-titulo>{t.principios.titulo}</h2></div>
-      <ul class="v linhas" style="--i:4;--f:7" data-grupo>
+    <div class="caixa-l">
+      <div class="cabeca"><h2 id="rep-titulo" data-titulo>{t.principios.titulo}</h2></div>
+      <ul class="grade">
         {itens.map((x: any) => (
-          <li class="principio">
-            <h3>{x.titulo}</h3>
-            <p>{x.texto}</p>
-          </li>
+          <li class="cartao-suave depo"><h3>{x.titulo}</h3><p>{x.texto}</p></li>
         ))}
       </ul>
     </div>
@@ -40,20 +37,12 @@ const itens = t.principios.itens || [];
 )}
 
 <style>
-  .sem { row-gap: 28px; }
-  .linhas { border-top: 1px solid var(--pauta-forte); align-self: start; }
-  li { padding-block: 24px; border-bottom: 1px solid var(--pauta-forte); }
-  .principio { display: grid; gap: 8px; }
-  blockquote p { font-size: 1.25rem; line-height: 1.45; text-wrap: pretty; }
-  blockquote p::before { content: '\201C'; margin-right: 0.08em; font-weight: 650; color: var(--tomate); }
-  blockquote p::after { content: '\201D'; margin-left: 0.04em; font-weight: 650; color: var(--tomate); }
-  @media (min-width: 1024px) {
-    /* aspa de abertura pendurada fora da medida, como em revista */
-    blockquote p { text-indent: -0.42em; }
-  }
-  .autor { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin-top: 14px; max-width: none; color: var(--texto-suave); }
-  .autor strong { color: var(--grafite); font-weight: 650; }
-  @media (min-width: 1024px) {
-    .principio { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px; align-items: baseline; }
-  }
+  .grade { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+  .depo { display: grid; gap: 18px; align-content: start; padding: 32px clamp(24px, 3vw, 36px); }
+  .aspas { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: var(--salvia-clara); color: var(--terra); }
+  blockquote p { font-family: var(--serif); font-size: 1.3rem; font-weight: 420; line-height: 1.45; color: var(--oliva); }
+  .autor { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; font-size: 0.85rem; color: var(--texto-suave); max-width: none; }
+  .autor strong { color: var(--oliva); font-weight: 700; }
+  .depo h3 { font-family: var(--serif); font-weight: 560; font-size: 1.4rem; }
+  .depo p { color: var(--texto-suave); }
 </style>

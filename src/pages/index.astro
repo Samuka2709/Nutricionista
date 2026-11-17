@@ -1,12 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
-import Credenciais from '../components/Credenciais.astro';
-import Seletor from '../components/Seletor.astro';
 import Especialidades from '../components/Especialidades.astro';
 import Sobre from '../components/Sobre.astro';
 import Metodologia from '../components/Metodologia.astro';
-import Recursos from '../components/Recursos.astro';
 import Atendimento from '../components/Atendimento.astro';
 import Conteudos from '../components/Conteudos.astro';
 import Reputacao from '../components/Reputacao.astro';
@@ -52,13 +49,10 @@ if (faq.length) {
 ---
 <Base inicio jsonld={jsonld}>
   <Hero />
-  <Credenciais />
-  <Seletor />
-  <Especialidades />
   <Sobre />
-  <Metodologia />
-  <Recursos />
+  <Especialidades />
   <Atendimento />
+  <Metodologia />
   <Conteudos />
   <Reputacao />
   <Faq />

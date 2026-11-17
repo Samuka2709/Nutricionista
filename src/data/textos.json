@@ -1,7 +1,7 @@
 {
   "_aviso": "Textos editoriais do site. Não contêm dados pessoais. Todos devem ser revisados pelo profissional antes da publicação.",
   "hero": {
-    "titulo": "Nutrição baseada em ciência, feita para caber na sua semana.",
+    "titulo": "Nutrição baseada em ciência, feita para caber na *sua rotina.*",
     "alternativas": [
       "Nutrição baseada em ciência, construída para a sua realidade.",
       "Ciência da nutrição, traduzida para a vida que você leva.",
@@ -15,20 +15,20 @@
     "vazio": "Escolha uma das opções."
   },
   "especialidades": {
-    "titulo": "Especialidades",
-    "apoio": "As áreas em que eu atendo, e como costumo trabalhar cada uma."
+    "titulo": "Em que posso *te ajudar*",
+    "apoio": "Cada área começa pelo mesmo cuidado: entender sua história antes de qualquer orientação."
   },
   "sobre": {
-    "titulo": "Sobre",
+    "titulo": "Prazer, sou",
     "trajetoria": "Trajetória"
   },
   "metodologia": {
-    "titulo": "Como funciona meu acompanhamento",
+    "titulo": "Como funciona o *acompanhamento*",
     "apoio": "Quatro etapas, do primeiro encontro aos ajustes ao longo do tempo.",
     "etapas": [
       {
         "titulo": "Primeira consulta",
-        "resumo": "Um encontro para conhecer sua rotina.",
+        "resumo": "Um encontro para conhecer sua rotina, seu histórico e seus objetivos.",
         "antes": "Separe exames recentes, se tiver, e a lista de medicamentos e suplementos que usa. Não é preciso mudar nada na alimentação antes de vir.",
         "durante": "Conversamos sobre como são seus dias, o que você gosta de comer e o que já tentou.",
         "depois": "Você sai com os primeiros combinados e a data do retorno.",
@@ -36,21 +36,21 @@
       },
       {
         "titulo": "Avaliação nutricional",
-        "resumo": "Análise individualizada das informações relevantes para o seu caso.",
+        "resumo": "Análise individual do seu consumo, histórico de saúde e exames.",
         "antes": "Nada a preparar além do que foi combinado na primeira consulta.",
         "durante": "Avalio seu consumo alimentar, seu histórico de saúde e, quando faz sentido, medidas e exames.",
         "depois": "Explico o que encontrei em linguagem simples, e isso orienta o planejamento."
       },
       {
         "titulo": "Planejamento nutricional",
-        "resumo": "Estratégias personalizadas e possíveis dentro da sua rotina.",
+        "resumo": "Um plano possível, com trocas e estratégias para os dias fora do padrão.",
         "antes": "Conte o que mudou desde a consulta: horários, viagens, treinos.",
         "durante": "Monto o plano com você: refeições, trocas possíveis e o que fazer nos dias fora do padrão.",
         "depois": "Você recebe o plano por escrito e os materiais de apoio combinados."
       },
       {
         "titulo": "Acompanhamento",
-        "resumo": "Retornos.",
+        "resumo": "Retornos periódicos para revisar o que funcionou e ajustar o resto.",
         "antes": "Anote o que funcionou e o que foi difícil de manter.",
         "durante": "Revisamos o plano e ajustamos o que for preciso.",
         "depois": "O plano é atualizado e combinamos o próximo retorno.",
@@ -68,7 +68,7 @@
     "apoio": "O que você recebe e usa entre uma consulta e outra."
   },
   "atendimento": {
-    "titulo": "Atendimento presencial e online",
+    "titulo": "Do jeito que *cabe para você*",
     "presencial": {
       "titulo": "Presencial"
     },
@@ -85,7 +85,7 @@
     }
   },
   "conteudos": {
-    "titulo": "Conhecimento que transforma a maneira de cuidar da alimentação.",
+    "titulo": "Leituras para o *dia a dia*",
     "apoio": "Artigos educativos, com referências.",
     "aviso": "Este conteúdo é educativo e não substitui uma consulta individual."
   },
@@ -111,17 +111,18 @@
     ]
   },
   "reputacao": {
-    "titulo": "O que dizem pacientes"
+    "titulo": "O que dizem *pacientes*"
   },
   "faq": {
-    "titulo": "Perguntas frequentes"
+    "titulo": "Dúvidas antes da *primeira consulta*",
+    "apoio": "Não encontrou o que procurava? Mande uma mensagem."
   },
   "convite": {
-    "titulo": "Comece a construir uma relação mais consciente com a sua alimentação.",
-    "frase": ""
+    "titulo": "Vamos *conversar?*",
+    "frase": "Conte um pouco da sua rotina. A primeira conversa já começa a construir o seu plano."
   },
   "contato": {
-    "titulo": "Contato",
+    "titulo": "Fale *comigo*",
     "apoio": "Para agendar ou tirar dúvidas sobre o atendimento.",
     "avisoSaude": "Não envie informações de saúde por este formulário. Elas serão tratadas com segurança durante a consulta."
   }
