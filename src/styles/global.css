@@ -33,8 +33,8 @@
   --pequeno: 0.9375rem;
 
   /* Grade: a semana */
-  --calha: 40px;
-  --recuo: 14px;
+  --calha: 0px; /* sem a margem das horas: conteúdo alinhado pelas bordas */
+  --recuo: 18px;
   --borda: 18px;
   --folha-max: 1680px;
   --header-h: 64px;
@@ -58,7 +58,7 @@
 
 @media (min-width: 1024px) {
   :root {
-    --calha: 96px;
+    --calha: 0px;
     --recuo: 24px;
     --borda: 24px;
     --header-h: 72px;

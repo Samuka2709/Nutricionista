@@ -4,6 +4,7 @@ categoria: "Hábitos alimentares"
 resumo: "Falta de tempo é um dos obstáculos que o Guia Alimentar reconhece. Planejar a semana diminui as decisões do dia e abre espaço para comer com mais atenção."
 data: 2026-10-28
 tempoLeitura: 4
+imagem: "artigo-rotina.jpg"
 rascunho: true
 referencias:
   - titulo: "Brasil. Ministério da Saúde. Guia Alimentar para a População Brasileira. 2ª ed. Brasília, 2014."

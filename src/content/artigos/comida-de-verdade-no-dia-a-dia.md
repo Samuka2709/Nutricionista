@@ -4,6 +4,7 @@ categoria: "Alimentação"
 resumo: "O Guia Alimentar para a População Brasileira organiza os alimentos pelo grau de processamento. Entender essa lógica ajuda a fazer escolhas sem contar calorias."
 data: 2026-11-10
 tempoLeitura: 5
+imagem: "artigo-comida-de-verdade.jpg"
 rascunho: true
 referencias:
   - titulo: "Brasil. Ministério da Saúde. Guia Alimentar para a População Brasileira. 2ª ed. Brasília, 2014."

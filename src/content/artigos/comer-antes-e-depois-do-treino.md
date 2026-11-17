@@ -4,6 +4,7 @@ categoria: "Performance"
 resumo: "Não existe uma refeição de treino que sirva para todo mundo. O que muda o plano é o tipo de treino, a duração, o horário e o que você comeu antes."
 data: 2026-10-14
 tempoLeitura: 5
+imagem: "artigo-treino.jpg"
 rascunho: true
 referencias:
   - titulo: "Thomas DT, Erdman KA, Burke LM. American College of Sports Medicine Joint Position Statement: Nutrition and Athletic Performance. Medicine & Science in Sports & Exercise, 2016; 48(3): 543-568."

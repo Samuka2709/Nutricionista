@@ -52,10 +52,6 @@ const cabeca = `(function(){var d=document.documentElement;d.classList.add('js')
     {demo && <p class="demo-aviso">Demonstração com dados fictícios<span>: nome, CRN, cadastros, formação e contatos são exemplos, não um profissional real.</span></p>}
     <Header inicio={inicio} />
     <div class="folha">
-      <div class="pauta" aria-hidden="true">
-        <span class="margem" data-pauta></span>
-        {[1, 2, 3, 4, 5, 6].map((n) => <span style={`--n:${n}`} data-pauta></span>)}
-      </div>
       <main id="conteudo" tabindex="-1">
         <slot />
       </main>

@@ -6,11 +6,11 @@ import Foto from './Foto.astro';
 import PadraoSemana from './PadraoSemana.astro';
 import Icone from './Icone.astro';
 import Mapa from './Mapa.astro';
-import GradeHorarios from './GradeHorarios.astro';
 import Preencher from './Preencher.astro';
 const e = p.endereco || {};
 const horarios = (p.horarios || []).filter((h: any) => tem(h.dias));
 const fotoConsultorio = (p.fotos?.consultorio || []).find(tem);
+const fotoOnline = (p.fotos?.atendimento || []).find(tem);
 const titulo = presencial && online ? t.atendimento.titulo : presencial ? 'Atendimento presencial' : 'Atendimento online';
 const o = t.atendimento.online;
 ---
@@ -32,7 +32,7 @@ const o = t.atendimento.online;
                 ) : <li><Preencher campo="endereco" /></li>}
                 {tem(e.acesso) && <li><Icone nome="carro" /><div><strong>Acesso</strong><span>{e.acesso}</span></div></li>}
                 {horarios.length > 0 ? (
-                  <li><Icone nome="relogio" /><div><strong>Horários</strong>{horarios.map((h: any) => <span>{h.dias}, {h.horas}</span>)}<GradeHorarios /></div></li>
+                  <li><Icone nome="relogio" /><div><strong>Horários</strong>{horarios.map((h: any) => <span>{h.dias}, {h.horas}</span>)}</div></li>
                 ) : <li><Preencher campo="horarios" /></li>}
               </ul>
               <Mapa id="mapa-atendimento" />
@@ -42,7 +42,9 @@ const o = t.atendimento.online;
         {online && (
           <article class="bloco">
             <div class="midia" data-revela>
-              <PadraoSemana semente={3} fundo="tinta" proporcao="3 / 2" />
+              {fotoOnline
+                ? <Foto arquivo={fotoOnline} tipo="atendimento online" alt="" proporcao="3 / 2" parallax sizes="(min-width: 1024px) 45vw, 100vw" />
+                : <PadraoSemana semente={3} fundo="tinta" proporcao="3 / 2" />}
             </div>
             <div class="conteudo">
               <h3>{o.titulo}</h3>

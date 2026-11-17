@@ -107,6 +107,10 @@ const descricao = [t.hero.descricao, tem(p.publico) ? `Atendo ${p.publico}.` : '
   /* ---------- Vista de um dia (celular e tablet) ---------- */
   @media (max-width: 1023px) { .agora:not([hidden]) { right: auto; width: calc(var(--calha) + 10px); } }
   .b-fundo, .pf { display: none; }
+  /* Sem pauta: a folha da semana fica só na estrutura, sem linhas, dias, horas nem linha do "agora" */
+  .canto, .dia, .hora, .linha, .agora, .agora:not([hidden]) { display: none; }
+  .grade { border-top: 0; }
+  @media (min-width: 1024px) { .pf { display: none !important; } }
   .b-titulo, .b-cta, .b-sec, .b-fatos, .b-foto, .b-legenda, .b-esp {
     position: relative; z-index: 2; grid-column: 2 / -1; min-width: 0;
     padding-inline: var(--recuo) var(--borda);

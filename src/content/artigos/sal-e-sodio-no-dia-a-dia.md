@@ -4,6 +4,7 @@ categoria: "Saúde"
 resumo: "A Organização Mundial da Saúde recomenda menos de 5 gramas de sal por dia para adultos. Boa parte do sódio que consumimos não vem do saleiro."
 data: 2026-09-30
 tempoLeitura: 4
+imagem: "artigo-sal.jpg"
 rascunho: true
 referencias:
   - titulo: "World Health Organization. Sodium reduction (fact sheet)."

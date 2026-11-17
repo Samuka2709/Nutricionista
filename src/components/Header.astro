@@ -115,7 +115,7 @@ const links = nav(artigos.length > 0);
   }
   .painel[hidden] { display: none; }
   :global(.painel.aberto) { opacity: 1; clip-path: inset(0); }
-  .painel::before { content: ''; position: absolute; left: var(--calha); top: 0; bottom: 0; width: 1px; background: var(--tomate); }
+  .painel::before { content: none; }
   .painel-topo { display: flex; align-items: center; justify-content: space-between; height: var(--header-h); flex: none; }
   .painel .a-nome { color: var(--papel); }
   .fecha { color: var(--papel); }

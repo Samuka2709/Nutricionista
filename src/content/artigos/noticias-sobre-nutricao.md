@@ -4,6 +4,7 @@ categoria: "Ciência"
 resumo: "Um dia o ovo faz mal, no outro faz bem. Saber como um estudo foi feito ajuda a entender o que a manchete não conta."
 data: 2026-08-19
 tempoLeitura: 4
+imagem: "artigo-noticias.jpg"
 rascunho: true
 referencias:
   - titulo: "World Health Organization. Healthy diet (fact sheet)."

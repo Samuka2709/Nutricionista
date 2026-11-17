@@ -4,6 +4,7 @@ categoria: "Nutrição"
 resumo: "A combinação mais conhecida do prato brasileiro aparece no Guia Alimentar como exemplo de alimentação adequada. Entenda por quê."
 data: 2026-09-02
 tempoLeitura: 3
+imagem: "artigo-arroz-feijao.jpg"
 rascunho: true
 referencias:
   - titulo: "Brasil. Ministério da Saúde. Guia Alimentar para a População Brasileira. 2ª ed. Brasília, 2014."
